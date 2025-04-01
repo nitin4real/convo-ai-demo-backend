@@ -2,12 +2,28 @@ import { Router, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { AdminService } from '../services/adminService';
 import { validateRequest } from '../middleware/validation';
-import { authenticateToken, requireAdmin } from '../middleware/auth';
 
 const router = Router();
 
-// Apply authentication and admin middleware to all routes
-// router.use(authenticateToken, requireAdmin);
+// Middleware to check for master token
+const checkMasterToken = (req: Request, res: Response, next: Function) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  const masterToken = process.env.ADMIN_MASTER_TOKEN;
+
+  if (!masterToken || token !== masterToken) {
+    return res.status(403).json({ message: 'Invalid master token' });
+  }
+
+  next();
+};
+
+// Apply master token check to all routes
+router.use(checkMasterToken);
 
 // Create admin
 router.post(
