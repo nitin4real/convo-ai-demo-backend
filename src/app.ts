@@ -1,20 +1,25 @@
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import express from 'express';
+import fs from 'fs';
+import https from 'https';
 import "reflect-metadata";
 import { AppDataSource } from './config/database';
-import authRoutes from './routes/auth';
-import userRoutes from './routes/users';
 import adminRoutes from './routes/admins';
-import healthRoutes from './routes/health';
-import agoraRoutes from './routes/agora';
 import agentRoutes from './routes/agent';
+import agoraRoutes from './routes/agora';
+import authRoutes from './routes/auth';
+import healthRoutes from './routes/health';
+import userRoutes from './routes/users';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+const isProd = process.env.PROD === 'true';
+const SSL_KEY_PATH = process.env.SSL_KEY_PATH
+const SSL_CERT_PATH = process.env.SSL_CERT_PATH
 
 // Middleware
 app.use(cors());
@@ -41,9 +46,20 @@ const startServer = async () => {
     await AppDataSource.initialize();
     console.log("Data Source has been initialized!");
 
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
+    if (isProd) {
+      const httpsOptions = {
+        key: fs.readFileSync(SSL_KEY_PATH || ''),
+        cert: fs.readFileSync(SSL_CERT_PATH || ''),
+      };
+
+      https.createServer(httpsOptions, app).listen(port, () => {
+        console.log(`HTTPS Server is running on port ${port}`);
+      });
+    } else {
+      app.listen(port, () => {
+        console.log(`HTTP Server is running on port ${port}`);
+      });
+    }
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);
