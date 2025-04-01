@@ -7,6 +7,8 @@ import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
 import adminRoutes from './routes/admins';
 import healthRoutes from './routes/health';
+import agoraRoutes from './routes/agora';
+import agentRoutes from './routes/agent';
 
 // Load environment variables
 dotenv.config();
@@ -23,6 +25,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admins', adminRoutes);
 app.use('/api/health', healthRoutes);
+app.use('/api/agora', agoraRoutes);
+app.use('/api/agent', agentRoutes);
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response) => {
