@@ -16,7 +16,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     const tokenData = tokenService.generateToken(channelName, agentUid);
 
     // Start the agent with the generated token
-    const agent = await agentService.startAgent(channelName, tokenData.token);
+    const agent = await agentService.startAgent(channelName, agentUid.toString(), tokenData.token);
     
     res.json({
       ...agent,

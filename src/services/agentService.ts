@@ -93,14 +93,14 @@ class AgentService {
         };
   }
 
-  async startAgent(channelName: string, token: string, ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): Promise<AgentResponse> {
+  async startAgent(channelName: string, agentUid: string, token: string, ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): Promise<AgentResponse> {
     try {
       const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor);
 
       const properties: AgentProperties = {
         channel: channelName,
         token: token,
-        agent_rtc_uid: "0",
+        agent_rtc_uid: agentUid,
         remote_rtc_uids: ["*"], // use req user id as remote uid
         enable_string_uid: false,
         idle_timeout: 120,
