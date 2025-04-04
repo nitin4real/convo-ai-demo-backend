@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 import { PlatformAdmin, PlatformUser } from "../models";
+import { Feedback } from "../models/Feedback";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: true, // Disable synchronize in production
     logging: true,
-    entities: [PlatformAdmin, PlatformUser],
+    entities: [PlatformAdmin, PlatformUser, Feedback],
     subscribers: [],
     migrations: [],
 });
