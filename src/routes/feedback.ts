@@ -23,7 +23,7 @@ router.post(
             });
             res.status(201).json(feedback);
         } catch (error) {
-            console.error('Error submitting feedback:', error);
+            console.error('Error submitting feedback');
             res.status(500).json({ error: 'Failed to submit feedback' });
         }
     }

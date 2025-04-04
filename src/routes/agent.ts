@@ -43,7 +43,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     });
 
     if(agent.status === 'NO_MINUTES_REMAINING'){
-      return res.status(440).json({ errorCode: 'NO_MINUTES_REMAINING', error: 'User has no remaining minutes' });
+      return res.status(440).json({ errorCode: 'NO_MINUTES_REMAINING', error: 'User has no remaining minutes', userMessages: ['Platform Access Expired'] });
     }
 
     res.json({
@@ -103,7 +103,7 @@ router.post('/heartbeat/:convoAgentId', authenticateToken, async (req, res) => {
     res.json({ status: heartbeatStatus.status, secondsRemaining: heartbeatStatus.secondsRemaining });
   } catch (error) {
     console.error('Timeout sending heartbeat');
-    res.status(440).json({ error: 'Could not send heartbeat' });
+    res.status(440).json({ error: 'Could not send heartbeat', userMessages: ['Platform Access Expired'] });
   }
 });
 

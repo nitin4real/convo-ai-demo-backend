@@ -17,7 +17,7 @@ router.post(
       const result = await AuthService.login(req.body);
       res.json(result);
     } catch (error) {
-      res.status(401).json({ message: 'Invalid credentials' });
+      res.status(401).json({ message: 'Invalid credentials', userMessages: ['Invalid credentials'] });
     }
   }
 );
