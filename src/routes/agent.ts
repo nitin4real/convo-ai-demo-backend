@@ -32,14 +32,15 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
 
     // Generate system prompt for the agent
     const systemPrompt = agentPromptService.generateSystemPrompt(agentId, userName);
-
+    const introduction = agentPromptService.generateIntroduction(agentId, userName);
     // Start the agent with the generated token and system prompt
     const agent = await agentService.startAgent({
       channelName,
       agentUid: agentUid.toString(),
       token: tokenData.token,
       userId: Number(userId),
-      systemPrompt
+      systemPrompt,
+      introduction
     });
 
     if(agent.status === 'NO_MINUTES_REMAINING'){

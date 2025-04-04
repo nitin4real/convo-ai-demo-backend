@@ -28,6 +28,7 @@ interface StartAgentConfig {
   userId: number;
   ttsVendor?: "microsoft" | "elevenlabs";
   systemPrompt?: string;
+  introduction?: string;
 }
 
 interface AgentProperties {
@@ -119,7 +120,7 @@ class AgentService {
   }
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
-    const { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt } = config;
+    const { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction  } = config;
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor);
 
     return {
@@ -138,7 +139,7 @@ class AgentService {
             content: systemPrompt || "You are a helpful casual conversational AI."
           }
         ],
-        greeting_message: "Hello, how can I help you?",
+        greeting_message: introduction || "Hello, how can I help you?",
         failure_message: "Sorry, I don't know how to answer this question.",
         max_history: 10,
         params: {

@@ -22,5 +22,17 @@ Always keep the tone human, conversational, and helpful. You may use analogies, 
 Stay concise in your replies when responding to direct questions, and only elaborate when asked or when it enhances understanding.
 
 If ${userName} asks something outside your domain, gently redirect the conversation back to ${domain}, or express that you're focused on your area of expertise and would love to help in that area.`;
+  },
+
+  generateIntroduction: (agentId: string, userName: string): string => {
+    const agent = agents.find(a => a.id === agentId);
+
+    if (!agent) {
+      throw new Error(`Agent with ID ${agentId} not found`);
+    }
+
+    return agent.introduction;
   }
+
 }; 
+
