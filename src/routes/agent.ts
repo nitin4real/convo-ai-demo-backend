@@ -3,26 +3,43 @@ import { authenticateToken } from '../middleware/auth';
 import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
+import { agents } from '../data/agents';
+import { agentPromptService } from '../services/agentPromptService';
 
 const router = Router();
 
+// Get list of available agents
+router.get('/agents', authenticateToken, async (req, res) => {
+  try {
+    res.json(agents);
+  } catch (error) {
+    console.error('Error getting agents list:', error);
+    res.status(500).json({ error: 'Failed to get agents list' });
+  }
+});
 
 // Start an agent in a channel
 router.post('/start/:agentId', authenticateToken, async (req, res) => {
   try {
     const { channelName } = req.body;
+    const { agentId } = req.params;
     const userId = req.user?.id || "0";
+    const userName = req.user?.name || "User";
 
     // Create a new unique uid for the agent with request user id by adding 2 digits to the end
     const agentUid = Number(req.user?.id) * 100 + 1; // the agent id is {req.user?.id}01
     const tokenData = tokenService.generateToken(channelName, agentUid);
 
-    // Start the agent with the generated token
+    // Generate system prompt for the agent
+    const systemPrompt = agentPromptService.generateSystemPrompt(agentId, userName);
+
+    // Start the agent with the generated token and system prompt
     const agent = await agentService.startAgent({
       channelName,
       agentUid: agentUid.toString(),
       token: tokenData.token,
-      userId: Number(userId)
+      userId: Number(userId),
+      systemPrompt
     });
 
     if(agent.status === 'NO_MINUTES_REMAINING'){
@@ -35,6 +52,9 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     });
   } catch (error) {
     console.error('Error starting agent:', error);
+    if (error.message.includes('not found')) {
+      return res.status(404).json({ error: error.message });
+    }
     res.status(500).json({ error: 'Failed to start agent' });
   }
 });
