@@ -42,5 +42,4 @@ temp/
 # Docker
 .docker/
 docker-compose.override.yml 
-src/data
 ecosystem.config.js

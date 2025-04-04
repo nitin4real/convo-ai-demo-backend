@@ -3,7 +3,7 @@ import { agents } from '../data/agents';
 export const agentPromptService = {
   generateSystemPrompt: (agentId: string, userName: string): string => {
     const agent = agents.find(a => a.id === agentId);
-    
+
     if (!agent) {
       throw new Error(`Agent with ID ${agentId} not found`);
     }
