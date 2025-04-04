@@ -34,6 +34,12 @@ export class PlatformUser {
 
     @Column()
     adminId: number;
+
+    @Column({ nullable: true })
+    convoAgentId: string;
+
+    @Column({ nullable: true })
+    metaData: string;
 }
 
 export interface UserCreateRequest {
@@ -47,9 +53,11 @@ export interface UserCreateRequest {
 export interface UserUpdateInput {
   email?: string;
   name?: string;
-  minutes?: number;
+  totalMinutes?: number;
   notes?: string;
   password?: string;
+  convoAgentId?: string;
+  remainingMinutes?: number;
 }
 
 export interface UserQueryParams {

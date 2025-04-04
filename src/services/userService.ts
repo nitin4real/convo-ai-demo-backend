@@ -32,7 +32,9 @@ export class UserService {
       password: hashedPassword,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      adminId
+      adminId,
+      convoAgentId: "",
+      metaData: JSON.stringify({})
     };
 
     const createdUser = await userStorage.create(user);
@@ -41,6 +43,11 @@ export class UserService {
 
   static async updateUser(id: number, updates: UserUpdateInput): Promise<PlatformUser | null> {
     return userStorage.update(id, updates);
+  }
+
+  static async getAgentId(userId: number): Promise<string | null> {
+    const user = await userStorage.getById(userId);
+    return user?.convoAgentId || null;
   }
 
   static async deleteUser(id: number): Promise<boolean> {

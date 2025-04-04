@@ -3,6 +3,7 @@ import { body, query } from 'express-validator';
 import { UserService } from '../services/userService';
 import { validateRequest } from '../middleware/validation';
 import { authenticateToken, requireAdmin } from '../middleware/auth';
+import { AuthService } from '../services/authService';
 
 const router = Router();
 
@@ -42,10 +43,15 @@ router.put(
     body('name').optional().notEmpty().withMessage('Name cannot be empty'),
     body('role').optional().notEmpty().withMessage('Role cannot be empty'),
     body('status').optional().isIn(['active', 'inactive']).withMessage('Status must be either active or inactive'),
+    body('remainingMinutes').optional().isInt().withMessage('Remaining minutes must be a Integer value'),
+    body('password').optional().isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
     validateRequest
   ],
   async (req: Request, res: Response) => {
     try {
+      if(req.body.password){
+        req.body.password = await AuthService.hashPassword(req.body.password);
+      }
       const user = await UserService.updateUser(Number(req.params.id), req.body);
       if (!user) {
         return res.status(404).json({ message: 'User not found' });

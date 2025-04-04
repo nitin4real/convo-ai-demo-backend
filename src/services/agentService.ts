@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { UserService } from './userService';
 
 interface MicrosoftTTSParams {
   vendor: "microsoft";
@@ -20,6 +21,13 @@ interface ElevenLabsTTSParams {
 
 type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams;
 
+interface StartAgentConfig {
+  channelName: string;
+  agentUid: string;
+  token: string;
+  userId: number;
+  ttsVendor?: "microsoft" | "elevenlabs";
+}
 
 interface AgentProperties {
   channel: string;
@@ -59,12 +67,19 @@ class AgentService {
   private readonly appId: string;
   private readonly customerId: string;
   private readonly customerSecret: string;
+  private readonly heartbeatMap: Map<string, { lastHeartbeat: number, secondsRemaining: number, userId: number }>;
+  private readonly heartbeatInterval: NodeJS.Timeout;
+  private readonly HEARTBEAT_TIMEOUT = 10000; // 10 seconds
 
   constructor() {
     this.appId = process.env.AGORA_APP_ID || '';
     this.customerId = process.env.AGORA_CUSTOMER_ID || '';
     this.customerSecret = process.env.AGORA_CUSTOMER_SECRET || '';
     this.baseUrl = `https://api.agora.io/api/conversational-ai-agent/v2/projects/${this.appId}`;
+    this.heartbeatMap = new Map();
+
+    // Start heartbeat check interval
+    this.heartbeatInterval = setInterval(() => this.checkHeartbeats(), 5000); // Check every 5 seconds
   }
 
   private getAuthHeader(): string {
@@ -73,73 +88,104 @@ class AgentService {
     return `Basic ${encodedCredential}`;
   }
 
-  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): TTSParams {
-    return ttsVendor === "microsoft" 
-      ? {
-          vendor: "microsoft",
-          params: {
-            key: process.env.AZURE_TTS_KEY || "",
-            region: process.env.AZURE_TTS_REGION || "eastus",
-            voice_name: "en-US-AndrewMultilingualNeural"
-          }
-        }
-      : { 
-          vendor: "elevenlabs",
-          params: {
-            key: process.env.ELEVENLABS_API_KEY || "",
-            model_id: "eleven_flash_v2_5",
-            voice_id: "21m00Tcm4TlvDq8ikWAM"
-          }
-        };
+  private getHeaders() {
+    return {
+      headers: {
+        'Authorization': this.getAuthHeader(),
+        'Content-Type': 'application/json'
+      }
+    }
   }
 
-  async startAgent(channelName: string, agentUid: string, token: string, ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): Promise<AgentResponse> {
-    try {
-      const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor);
-
-      const properties: AgentProperties = {
-        channel: channelName,
-        token: token,
-        agent_rtc_uid: agentUid,
-        remote_rtc_uids: ["*"], // use req user id as remote uid
-        enable_string_uid: false,
-        idle_timeout: 120,
-        llm: {
-          url: process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions",
-          api_key: process.env.OPENAI_API_KEY || "",
-          system_messages: [
-            {
-              role: "system",
-              content: "You are a helpful chatbot."
-            }
-          ],
-          greeting_message: "Hello, how can I help you?",
-          failure_message: "Sorry, I don't know how to answer this question.",
-          max_history: 10,
-          params: {
-            model: "gpt-4o-mini"
-          }
-        },
-        asr: {
-          language: "en-US"
-        },
-        tts: ttsConfig
+  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): TTSParams {
+    return ttsVendor === "microsoft"
+      ? {
+        vendor: "microsoft",
+        params: {
+          key: process.env.AZURE_TTS_KEY || "",
+          region: process.env.AZURE_TTS_REGION || "eastus",
+          voice_name: "en-US-AndrewMultilingualNeural"
+        }
+      }
+      : {
+        vendor: "elevenlabs",
+        params: {
+          key: process.env.ELEVENLABS_API_KEY || "",
+          model_id: "eleven_flash_v2_5",
+          voice_id: "21m00Tcm4TlvDq8ikWAM"
+        }
       };
+  }
 
+  private getAgentProperties(config: StartAgentConfig): AgentProperties {
+    const { channelName, agentUid, token, ttsVendor = "elevenlabs" } = config;
+    const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor);
+
+    return {
+      channel: channelName,
+      token: token,
+      agent_rtc_uid: agentUid,
+      remote_rtc_uids: ["*"], // use req user id as remote uid
+      enable_string_uid: false,
+      idle_timeout: 120,
+      llm: {
+        url: process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions",
+        api_key: process.env.OPENAI_API_KEY || "",
+        system_messages: [
+          {
+            role: "system",
+            content: "You are a helpful chatbot."
+          }
+        ],
+        greeting_message: "Hello, how can I help you?",
+        failure_message: "Sorry, I don't know how to answer this question.",
+        max_history: 10,
+        params: {
+          model: "gpt-4o-mini"
+        }
+      },
+      asr: {
+        language: "en-US"
+      },
+      tts: ttsConfig
+    };
+  }
+
+  async startAgent(config: StartAgentConfig): Promise<AgentResponse> {
+    try {
+      const user = await UserService.getUserById(config.userId);
+
+      if (user?.remainingMinutes && user.remainingMinutes <= 0) {
+        UserService.updateUser(Number(config.userId), { convoAgentId: "" });
+        return {
+          status: "NO_MINUTES_REMAINING",
+          agent_id: "",
+          create_ts: 0
+        }
+      }
+
+      if (user?.convoAgentId) {
+        const status = await this.getAgentStatus(user.convoAgentId);
+        if (status.status === 'active') {
+          this.stopHeartbeat(user.convoAgentId);
+        }
+      }
+
+      const properties = this.getAgentProperties(config);
       const response = await axios.post(
         `${this.baseUrl}/join`,
         {
           name: `agent_${Date.now()}`,
           properties
         },
-        {
-          headers: {
-            'Authorization': this.getAuthHeader(),
-            'Content-Type': 'application/json'
-          }
-        }
+        this.getHeaders()
       );
 
+      UserService.updateUser(Number(config.userId), { convoAgentId: response.data.agent_id });
+      const secondsRemaining = user?.remainingMinutes || 0;
+      if (secondsRemaining > 0) {
+        this.startHeartbeat(response.data.agent_id, secondsRemaining, config.userId);
+      }
       return response.data;
     } catch (error) {
       console.error('Error starting agent:', error);
@@ -147,18 +193,88 @@ class AgentService {
     }
   }
 
-  async stopAgent(agentId: string): Promise<void> {
+  private async startHeartbeat(convoAgentId: string, secondsRemaining: number, userId: number): Promise<void> {
+    // Initialize heartbeat timestamp
+    this.heartbeatMap.set(convoAgentId, {
+      lastHeartbeat: Date.now(),
+      secondsRemaining,
+      userId
+    });
+  }
+
+  stopHeartbeat(convoAgentId: string): void {
+    
+    const heartbeat = this.heartbeatMap.get(convoAgentId);
+    if (!heartbeat) {
+      throw new Error(`Agent ${convoAgentId} not found`);
+    }
+    
+    const { userId, secondsRemaining } = heartbeat;
+    try {
+      UserService.updateUser(userId, { convoAgentId: "", remainingMinutes: Math.floor(secondsRemaining) });
+    } catch (error) {
+      console.error(`Error updating user ${userId}:`, error);
+    }
+
+    this.heartbeatMap.delete(convoAgentId);
+    
+    try {
+      this.stopAgent(convoAgentId);
+    } catch (error) {
+      console.error(`Error stopping agent ${convoAgentId}:`, error);
+    }
+  }
+
+  async updateHeartbeat(convoAgentId: string, userId: number): Promise<{ status: string, secondsRemaining: number }> {
+    const heartbeat = this.heartbeatMap.get(convoAgentId);
+    if (!heartbeat) {
+      throw new Error(`Agent ${convoAgentId} not found`);
+    }
+    if (heartbeat.userId !== userId) {
+      throw new Error(`Agent - User mismatch`);
+    }
+    const newTime = Date.now();
+    const heartbeatDifference = newTime - heartbeat.lastHeartbeat;
+    const newSecondsRemaining = heartbeat.secondsRemaining - (heartbeatDifference / 1000);
+
+    this.heartbeatMap.set(convoAgentId, {
+      lastHeartbeat: newTime,
+      secondsRemaining: newSecondsRemaining,
+      userId
+    });
+
+    if (newSecondsRemaining <= 0) {
+      this.stopHeartbeat(convoAgentId);
+      throw new Error(`Agent ${convoAgentId} timed out`);
+    }
+    return {
+      status: "OK",
+      secondsRemaining: newSecondsRemaining
+    }
+  }
+
+  private async checkHeartbeats(): Promise<void> {
+
+    for (const [convoAgentId, heartbeat] of this.heartbeatMap.entries()) {
+      const now = Date.now();
+      const timeSinceLastHeartbeat = now - heartbeat.lastHeartbeat;
+
+      if (timeSinceLastHeartbeat > this.HEARTBEAT_TIMEOUT) {
+        console.log(`Agent ${convoAgentId} heartbeat timeout. Stopping agent...`);
+        this.stopHeartbeat(convoAgentId);
+      }
+    }
+  }
+
+  async stopAgent(convoAgentId: string): Promise<void> {
     try {
       await axios.post(
-        `${this.baseUrl}/agents/${agentId}/leave`,
+        `${this.baseUrl}/agents/${convoAgentId}/leave`,
         {},
-        {
-          headers: {
-            'Authorization': this.getAuthHeader(),
-            'Content-Type': 'application/json'
-          }
-        }
+        this.getHeaders()
       );
+      // Remove from heartbeat map when stopping
+      this.heartbeatMap.delete(convoAgentId);
     } catch (error) {
       console.error('Error stopping agent:', error);
       throw error;
@@ -169,12 +285,7 @@ class AgentService {
     try {
       const response = await axios.get(
         `${this.baseUrl}/agents/${agentId}`,
-        {
-          headers: {
-            'Authorization': this.getAuthHeader(),
-            'Content-Type': 'application/json'
-          }
-        }
+        this.getHeaders()
       );
       return response.data;
     } catch (error) {
@@ -183,31 +294,18 @@ class AgentService {
     }
   }
 
-  async listAgents(params?: {
-    channel?: string;
-    from_time?: number;
-    to_time?: number;
-    status?: string;
-    limit?: number;
-    cursor?: string;
-  }): Promise<any> {
-    try {
-      const response = await axios.get(
-        `${this.baseUrl}/agents`,
-        {
-          params,
-          headers: {
-            'Authorization': this.getAuthHeader(),
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error listing agents:', error);
-      throw error;
-    }
-  }
+  // async listAgents(): Promise<any> {
+  //   try {
+  //     const response = await axios.get(
+  //       `${this.baseUrl}/agents`,
+  //       this.getHeaders()
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error listing agents:', error);
+  //     throw error;
+  //   }
+  // }
 }
 
 export const agentService = new AgentService(); 
