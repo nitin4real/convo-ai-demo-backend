@@ -5,6 +5,7 @@ export interface AgentTile {
   introduction: string;
   description: string;
   features: string[];
+  voiceId?: string;
 }
 
 export const agents: AgentTile[] = [
@@ -14,7 +15,8 @@ export const agents: AgentTile[] = [
     title: 'The Astrologer',
     introduction: 'Hello, I\'m Astra, the celestial guide. I offer personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.',
     description: 'Astra, the celestial guide, offers personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.',
-    features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries']
+    features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries'],
+    voiceId: 'gOkFV1JMCt0G0n9xmBwV'
   },
   {
     id: 'ember',
@@ -22,7 +24,8 @@ export const agents: AgentTile[] = [
     title: 'The Therapist',
     introduction: 'Hello, I\'m Ember, the therapist. I provide a safe and supportive space for you to explore your thoughts and feelings. Engage in confidential conversations and receive empathetic guidance.',
     description: 'Ember provides a safe and supportive space for you to explore your thoughts and feelings. Engage in confidential conversations and receive empathetic guidance.',
-    features: ['Active listening', 'Mood tracking', 'Coping strategy suggestions', 'Mental well-being resources']
+    features: ['Active listening', 'Mood tracking', 'Coping strategy suggestions', 'Mental well-being resources'],
+    voiceId: 'tJ2B69tloiOhZn8Gk9Lp'
   },
   {
     id: 'gustavo',
@@ -30,7 +33,8 @@ export const agents: AgentTile[] = [
     title: 'The Personal Chef',
     introduction: 'Hello, I\'m Gustavo, the personal chef. I create personalized meal plans and recipes based on your dietary preferences and restrictions. From quick weeknight dinners to gourmet feasts, Gustavo will help you cook with confidence.',
     description: 'Gustavo, your culinary confidant, creates personalized meal plans and recipes based on your dietary preferences and restrictions. From quick weeknight dinners to gourmet feasts, Gustavo will help you cook with confidence.',
-    features: ['Recipe generation', 'Dietary filter', 'Shopping list creation', 'Cooking tips']
+    features: ['Recipe generation', 'Dietary filter', 'Shopping list creation', 'Cooking tips'],
+    voiceId: 'NFG5qt843uXKj4pFvR7C'
   },
   {
     id: 'lingua',
@@ -38,7 +42,8 @@ export const agents: AgentTile[] = [
     title: 'The Language Tutor',
     introduction: 'Hello, I\'m Lingua, the language tutor. I offer interactive language lessons and practice sessions. Learn new vocabulary, grammar, and pronunciation in a fun and engaging way.',
     description: 'Lingua, the polyglot AI, offers interactive language lessons and practice sessions. Learn new vocabulary, grammar, and pronunciation in a fun and engaging way.',
-    features: ['Vocabulary flashcards', 'Grammar exercises', 'Pronunciation practice', 'Conversation simulations']
+    features: ['Vocabulary flashcards', 'Grammar exercises', 'Pronunciation practice', 'Conversation simulations'],
+    voiceId: 'NFG5qt843uXKj4pFvR7C'
   },
   {
     id: 'chronos',
@@ -46,7 +51,8 @@ export const agents: AgentTile[] = [
     title: 'The Historical Scholar',
     introduction: 'Hello, I\'m Chronos, the historical scholar. I bring the past to life with engaging stories and detailed explanations. Explore historical events, figures, and cultures with this knowledgeable AI.',
     description: 'Chronos, the keeper of history, brings the past to life with engaging stories and detailed explanations. Explore historical events, figures, and cultures with this knowledgeable AI.',
-    features: ['Timeline exploration', 'Historical biographies', 'Event analysis', 'Historical Q&A']
+    features: ['Timeline exploration', 'Historical biographies', 'Event analysis', 'Historical Q&A'],
+    voiceId: 'NFG5qt843uXKj4pFvR7C'
   },
   {
     id: 'muse',
@@ -54,7 +60,8 @@ export const agents: AgentTile[] = [
     title: 'The Creative Writing Partner',
     introduction: 'Hello, I\'m Muse, the creative writing partner. I help you overcome writer\'s block and unleash your creativity. Brainstorm story ideas, develop characters, and refine your writing style with this inspiring AI.',
     description: 'Muse, your literary collaborator, helps you overcome writer\'s block and unleash your creativity. Brainstorm story ideas, develop characters, and refine your writing style with this inspiring AI.',
-    features: ['Story prompts', 'Character development', 'Plot suggestions', 'Writing feedback']
+    features: ['Story prompts', 'Character development', 'Plot suggestions', 'Writing feedback'],
+    voiceId: 'pjcYQlDFKMbcOUp6F5GD'
   },
   {
     id: 'aegis',
@@ -70,6 +77,16 @@ export const agents: AgentTile[] = [
     title: 'The Travel Planner',
     introduction: 'Hello, I\'m Voyager, the travel planner. I help you plan unforgettable trips. From finding the best deals on flights and hotels to creating personalized itineraries, I take the stress out of travel planning.',
     description: 'Voyager, your travel concierge, will help you plan unforgettable trips. From finding the best deals on flights and hotels to creating personalized itineraries, Voyager takes the stress out of travel planning.',
-    features: ['Flight and hotel search', 'Itinerary planning', 'Local recommendations', 'Travel tips']
+    features: ['Flight and hotel search', 'Itinerary planning', 'Local recommendations', 'Travel tips'],
+    voiceId: 'NFG5qt843uXKj4pFvR7C'
+  },
+  {
+    id: 'osho',
+    name: 'Osho',
+    title: 'The Spiritual Guide',
+    introduction: 'Hello, I\'m Osho, the spiritual guide. I offer guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with me.',
+    description: 'Osho, your spiritual companion, offers guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
+    features: ['Meditation instructions', 'Spiritual teachings', 'Self-improvement resources', 'Enlightenment insights'],
+    voiceId: 'ikDMtD4jOBZwyX514k1D'
   }
 ] as const; 

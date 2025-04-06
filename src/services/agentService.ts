@@ -29,6 +29,7 @@ interface StartAgentConfig {
   ttsVendor?: "microsoft" | "elevenlabs";
   systemPrompt?: string;
   introduction?: string;
+  voiceId?: string;
 }
 
 interface AgentProperties {
@@ -99,7 +100,7 @@ class AgentService {
     }
   }
 
-  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs"): TTSParams {
+  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs", voiceId?: string): TTSParams {
     return ttsVendor === "microsoft"
       ? {
         vendor: "microsoft",
@@ -114,14 +115,14 @@ class AgentService {
         params: {
           key: process.env.ELEVENLABS_API_KEY || "",
           model_id: "eleven_flash_v2_5",
-          voice_id: "21m00Tcm4TlvDq8ikWAM"
+          voice_id: voiceId || "21m00Tcm4TlvDq8ikWAM"
         }
       };
   }
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
-    const { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction  } = config;
-    const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor);
+    const { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction, voiceId } = config;
+    const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
 
     return {
       channel: channelName,
