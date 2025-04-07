@@ -24,8 +24,8 @@ export class UserService {
     const user: PlatformUser = {
       id: uniqueId,
       name: input.name,
-      totalMinutes: input.minutes * 60,
-      remainingMinutes: input.minutes * 60,
+      totalMinutes: input.totalMinutes * 60,
+      remainingMinutes: input.totalMinutes * 60,
       email: input.email || '',
       notes: input.notes || '',
       status: 'active',

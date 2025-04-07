@@ -44,7 +44,7 @@ export class PlatformUser {
 
 export interface UserCreateRequest {
   name: string;
-  minutes: number;
+  totalMinutes: number;
   email?: string;
   notes?: string;
   password?: string;
