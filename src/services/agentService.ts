@@ -16,6 +16,11 @@ interface ElevenLabsTTSParams {
     key: string;
     model_id: string;
     voice_id: string;
+    stability?: number;
+    similarity_boost?: number;
+    style?: number;
+    use_speaker_boost?: boolean;
+    speed?: number;
   }
 }
 
@@ -115,7 +120,11 @@ class AgentService {
         params: {
           key: process.env.ELEVENLABS_API_KEY || "",
           model_id: "eleven_flash_v2_5",
-          voice_id: voiceId || "21m00Tcm4TlvDq8ikWAM"
+          voice_id: voiceId || "21m00Tcm4TlvDq8ikWAM",
+          stability: 0.5,
+          similarity_boost: 1,
+          style: 0.4,
+          use_speaker_boost: true,
         }
       };
   }

@@ -3,7 +3,7 @@ import { authenticateToken } from '../middleware/auth';
 import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
-import { agents } from '../data/agents';
+import { agents, agentTypes } from '../data/agents';
 import { agentPromptService } from '../services/agentPromptService';
 
 const router = Router();
@@ -15,6 +15,42 @@ router.get('/agents', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error getting agents list:', error);
     res.status(500).json({ error: 'Failed to get agents list' });
+  }
+});
+
+// get agents by type
+router.get('/agents/:type', authenticateToken, async (req, res) => {
+  try {
+    const { type } = req.params;
+    const agentsByType = agents.filter(agent => agent.type === type);
+    res.json(agentsByType);
+  } catch (error) {
+    console.error('Error getting agents by type:', error);
+    res.status(500).json({ error: 'Failed to get agents by type' });
+  }
+});
+
+// Get list of available agent types
+router.get('/agent-types', authenticateToken, async (req, res) => {
+  try {
+    res.json(agentTypes);
+  } catch (error) {
+    console.error('Error getting agent types:', error);
+    res.status(500).json({ error: 'Failed to get agent types' });
+  }
+});
+
+router.get('/:agentId', authenticateToken, async (req, res) => {
+  try {
+    const { agentId } = req.params;
+    const agent = agents.find(agent => agent.id === agentId);
+    if (!agent) {
+      return res.status(404).json({ error: 'Agent not found', userMessages: ['Working on this feature!'] });
+    }
+    res.json(agent);
+  } catch (error) {
+    console.error('Error getting agent:', error);
+    res.status(500).json({ error: 'Failed to get agent' });
   }
 });
 
@@ -45,7 +81,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       voiceId
     });
 
-    if(agent.status === 'NO_MINUTES_REMAINING'){
+    if (agent.status === 'NO_MINUTES_REMAINING') {
       return res.status(440).json({ errorCode: 'NO_MINUTES_REMAINING', error: 'User has no remaining minutes', userMessages: ['Platform Access Expired'] });
     }
 
