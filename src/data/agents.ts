@@ -283,7 +283,7 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m Anya, your friendly AI companion. I\'m here to chat, listen, and offer support whenever you need it.',
     description: 'Anya, your AI companion, provides companionship, engaging in conversations and offering emotional support.',
     features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
-    // voiceId: 'zqwwn6349h8g24t8x6zb',
+    voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
     type: AgentTypeIds.Companion
   },
   {
@@ -293,7 +293,7 @@ export const agents: AgentTile[] = [
     introduction: 'Hey, I\'m Aarav, your AI companion. I\'m here to share thoughts, have fun conversations, and be a supportive presence.',
     description: 'Aarav, your AI companion, offers engaging conversations, shares insights, and provides a supportive virtual presence.',
     features: ['Interesting discussions', 'Sharing perspectives', 'Lighthearted interactions', 'Supportive communication'],
-    // voiceId: 'ooe44w40Kz321v6j9v0v',
+    voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Companion
   },
   {
