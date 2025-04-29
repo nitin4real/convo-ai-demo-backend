@@ -3,7 +3,7 @@ import { authenticateToken } from '../middleware/auth';
 import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
-import { agents, agentTypes } from '../data/agents';
+import { agents, agentTypes, tempAnyaHindiIntro } from '../data/agents';
 import { agentPromptService } from '../services/agentPromptService';
 
 const router = Router();
@@ -57,19 +57,25 @@ router.get('/:agentId', authenticateToken, async (req, res) => {
 // Start an agent in a channel
 router.post('/start/:agentId', authenticateToken, async (req, res) => {
   try {
-    const { channelName } = req.body;
+    let { channelName, languageCode = 'en-US' } = req.body;
     const { agentId } = req.params;
     const userId = req.user?.id || "0";
     const userName = req.user?.name || "User";
-
+    if(languageCode === '') {
+      languageCode = 'en-US'
+    }
     // Create a new unique uid for the agent with request user id by adding 2 digits to the end
     const agentUid = Number(req.user?.id) * 100 + 1; // the agent id is {req.user?.id}01
     const tokenData = tokenService.generateToken(channelName, agentUid);
 
     // Generate system prompt for the agent
-    const systemPrompt = agentPromptService.generateSystemPrompt(agentId, userName);
-    const introduction = agentPromptService.generateIntroduction(agentId, userName);
+    let systemPrompt = agentPromptService.generateSystemPrompt(agentId, userName, languageCode);
+    let introduction = agentPromptService.generateIntroduction(agentId, userName, languageCode);
     const voiceId = agents.find(agent => agent.id === agentId)?.voiceId;
+    if( agentId === 'anya' && languageCode === 'hi-IN') {
+      introduction = tempAnyaHindiIntro
+      systemPrompt = systemPrompt + '\n\n' + 'Talk in Hindi.'
+    }
     // Start the agent with the generated token and system prompt
     const agent = await agentService.startAgent({
       channelName,
@@ -78,7 +84,8 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       userId: Number(userId),
       systemPrompt,
       introduction,
-      voiceId
+      voiceId,
+      language: languageCode
     });
 
     if (agent.status === 'NO_MINUTES_REMAINING') {

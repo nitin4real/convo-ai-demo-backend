@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { UserService } from './userService';
+import { tempAnyaHindiIntro } from 'src/data/agents';
 
 interface MicrosoftTTSParams {
   vendor: "microsoft";
@@ -21,6 +22,7 @@ interface ElevenLabsTTSParams {
     style?: number;
     use_speaker_boost?: boolean;
     speed?: number;
+    adjust_volume?: number;
   }
 }
 
@@ -35,6 +37,7 @@ interface StartAgentConfig {
   systemPrompt?: string;
   introduction?: string;
   voiceId?: string;
+  language?: string;
 }
 
 interface AgentProperties {
@@ -121,18 +124,19 @@ class AgentService {
           key: process.env.ELEVENLABS_API_KEY || "",
           model_id: "eleven_flash_v2_5",
           voice_id: voiceId || "21m00Tcm4TlvDq8ikWAM",
-          stability: 0.5,
-          similarity_boost: 1,
-          style: 0.4,
-          use_speaker_boost: true,
+          stability: 1,
+          similarity_boost: 0.75,
+          // use_speaker_boost: true,
+          // FIX: Fix this later with configs
+          adjust_volume: voiceId === 'tJ2B69tloiOhZn8Gk9Lp' ? 3000 : 1000
         }
       };
   }
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
-    const { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction, voiceId } = config;
+    let { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction, voiceId, language = "en-US" } = config;
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
-
+ 
     return {
       channel: channelName,
       token: token,
@@ -157,7 +161,7 @@ class AgentService {
         }
       },
       asr: {
-        language: "en-US"
+        language
       },
       tts: ttsConfig
     };
@@ -215,12 +219,12 @@ class AgentService {
   }
 
   stopHeartbeat(convoAgentId: string): void {
-    
+
     const heartbeat = this.heartbeatMap.get(convoAgentId);
     if (!heartbeat) {
       throw new Error(`Agent ${convoAgentId} not found`);
     }
-    
+
     const { userId, secondsRemaining } = heartbeat;
     try {
       UserService.updateUser(userId, { convoAgentId: "", remainingMinutes: Math.floor(secondsRemaining) });
@@ -229,7 +233,7 @@ class AgentService {
     }
 
     this.heartbeatMap.delete(convoAgentId);
-    
+
     try {
       this.stopAgent(convoAgentId);
     } catch (error) {

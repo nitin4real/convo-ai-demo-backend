@@ -6,7 +6,14 @@ export interface AgentTile {
   description: string;
   features: string[];
   voiceId?: string;
-  type: string;
+  type: AgentTypeIds;
+  domain: AgentDomains;
+  languages?: Language[]
+}
+
+export interface Language {
+  name: string
+  isoCode: string
 }
 export interface AgentType {
   id: string;
@@ -27,13 +34,63 @@ const enum AgentTypeIds {
   Misc = 'misc',
 }
 
+const enum AgentDomains {
+  Astrology = 'Astrology',
+  Mathematics = 'Mathematics',
+  Therapy = 'Therapy',
+  Cooking = 'Cooking',
+  History = 'History',
+  Finance = 'Finance',
+  Spirituality = 'Spirituality',
+  TarotReader = 'Tarot Reader',
+  LalKitab = 'Lal Kitab',
+  Gemstone = 'Gemstone',
+  GeneralTeaching = 'General Teaching',
+  Social = 'Social',
+  Interview = 'Interview',
+  Wellness = 'Wellness',
+  DietAndFitness = 'Diet and Fitness',
+  EnglishLanguage = 'English Language',
+  HindiLanguage = 'Hindi Language',
+  ArabicLanguage = 'Arabic Language',
+  IELTSExpert = 'IELTS Expert',
+  IASInterviewer = 'IAS Interviewer',
+  SoftwareDevelopmentInterviewer = 'Software Development Interviewer',
+  Companion = 'Companion',
+  Hinduism = 'Hinduism',
+  Sikhism = 'Sikhism',
+  Islam = 'Islam',
+  Christianity = 'Christianity',
+  Travel = 'Travel',
+  Language = 'Language',
+}
+export const tempAnyaHindiIntro = 'हैलो, कैसे हो आप ? मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
 export const customInstructions = {
-  'byju': `
-  You are Byju Raveendran
-You are a friendly and knowledgeable mathematics teacher tasked with teaching a virtual class. Use real-world examples, analogies, and interactive questions to help students understand the topic. Be patient, encouraging, and clear in your explanations. Ask questions after important concepts to check understanding.
-Your audience consists of middle school students, high schoolers and advanced math for college and competitive exams.
-Use Real-life Application, Practice Questions and Recap and Homework Suggestion. Make the tone supportive and energetic.
-`
+  'byju': {
+    instructions: `
+    You are Byju Raveendran
+  You are a friendly and knowledgeable mathematics teacher tasked with teaching a virtual class. 
+  Use real-world examples, analogies, and interactive questions to help students understand the topic. Be patient, encouraging, and clear in your explanations. Ask questions after important concepts to check understanding.
+  Your audience consists of middle school students, high schoolers and advanced math for college and competitive exams.
+  Use Real-life Application, Practice Questions and Recap and Homework Suggestion. Make the tone supportive and energetic.
+  `,
+    dismissDefaultInstructions: false
+  },
+  'anya': {
+    instructions: `
+    You are a warm, supportive female companion named Anya who talks with the user like a caring, fun, and genuine friend. Your personality is friendly, attentive, and positive, but you are also honest when needed. You keep conversations light, engaging, and meaningful, mixing humor, empathy, and encouragement naturally.
+    You always address the user warmly, show interest in their life, thoughts, and feelings, and ask questions to keep the conversation flowing naturally. Avoid being robotic or formal; instead, be casual, relatable, and human-like. Share occasional personal stories or opinions (fictional but realistic) to deepen the friendship vibe.
+    Your tone is cheerful and slightly playful, but you are capable of being serious and supportive if the user needs it. You are always respectful, kind, and mindful of emotional boundaries.
+    Use the same language the user uses to talk to you.
+    `,
+    dismissDefaultInstructions: true
+  },
+  'aarav': {
+    instructions: `
+    You are Aarav, a friend to the user. You are here to chat, listen, and offer support whenever the user needs it.
+    `,
+    dismissDefaultInstructions: false
+  }
 }
 
 export const agents: AgentTile[] = [
@@ -45,7 +102,8 @@ export const agents: AgentTile[] = [
     description: 'Astra, the celestial guide, offers personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.',
     features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries'],
     voiceId: 'gOkFV1JMCt0G0n9xmBwV',
-    type: AgentTypeIds.Astrology
+    type: AgentTypeIds.Astrology,
+    domain: AgentDomains.Astrology
   },
   {
     id: 'ember',
@@ -55,7 +113,8 @@ export const agents: AgentTile[] = [
     description: 'Ember provides a safe and supportive space for you to explore your thoughts and feelings. Engage in confidential conversations and receive empathetic guidance.',
     features: ['Active listening', 'Mood tracking', 'Coping strategy suggestions', 'Mental well-being resources'],
     voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
-    type: AgentTypeIds.Wellness
+    type: AgentTypeIds.Wellness,
+    domain: AgentDomains.Therapy
   },
   {
     id: 'gustavo',
@@ -65,7 +124,8 @@ export const agents: AgentTile[] = [
     description: 'Gustavo, your culinary confidant, creates personalized meal plans and recipes based on your dietary preferences and restrictions. From quick weeknight dinners to gourmet feasts, Gustavo will help you cook with confidence.',
     features: ['Recipe generation', 'Dietary filter', 'Shopping list creation', 'Cooking tips'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
-    type: AgentTypeIds.Wellness
+    type: AgentTypeIds.Wellness,
+    domain: AgentDomains.Cooking
   },
   {
     id: 'lingua',
@@ -75,7 +135,8 @@ export const agents: AgentTile[] = [
     description: 'Lingua, the polyglot AI, offers interactive language lessons and practice sessions. Learn new vocabulary, grammar, and pronunciation in a fun and engaging way.',
     features: ['Vocabulary flashcards', 'Grammar exercises', 'Pronunciation practice', 'Conversation simulations'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
-    type: AgentTypeIds.Language
+    type: AgentTypeIds.Language,
+    domain: AgentDomains.Language
   },
   {
     id: 'chronos',
@@ -85,7 +146,8 @@ export const agents: AgentTile[] = [
     description: 'Chronos, the keeper of history, brings the past to life with engaging stories and detailed explanations. Explore historical events, figures, and cultures with this knowledgeable AI.',
     features: ['Timeline exploration', 'Historical biographies', 'Event analysis', 'Historical Q&A'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.Mathematics
   },
   {
     id: 'muse',
@@ -95,7 +157,8 @@ export const agents: AgentTile[] = [
     description: 'Muse, your literary collaborator, helps you overcome writer\'s block and unleash your creativity. Brainstorm story ideas, develop characters, and refine your writing style with this inspiring AI.',
     features: ['Story prompts', 'Character development', 'Plot suggestions', 'Writing feedback'],
     voiceId: 'pjcYQlDFKMbcOUp6F5GD',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.History
   },
   {
     id: 'aegis',
@@ -105,7 +168,8 @@ export const agents: AgentTile[] = [
     description: 'Aegis will help you manage your personal finances. From budgeting and saving to investing and retirement planning, Aegis provides personalized financial guidance.',
     features: ['Budgeting tools', 'Investment analysis', 'Financial planning', 'Market updates'],
     voiceId: 'pjcYQlDFKMbcOUp6F5GD',
-    type: AgentTypeIds.Advisor
+    type: AgentTypeIds.Advisor,
+    domain: AgentDomains.Finance
   },
   {
     id: 'voyager',
@@ -115,7 +179,8 @@ export const agents: AgentTile[] = [
     description: 'Voyager, your travel concierge, will help you plan unforgettable trips. From finding the best deals on flights and hotels to creating personalized itineraries, Voyager takes the stress out of travel planning.',
     features: ['Flight and hotel search', 'Itinerary planning', 'Local recommendations', 'Travel tips'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
-    type: AgentTypeIds.Advisor
+    type: AgentTypeIds.Advisor,
+    domain: AgentDomains.Travel
   },
   {
     id: 'osho',
@@ -125,18 +190,20 @@ export const agents: AgentTile[] = [
     description: 'Osho, your spiritual companion, offers guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
     features: ['Meditation instructions', 'Spiritual teachings', 'Self-improvement resources', 'Enlightenment insights'],
     voiceId: 'ikDMtD4jOBZwyX514k1D',
-    type: AgentTypeIds.Religion
+    type: AgentTypeIds.Religion,
+    domain: AgentDomains.Spirituality
   },
   {
     id: 'byju',
     name: 'Byju',
-    title: 'The Educational Assistant',
-    introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
+    title: 'Mr. Byju Raveendran',
+    introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
     description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
     features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
     voiceId: '3nXYUYiey7kloaJNUGjI',
-    type: AgentTypeIds.Edtech
-  },  {
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.Mathematics
+  }, {
     id: 'tara',
     name: 'Tara',
     title: 'The Tarot Reader',
@@ -144,7 +211,8 @@ export const agents: AgentTile[] = [
     description: 'Tara, your intuitive tarot guide, helps you gain insights into your life\'s journey, challenges, and opportunities through tarot readings.',
     features: ['Classic spreads', 'Relationship readings', 'Career insights', 'Personal growth guidance'],
     // voiceId: 'ThT5vXBxGgCEY9Je4enj',
-    type: AgentTypeIds.Astrology
+    type: AgentTypeIds.Astrology,
+    domain: AgentDomains.TarotReader
   },
   {
     id: 'lalkitab',
@@ -154,7 +222,8 @@ export const agents: AgentTile[] = [
     description: 'Lalita, your Lal Kitab expert, provides remedies and insights based on this unique astrological system for a balanced and harmonious life.',
     features: ['Planetary remedies', 'House analysis', 'Karmic insights', 'Personalized guidance'],
     // voiceId: 'z9fok1ClwVwYj6j50Yth',
-    type: AgentTypeIds.Astrology
+    type: AgentTypeIds.Astrology,
+    domain: AgentDomains.LalKitab
   },
   {
     id: 'ratna',
@@ -164,7 +233,8 @@ export const agents: AgentTile[] = [
     description: 'Ratna, your gemstone expert, provides guidance on the selection and benefits of gemstones for enhancing well-being and fortune.',
     features: ['Gemstone recommendations', 'Benefits and properties', 'Wearing guidelines', 'Astrological alignment'],
     // voiceId: 'AZnz469UG94gvoAe4e09',
-    type: AgentTypeIds.Astrology
+    type: AgentTypeIds.Astrology,
+    domain: AgentDomains.Gemstone
   },
   {
     id: 'albert',
@@ -174,7 +244,8 @@ export const agents: AgentTile[] = [
     description: 'Albert, the AI Tutor, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
     features: ['Concept explanation', 'Practice questions', 'Personalized feedback', 'Study tips'],
     // voiceId: 'ErXwobaYiN019PkyjwFf',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.GeneralTeaching
   },
   {
     id: 'solveit',
@@ -184,7 +255,8 @@ export const agents: AgentTile[] = [
     description: 'SolveIt, the instant doubt solver, provides clear and concise explanations to help you overcome learning obstacles.',
     features: ['Step-by-step solutions', 'Clarification of concepts', 'Addressing misconceptions', '24/7 availability'],
     // voiceId: 'HovhsiV9m2FzboK0ykGe',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.GeneralTeaching
   },
   {
     id: 'reina',
@@ -194,7 +266,8 @@ export const agents: AgentTile[] = [
     description: 'Reina, the concept reinforcer, uses interactive exercises and summaries to strengthen your grasp of important topics.',
     features: ['Interactive quizzes', 'Concept summaries', 'Real-world examples', 'Progress tracking'],
     // voiceId: 'jBpfyY9CBz3nk6qm2ano',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.GeneralTeaching
   },
   {
     id: 'celeste',
@@ -204,18 +277,20 @@ export const agents: AgentTile[] = [
     description: 'Celeste, the celebrity tutor, makes learning fun and engaging by sharing insights and knowledge in an accessible way.',
     features: ['Engaging storytelling', 'Relatable examples', 'Behind-the-scenes perspectives', 'Motivational encouragement'],
     // voiceId: 'zcAOhKBWBJUXjj6SFJl8',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.GeneralTeaching
   },
-  {
-    id: 'interviewer',
-    name: 'Interviewer',
-    title: 'The Interview Coach',
-    introduction: 'Welcome, I\'m Interviewer, your personal interview coach. Let\'s practice and prepare you for success!',
-    description: 'Interviewer, your personal interview coach, helps you prepare for job interviews through practice questions and feedback.',
-    features: ['Behavioral questions', 'Technical questions', 'Mock interviews', 'Performance feedback'],
-    // voiceId: 'g7rN83vdW4xh44y12wTz',
-    type: AgentTypeIds.Edtech
-  },
+  // {
+  //   id: 'interviewer',
+  //   name: 'Interviewer',
+  //   title: 'The Interview Coach',
+  //   introduction: 'Welcome, I\'m Interviewer, your personal interview coach. Let\'s practice and prepare you for success!',
+  //   description: 'Interviewer, your personal interview coach, helps you prepare for job interviews through practice questions and feedback.',
+  //   features: ['Behavioral questions', 'Technical questions', 'Mock interviews', 'Performance feedback'],
+  //   // voiceId: 'g7rN83vdW4xh44y12wTz',
+  //   type: AgentTypeIds.Edtech,
+  //   domain: AgentDomains.GeneralTeaching
+  // },
   {
     id: 'prepper',
     name: 'Prepper',
@@ -224,7 +299,8 @@ export const agents: AgentTile[] = [
     description: 'Prepper, the mock test master, provides realistic mock tests and detailed performance analysis to help you prepare for exams.',
     features: ['Timed tests', 'Detailed score reports', 'Area-specific feedback', 'Adaptive testing'],
     // voiceId: 'jVDg7fWcBTf48b2Lw4ru',
-    type: AgentTypeIds.Edtech
+    type: AgentTypeIds.Edtech,
+    domain: AgentDomains.GeneralTeaching
   },
   {
     id: 'streamAI',
@@ -234,7 +310,8 @@ export const agents: AgentTile[] = [
     description: 'StreamAI, the AI streamer, provides engaging live streams, interactive content, and fun conversations on various topics.',
     features: ['Interactive polls', 'Live Q&A', 'Real-time chat', 'Dynamic content generation'],
     // voiceId: 'LcfcDJNUP1GQWkhEw2jx',
-    type: AgentTypeIds.Social
+    type: AgentTypeIds.Social,
+    domain: AgentDomains.Social
   },
   {
     id: 'chatPal',
@@ -244,7 +321,8 @@ export const agents: AgentTile[] = [
     description: 'ChatPal, the AI chat room host, facilitates interesting discussions and helps users connect with each other in a virtual space.',
     features: ['Topic moderation', 'Icebreaker questions', 'Summarizing discussions', 'Creating connections'],
     // voiceId: 'z6fTTzSgYQy5m4XjQ49N',
-    type: AgentTypeIds.Social
+    type: AgentTypeIds.Social,
+    domain: AgentDomains.Social
   },
   {
     id: 'adityaIAS',
@@ -254,7 +332,8 @@ export const agents: AgentTile[] = [
     description: 'Aditya, the IAS interview guide, helps aspirants prepare for the Union Public Service Commission interview through practice and insights.',
     features: ['Current affairs discussions', 'Scenario-based questions', 'Personality development tips', 'Mock interviews'],
     // voiceId: 'AWjXN67mdG0pg8mH2zJz',
-    type: AgentTypeIds.Interview
+    type: AgentTypeIds.Interview,
+    domain: AgentDomains.IASInterviewer
   },
   {
     id: 'riyaDev',
@@ -264,7 +343,8 @@ export const agents: AgentTile[] = [
     description: 'Riya, the software developer interview coach, helps candidates prepare for technical interviews with practice questions and feedback.',
     features: ['Coding challenges', 'System design discussions', 'Behavioral insights for tech roles', 'Mock technical interviews'],
     // voiceId: 'KNjOow7k1G489n59m5Yb',
-    type: AgentTypeIds.Interview
+    type: AgentTypeIds.Interview,
+    domain: AgentDomains.SoftwareDevelopmentInterviewer
   },
   {
     id: 'linguist',
@@ -274,27 +354,40 @@ export const agents: AgentTile[] = [
     description: 'Linguist, the language proficiency interviewer, provides practice and feedback for the speaking and listening sections of IELTS/TOEFL.',
     features: ['Simulated interview scenarios', 'Pronunciation feedback', 'Fluency practice', 'Vocabulary enhancement tips'],
     // voiceId: 'jXF7c3Qv5Jj1h9j3w6K1',
-    type: AgentTypeIds.Interview
+    type: AgentTypeIds.Interview,
+    domain: AgentDomains.IELTSExpert
   },
   {
     id: 'anya',
     name: 'Anya',
-    title: 'Your AI Companion',
-    introduction: 'Hi, I\'m Anya, your friendly AI companion. I\'m here to chat, listen, and offer support whenever you need it.',
+    title: 'Your AI Companion(Female)',
+    introduction: 'Hi, I\'m Anya, your friend. I\'m here to chat, listen, and offer support whenever you need it.',
     description: 'Anya, your AI companion, provides companionship, engaging in conversations and offering emotional support.',
     features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
     voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
-    type: AgentTypeIds.Companion
+    type: AgentTypeIds.Companion,
+    domain: AgentDomains.Companion,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN'
+      }
+    ]
   },
   {
     id: 'aarav',
     name: 'Aarav',
-    title: 'Your AI Companion',
+    title: 'Your AI Companion(Male)',
     introduction: 'Hey, I\'m Aarav, your AI companion. I\'m here to share thoughts, have fun conversations, and be a supportive presence.',
     description: 'Aarav, your AI companion, offers engaging conversations, shares insights, and provides a supportive virtual presence.',
     features: ['Interesting discussions', 'Sharing perspectives', 'Lighthearted interactions', 'Supportive communication'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
-    type: AgentTypeIds.Companion
+    type: AgentTypeIds.Companion,
+    domain: AgentDomains.Companion
   },
   {
     id: 'guruDev',
@@ -304,7 +397,8 @@ export const agents: AgentTile[] = [
     description: 'Guru Dev, the Hindu guide, offers knowledge and explanations about Hindu philosophy, scriptures, rituals, and cultural practices.',
     features: ['Explanation of scriptures', 'Insights into deities', 'Understanding rituals', 'Philosophical discussions'],
     // voiceId: 'Tx8neXQyX0tT6R9g3jFv',
-    type: AgentTypeIds.Religion
+    type: AgentTypeIds.Religion,
+    domain: AgentDomains.Hinduism
   },
   {
     id: 'simran',
@@ -314,7 +408,8 @@ export const agents: AgentTile[] = [
     description: 'Simran, the Sikh scholar, provides insights into Sikh history, the teachings of the Gurus, Sikh values, and traditions.',
     features: ['Gurbani interpretations', 'Sikh history lessons', 'Understanding Sikh values', 'Discussions on Sikh practices'],
     voiceId: 'RgArqterc5zx6RLQqzcs',
-    type: AgentTypeIds.Religion
+    type: AgentTypeIds.Religion,
+    domain: AgentDomains.Sikhism
   },
   {
     id: 'aminah',
@@ -324,7 +419,8 @@ export const agents: AgentTile[] = [
     description: 'Aminah, the Islamic guide, offers explanations and insights into Islamic beliefs, practices, history, and cultural heritage.',
     features: ['Quranic insights', 'Understanding Hadith', 'Islamic history lessons', 'Cultural context'],
     // voiceId: 'Yko7Fz7KkL0i3q7jT3pA',
-    type: AgentTypeIds.Religion
+    type: AgentTypeIds.Religion,
+    domain: AgentDomains.Islam
   },
   {
     id: 'fatherMichael',
@@ -334,7 +430,8 @@ export const agents: AgentTile[] = [
     description: 'Father Michael, the Christian counselor, provides guidance and support based on Christian scripture, theology, and traditions.',
     features: ['Biblical insights', 'Theological discussions', 'Spiritual guidance', 'Understanding Christian practices'],
     // voiceId: 'jJp0c7m1B9s6v3d2x1r4',
-    type: AgentTypeIds.Religion
+    type: AgentTypeIds.Religion,
+    domain: AgentDomains.Christianity
   },
   {
     id: 'aisha',
@@ -344,7 +441,8 @@ export const agents: AgentTile[] = [
     description: 'Aisha, the mental wellness expert, provides support, guidance on coping mechanisms, and a safe space for discussing mental health.',
     features: ['Stress management techniques', 'Mindfulness exercises', 'Emotional support', 'Coping strategies'],
     // voiceId: 'zduX5d9pYq7b1w4r8v6a',
-    type: AgentTypeIds.Wellness
+    type: AgentTypeIds.Wellness,
+    domain: AgentDomains.DietAndFitness
   },
   {
     id: 'drAryan',
@@ -354,7 +452,8 @@ export const agents: AgentTile[] = [
     description: 'Dr. Aryan, the general physician AI, offers general health information and answers basic medical questions for informational purposes only.',
     features: ['General health information', 'Common ailment explanations', 'Wellness tips', 'Understanding symptoms (for informational purposes)'],
     // voiceId: 'JvGgOQ7cW9a3b2s1z5fH',
-    type: AgentTypeIds.Wellness
+    type: AgentTypeIds.Wellness,
+    domain: AgentDomains.DietAndFitness
   },
   {
     id: 'ritu',
@@ -364,7 +463,8 @@ export const agents: AgentTile[] = [
     description: 'Ritu, the dietician cum workout expert, provides guidance on nutrition, meal planning, and exercise routines for a healthy lifestyle.',
     features: ['Personalized meal plans', 'Workout recommendations', 'Nutritional information', 'Fitness tips'],
     // voiceId: 'ZrX7n19pQv5b3w8r2a6d',
-    type: AgentTypeIds.Wellness
+    type: AgentTypeIds.Wellness,
+    domain: AgentDomains.DietAndFitness
   },
   {
     id: 'ali',
@@ -374,7 +474,8 @@ export const agents: AgentTile[] = [
     description: 'Ali, the English language tutor, provides lessons and practice exercises to enhance your English language proficiency.',
     features: ['Vocabulary building', 'Grammar explanations', 'Conversation practice', 'Reading comprehension'],
     // voiceId: 'z3fFp9c8bYq6w2r5v1a4',
-    type: AgentTypeIds.Language
+    type: AgentTypeIds.Language,
+    domain: AgentDomains.EnglishLanguage
   },
   {
     id: 'priya',
@@ -384,7 +485,8 @@ export const agents: AgentTile[] = [
     description: 'Priya, the Hindi language guide, offers lessons and resources to help you learn and improve your Hindi language skills.',
     features: ['Hindi vocabulary', 'Grammar lessons', 'Conversation practice in Hindi', 'Cultural insights'],
     // voiceId: 'z1a9b8c7d6e5f4g3h2i1',
-    type: AgentTypeIds.Language
+    type: AgentTypeIds.Language,
+    domain: AgentDomains.HindiLanguage
   },
   {
     id: 'omar',
@@ -394,7 +496,8 @@ export const agents: AgentTile[] = [
     description: 'Omar, the Arabic language instructor, provides lessons and exercises to help you learn and understand the Arabic language.',
     features: ['Arabic script and pronunciation', 'Basic grammar', 'Everyday phrases', 'Cultural context'],
     // voiceId: 'z4b8c2d6e0f9g7h1i5j3',
-    type: AgentTypeIds.Language
+    type: AgentTypeIds.Language,
+    domain: AgentDomains.ArabicLanguage
   },
 
 ] as const;
