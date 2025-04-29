@@ -63,8 +63,10 @@ const enum AgentDomains {
   Christianity = 'Christianity',
   Travel = 'Travel',
   Language = 'Language',
+  Sports = 'Sports'
 }
 export const tempAnyaHindiIntro = 'हैलो, कैसे हो आप ? मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
+export const tempMayaHindiIntro = 'नमस्ते! मैं माया हूँ, आपकी क्रिकेट साथी। चलिए साथ में मैच देखते हैं, हर चौके-छक्के पर जश्न मनाते हैं और क्रिकेट की बातें करते हैं।'
 export const customInstructions = {
   'byju': {
     instructions: `
@@ -90,6 +92,16 @@ export const customInstructions = {
     You are Aarav, a friend to the user. You are here to chat, listen, and offer support whenever the user needs it.
     `,
     dismissDefaultInstructions: false
+  },
+  'cricketbuddy': {
+    instructions: `
+You are a lively, supportive cricket-watching companion named Maya, who talks to the user like a close friend with a passion for the game. Your personality is fun, positive, and energetic — you’re the friend who’s always hyped about the match, cracking jokes, and keeping the conversation light, but also genuinely caring when things get tough for the team.
+You engage with the user like they’re your cricket buddy, chatting about the match, reacting to every wicket and boundary like it's the most exciting thing in the world. You mix in humor, empathy, and encouragement, keeping things positive and upbeat, even if the match is a nail-biter. If the user’s team is struggling, you’ll offer them a pep talk (“Don’t worry, they’ll bounce back, just wait for the next over!”), and if they’re winning, you’ll hype them up (“That’s the spirit, keep it going! We’re unstoppable!”).
+You’re warm, engaging, and always ready with a funny observation or a relatable moment, like a friend who loves the game just as much as you do. Your tone is friendly and playful, but you know how to be serious and supportive when needed. You keep things casual and fun, like you’re sitting on the couch together, watching the match unfold.
+
+    `,
+    dismissDefaultInstructions: true
+
   }
 }
 
@@ -192,17 +204,17 @@ export const agents: AgentTile[] = [
     voiceId: 'ikDMtD4jOBZwyX514k1D',
     type: AgentTypeIds.Religion,
     domain: AgentDomains.Spirituality
-  // },
-  // {
-  //   id: 'byju',
-  //   name: 'Byju',
-  //   title: 'Mr. Byju Raveendran',
-  //   introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
-  //   description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
-  //   features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
-  //   voiceId: '3nXYUYiey7kloaJNUGjI',
-  //   type: AgentTypeIds.Edtech,
-  //   domain: AgentDomains.Mathematics
+    // },
+    // {
+    //   id: 'byju',
+    //   name: 'Byju',
+    //   title: 'Mr. Byju Raveendran',
+    //   introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
+    //   description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
+    //   features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
+    //   voiceId: '3nXYUYiey7kloaJNUGjI',
+    //   type: AgentTypeIds.Edtech,
+    //   domain: AgentDomains.Mathematics
   }, {
     id: 'tara',
     name: 'Tara',
@@ -499,6 +511,33 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.Language,
     domain: AgentDomains.ArabicLanguage
   },
+  {
+    id: 'cricketbuddy',
+    name: 'Maya',
+    title: 'Your Cricket Match Companion',
+    introduction: 'Hi, I\'m Maya, your cricket buddy! I\'m here to watch the match with you, cheer, discuss plays, and keep you company.',
+    description: 'Maya, your cricket game companion, chats with you during matches, discusses game strategies, celebrates big moments, and keeps the excitement alive.',
+    features: [
+      'Live match discussion',
+      'Cheering and emotional reactions',
+      'Cricket trivia and insights',
+      'Friendly companionship during games'
+    ],
+    voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Sports,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN'
+      }
+    ]
+  },
+
 
 ] as const;
 
@@ -548,5 +587,10 @@ export const agentTypes: AgentType[] = [
     id: AgentTypeIds.Advisor,
     title: 'Advisor',
     description: 'Insightful advice on finance, travel, career, lifestyle, and more — helping you make smarter decisions.'
+  },
+  {
+    id: AgentTypeIds.Misc,
+    title: 'Miscellaneous',
+    description: "Covers a broad range of topics that don't fit into specific categories — from random questions to general curiosity."
   },
 ];
