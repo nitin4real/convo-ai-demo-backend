@@ -192,17 +192,17 @@ export const agents: AgentTile[] = [
     voiceId: 'ikDMtD4jOBZwyX514k1D',
     type: AgentTypeIds.Religion,
     domain: AgentDomains.Spirituality
-  },
-  {
-    id: 'byju',
-    name: 'Byju',
-    title: 'Mr. Byju Raveendran',
-    introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
-    description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
-    features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
-    voiceId: '3nXYUYiey7kloaJNUGjI',
-    type: AgentTypeIds.Edtech,
-    domain: AgentDomains.Mathematics
+  // },
+  // {
+  //   id: 'byju',
+  //   name: 'Byju',
+  //   title: 'Mr. Byju Raveendran',
+  //   introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
+  //   description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
+  //   features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
+  //   voiceId: '3nXYUYiey7kloaJNUGjI',
+  //   type: AgentTypeIds.Edtech,
+  //   domain: AgentDomains.Mathematics
   }, {
     id: 'tara',
     name: 'Tara',
