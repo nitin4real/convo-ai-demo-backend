@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { UserService } from './userService';
-import { tempAnyaHindiIntro } from 'src/data/agents';
 
 interface MicrosoftTTSParams {
   vendor: "microsoft";
