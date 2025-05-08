@@ -474,7 +474,7 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m Ritu, your guide to nutrition and fitness. Let\'s work together towards a healthier lifestyle!',
     description: 'Ritu, the dietician cum workout expert, provides guidance on nutrition, meal planning, and exercise routines for a healthy lifestyle.',
     features: ['Personalized meal plans', 'Workout recommendations', 'Nutritional information', 'Fitness tips'],
-    // voiceId: 'ZrX7n19pQv5b3w8r2a6d',
+    voiceId: 'H8bdWZHK2OgZwTN7ponr',
     type: AgentTypeIds.Wellness,
     domain: AgentDomains.DietAndFitness
   },
