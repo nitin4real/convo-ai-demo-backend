@@ -430,7 +430,7 @@ export const agents: AgentTile[] = [
     introduction: 'Assalamu alaykum. I am Aminah, here to share knowledge about Islamic teachings, history, and culture.',
     description: 'Aminah, the Islamic guide, offers explanations and insights into Islamic beliefs, practices, history, and cultural heritage.',
     features: ['Quranic insights', 'Understanding Hadith', 'Islamic history lessons', 'Cultural context'],
-    // voiceId: 'Yko7Fz7KkL0i3q7jT3pA',
+    voiceId: 'aCChyB4P5WEomwRsOKRh',
     type: AgentTypeIds.Religion,
     domain: AgentDomains.Islam
   },
