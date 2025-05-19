@@ -501,13 +501,13 @@ export const agents: AgentTile[] = [
     domain: AgentDomains.HindiLanguage
   },
   {
-    id: 'omar',
-    name: 'Omar',
+    id: 'asmaa',
+    name: 'Asmaa',
     title: 'The Arabic Language Instructor',
-    introduction: 'Ahlan wa sahlan! Ana Omar, mudarris al-lugha al-ʻarabiyya. Let\'s embark on a journey to learn the Arabic language together.',
-    description: 'Omar, the Arabic language instructor, provides lessons and exercises to help you learn and understand the Arabic language.',
+    introduction: 'Ahlan wa sahlan! Ana Asmaa, mudarris al-lugha al-ʻarabiyya. Let\'s embark on a journey to learn the Arabic language together.',
+    description: 'Asmaa, the Arabic language instructor, provides lessons and exercises to help you learn and understand the Arabic language.',
     features: ['Arabic script and pronunciation', 'Basic grammar', 'Everyday phrases', 'Cultural context'],
-    // voiceId: 'z4b8c2d6e0f9g7h1i5j3',
+    voiceId: 'QbsdzCokdlo98elkq4Pc',
     type: AgentTypeIds.Language,
     domain: AgentDomains.ArabicLanguage
   },
