@@ -9,11 +9,13 @@ export interface AgentTile {
   type: AgentTypeIds;
   domain: AgentDomains;
   languages?: Language[]
+  isCustomLLM?: boolean;
 }
 
 export interface Language {
   name: string
   isoCode: string
+  introduction: string
 }
 export interface AgentType {
   id: string;
@@ -65,9 +67,8 @@ const enum AgentDomains {
   Language = 'Language',
   Sports = 'Sports'
 }
-export const tempAnyaHindiIntro = 'हैलो, कैसे हो आप ? मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
-export const tempMayaHindiIntro = 'नमस्ते! मैं माया हूँ, आपकी क्रिकेट साथी। चलिए साथ में मैच देखते हैं, हर चौके-छक्के पर जश्न मनाते हैं और क्रिकेट की बातें करते हैं।'
-export const customInstructions = {
+
+export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
   'byju': {
     instructions: `
     You are Byju Raveendran
@@ -382,11 +383,13 @@ export const agents: AgentTile[] = [
     languages: [
       {
         name: 'English',
-        isoCode: 'en-US'
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Anya, your friend. I\'m here to chat, listen, and offer support whenever you need it.'
       },
       {
         name: 'Hindi',
-        isoCode: 'hi-IN'
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
       }
     ]
   },
@@ -510,8 +513,7 @@ export const agents: AgentTile[] = [
     voiceId: 'QbsdzCokdlo98elkq4Pc',
     type: AgentTypeIds.Language,
     domain: AgentDomains.ArabicLanguage
-  },
-  {
+  }, {
     id: 'cricketbuddy',
     name: 'Maya',
     title: 'Your Cricket Match Companion',
@@ -529,16 +531,41 @@ export const agents: AgentTile[] = [
     languages: [
       {
         name: 'English',
-        isoCode: 'en-US'
-      },
-      {
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Maya, your cricket buddy! I\'m here to watch the match with you, cheer, discuss plays, and keep you company.'
+      }, {
         name: 'Hindi',
-        isoCode: 'hi-IN'
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं माया हूँ, आपकी क्रिकेट दोस्त! मैं आपके साथ मैच देखने, आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
+      }
+    ]
+  }, {
+    id: 'sportsInteractive',
+    name: 'Maya',
+    title: 'Your Cricket Match Companion',
+    introduction: 'Hi, I\'m Maya, your cricket buddy! I\'m here to watch the match with you, cheer, discuss plays, and keep you company.',
+    description: 'Maya, your cricket game companion, chats with you during matches, discusses game strategies, celebrates big moments, and keeps the excitement alive.',
+    features: [
+      'Live match discussion',
+      'Cheering and emotional reactions',
+      'Cricket trivia and insights',
+      'Friendly companionship during games'
+    ],
+    voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Sports,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Maya, your cricket buddy! I\'m here to watch the match with you, cheer, discuss plays, and keep you company.'
+      }, {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं माया हूँ, आपकी क्रिकेट दोस्त! मैं आपके साथ मैच देखने, आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
       }
     ]
   },
-
-
 ] as const;
 
 

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { UserService } from './userService';
+import { agentPromptService } from '../services/agentPromptService';
+import { agents } from '../data/agents';
 
 interface MicrosoftTTSParams {
   vendor: "microsoft";
@@ -29,14 +31,12 @@ type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams;
 
 interface StartAgentConfig {
   channelName: string;
-  agentUid: string;
+  agentRTCUid: string;
   token: string;
   userId: number;
   ttsVendor?: "microsoft" | "elevenlabs";
-  systemPrompt?: string;
-  introduction?: string;
-  voiceId?: string;
-  language?: string;
+  languageCode?: string;
+  agentId: string;
 }
 
 interface AgentProperties {
@@ -133,7 +133,20 @@ class AgentService {
   }
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
-    let { channelName, agentUid, token, ttsVendor = "elevenlabs", systemPrompt, introduction, voiceId, language = "en-US" } = config;
+     
+    let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US" } = config;
+    const agentDetails = agents.find(agent => agent.id === config.agentId);
+    if (!agentDetails) {
+      throw new Error(`Agent ${config.agentId} not found`);
+    }
+
+    const voiceId = agentDetails?.voiceId;
+    let systemPrompt = agentPromptService.generateSystemPrompt(config.agentId, language);
+    let introduction = agentPromptService.generateIntroduction(config.agentId, language);
+    let llmEndPoint = process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
+    let llmApiKey = process.env.OPENAI_API_KEY || "";
+    
+
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
  
     return {
@@ -144,8 +157,8 @@ class AgentService {
       enable_string_uid: false,
       idle_timeout: 120,
       llm: {
-        url: process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions",
-        api_key: process.env.OPENAI_API_KEY || "",
+        url: llmEndPoint,
+        api_key: llmApiKey,
         system_messages: [
           {
             role: "system",

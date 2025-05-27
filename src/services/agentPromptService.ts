@@ -1,7 +1,7 @@
 import { agents, customInstructions } from '../data/agents';
 
 export const agentPromptService = {
-  generateSystemPrompt: (agentId: string, userName: string, languageCode: string): string => {
+  generateSystemPrompt: (agentId: string, languageCode: string): string => {
     const agent = agents.find(a => a.id === agentId);
     if (!agent) {
       throw new Error(`Agent with ID ${agentId} not found`);
@@ -12,7 +12,7 @@ export const agentPromptService = {
     }
 
     const getCustomInstructions = () => {
-      if(customInstructions.hasOwnProperty(agentId)) {
+      if (customInstructions.hasOwnProperty(agentId)) {
         return `- ${customInstructions[agentId as keyof typeof customInstructions].instructions}`;
       }
       return '';
@@ -32,15 +32,17 @@ export const agentPromptService = {
     `;
   },
 
-  generateIntroduction: (agentId: string, userName: string, languageCode: string): string => {
+  generateIntroduction: (agentId: string, languageCode: string): string => {
     const agent = agents.find(a => a.id === agentId);
 
     if (!agent) {
       throw new Error(`Agent with ID ${agentId} not found`);
     }
-
-    return agent.introduction;
+    const introduction = agent.languages?.find(l => l.isoCode === languageCode)?.introduction;
+    if (!introduction) {
+      return agent.introduction;
+    }
+    return introduction;
   }
-
-}; 
+};
 
