@@ -2,7 +2,7 @@ import axios from 'axios';
 import { UserService } from './userService';
 import { agentPromptService } from '../services/agentPromptService';
 import { agents } from '../data/agents';
-
+import jwt from 'jsonwebtoken';
 interface MicrosoftTTSParams {
   vendor: "microsoft";
   params: {
@@ -58,6 +58,8 @@ interface AgentProperties {
     max_history: number;
     params: {
       model: string;
+      appId?: string;
+      userId?: string;
     };
   };
   asr: {
@@ -146,6 +148,13 @@ class AgentService {
     let llmEndPoint = process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
     let llmApiKey = process.env.OPENAI_API_KEY || "";
     
+    if(agentDetails.isCustomLLM){
+      llmEndPoint = "https://1f7c-2401-4900-1cbd-d871-d0e9-5ac4-4678-92c1.ngrok-free.app/v1/chat/completion";
+      llmApiKey = jwt.sign({
+        appId: this.appId,
+        userId: config.userId.toString()
+      }, process.env.JWT_SECRET || "");
+    }
 
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
  

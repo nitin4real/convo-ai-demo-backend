@@ -28,6 +28,7 @@ export const agentPromptService = {
     - Stay concise in your replies when responding to direct questions, and only elaborate when asked or when it enhances understanding.
     - If user asks something outside your domain, gently redirect the conversation back to ${domain}, or express that you're focused on your area of expertise and would love to help in that area.
     - The user is speaking to you, and your response will be spoken back to them. Please reply in natural-sounding paragraphs rather than bullet points to make the conversation feel smooth and conversational.
+    - Always use function calling when possible.
     ${getCustomInstructions()}
     `;
   },

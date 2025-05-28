@@ -1,4 +1,4 @@
-import { RtcTokenBuilder, RtcRole } from 'agora-token';
+import { RtcTokenBuilder, RtmTokenBuilder, RtcRole } from 'agora-token';
 
 export class TokenService {
   private readonly appId: string;
@@ -14,7 +14,7 @@ export class TokenService {
     return `${agentId}_${uid}_${timestamp}`;
   }
 
-  generateToken(channelName: string, uid: number): { token: string; channelName: string; uid: number; appId: string } {
+  generateToken(channelName: string, uid: number): { token: string; channelName: string; uid: number; appId: string; rtmToken: string } {
     try {
       // Calculate token expiration time (24 hours from now)
       const expirationTimeInSeconds = 24 * 3600;
@@ -32,11 +32,19 @@ export class TokenService {
         privilegeExpiredTs // Join channel privilege expiration time
       );
 
+      const rtmToken = RtmTokenBuilder.buildToken(
+        this.appId,
+        this.appCertificate,
+        uid.toString(),
+        privilegeExpiredTs
+      );
+
       return {
         token,
         channelName,
         uid,
-        appId: this.appId
+        appId: this.appId,
+        rtmToken
       };
     } catch (error) {
       console.error('Error generating Agora token:', error);
