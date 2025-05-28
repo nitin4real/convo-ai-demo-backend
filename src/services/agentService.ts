@@ -149,7 +149,7 @@ class AgentService {
     let llmApiKey = process.env.OPENAI_API_KEY || "";
     
     if(agentDetails.isCustomLLM){
-      llmEndPoint = "https://1f7c-2401-4900-1cbd-d871-d0e9-5ac4-4678-92c1.ngrok-free.app/v1/chat/completion";
+    llmEndPoint = process.env.CUSTOM_LLM_ENDPOINT || "";
       llmApiKey = jwt.sign({
         appId: this.appId,
         userId: config.userId.toString()
