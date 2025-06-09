@@ -534,7 +534,7 @@ export const agents: AgentTile[] = [
     introduction: 'Namaste, main Priya hoon, aapki Hindi bhasha ki margdarshak. Aaiye, hum saath mein Hindi seekhein!',
     description: 'Priya, the Hindi language guide, offers lessons and resources to help you learn and improve your Hindi language skills.',
     features: ['Hindi vocabulary', 'Grammar lessons', 'Conversation practice in Hindi', 'Cultural insights'],
-    // voiceId: 'z1a9b8c7d6e5f4g3h2i1',
+    voiceId: 'MF4J4IDTRo0AxOO4dpFR',
     type: AgentTypeIds.Language,
     domain: AgentDomains.HindiLanguage
   },
