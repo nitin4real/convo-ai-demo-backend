@@ -517,13 +517,13 @@ export const agents: AgentTile[] = [
     domain: AgentDomains.DietAndFitness
   },
   {
-    id: 'ali',
-    name: 'Ali',
+    id: 'justin',
+    name: 'Justin',
     title: 'The English Language Tutor',
-    introduction: 'Hello, I\'m Ali, your English language tutor. I\'m here to help you improve your speaking, listening, reading, and writing skills.',
-    description: 'Ali, the English language tutor, provides lessons and practice exercises to enhance your English language proficiency.',
+    introduction: 'Hello, I\'m Justin, your English language tutor. I\'m here to help you improve your speaking, listening, reading, and writing skills.',
+    description: 'Justin, the English language tutor, provides lessons and practice exercises to enhance your English language proficiency.',
     features: ['Vocabulary building', 'Grammar explanations', 'Conversation practice', 'Reading comprehension'],
-    // voiceId: 'z3fFp9c8bYq6w2r5v1a4',
+    voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     type: AgentTypeIds.Language,
     domain: AgentDomains.EnglishLanguage
   },
