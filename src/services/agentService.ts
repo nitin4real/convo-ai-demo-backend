@@ -80,7 +80,7 @@ class AgentService {
   private readonly customerId: string;
   private readonly customerSecret: string;
   private readonly heartbeatMap: Map<string, { lastHeartbeat: number, secondsRemaining: number, userId: number }>;
-  private readonly HEARTBEAT_TIMEOUT = 10000; // 10 seconds
+  private readonly HEARTBEAT_TIMEOUT = 20000; // 10 seconds
   heartbeatInterval: NodeJS.Timeout;
 
   constructor() {
