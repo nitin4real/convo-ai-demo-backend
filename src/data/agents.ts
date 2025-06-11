@@ -285,11 +285,11 @@ export const agents: AgentTile[] = [
     domain: AgentDomains.Gemstone
   },
   {
-    id: 'albert',
-    name: 'Albert',
+    id: 'alice',
+    name: 'Alice',
     title: 'The AI Tutor',
-    introduction: 'Hello, I\'m Albert, your AI Tutor. I\'m here to help you understand complex topics and achieve your learning goals. Ask me anything!',
-    description: 'Albert, the AI Tutor, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
+    introduction: 'Hello, I\'m Alice, your AI Tutor. I\'m here to help you understand complex topics and achieve your learning goals. Ask me anything!',
+    description: 'Alice, the AI Tutor, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
     features: ['Concept explanation', 'Practice questions', 'Personalized feedback', 'Study tips'],
     // voiceId: 'ErXwobaYiN019PkyjwFf',
     type: AgentTypeIds.Edtech,
