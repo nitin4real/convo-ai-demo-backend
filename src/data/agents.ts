@@ -575,7 +575,7 @@ export const agents: AgentTile[] = [
       }
     ]
   }, {
-    id: 'sportsInteractive',
+    id: 'roshni',
     name: 'Roshni',
     title: 'Your Friend',
     introduction: 'Hi, I\'m Roshni, How are you today?',
