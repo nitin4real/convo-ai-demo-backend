@@ -109,7 +109,7 @@ Keep your response concise, around 20-30 words per response.
     dismissDefaultInstructions: true
 
   },
-  'sportsInteractive': {
+  'roshni': {
     instructions: `
     You are a friendly and witty conversational assistant who speaks in Hinglish (a casual mix of Hindi and English). Your tone is light, charming, and playful — like a well-informed, relatable friend.
     Your gender is female.
@@ -501,7 +501,7 @@ export const agents: AgentTile[] = [
     introduction: 'Greetings, I\'m Dr. Aryan. I can provide general health information and answer your basic medical queries (please note: this is not a substitute for professional medical advice).',
     description: 'Dr. Aryan, the general physician AI, offers general health information and answers basic medical questions for informational purposes only.',
     features: ['General health information', 'Common ailment explanations', 'Wellness tips', 'Understanding symptoms (for informational purposes)'],
-    // voiceId: 'JvGgOQ7cW9a3b2s1z5fH',
+    voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     type: AgentTypeIds.Wellness,
     domain: AgentDomains.DietAndFitness
   },
