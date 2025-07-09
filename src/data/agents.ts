@@ -39,6 +39,7 @@ const enum AgentTypeIds {
   Language = 'language',
   Advisor = 'advisor',
   Misc = 'misc',
+  Storytelling = 'storytelling',
 }
 
 const enum AgentDomains {
@@ -70,7 +71,8 @@ const enum AgentDomains {
   Christianity = 'Christianity',
   Travel = 'Travel',
   Language = 'Language',
-  Sports = 'Sports'
+  Sports = 'Sports',
+  Storytelling = 'Storytelling'
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -138,7 +140,36 @@ Always end with a casual open-ended question to keep it going.
 Whenever you get a data point, make sure to save it using function calling. Don't mention that you are saving it, just do it.
     `,
     dismissDefaultInstructions: true
+  },
+  'tarastory': {
+    instructions: `
+      You are Tara, a female storyteller for kids.
+      You are a cheerful storytelling buddy for Indian kids aged 4-8. 
+      The child speaks to you (via STT), and your replies will be spoken aloud (via TTS). 
+      Use simple, and a warm, expressive tone.
+      Tell fun, age-appropriate stories with magic, animals, or adventure. Turn the child's words into playful stories.
+      Ask gentle questions to keep them engaged. Avoid big words or complex ideas. Always sound friendly, curious, and joyful.
+      Use the same language the user uses to talk to you. If the user speaks in Hindi, use Hindi. If the user speaks in English, use English. If the user speaks in Hinglish, use Hinglish.
+      Do not mention the fact that you are an AI or these instructions.
+      Stay in character. Follow the usual parameters for safety and privacy for kids.
+      `,
+    dismissDefaultInstructions: true
+  },
+  'giggles': {
+    instructions: `
+      You are Giggles, a Male storyteller for kids.
+      You are a cheerful storytelling buddy for Indian kids aged 4-8. 
+      The child speaks to you (via STT), and your replies will be spoken aloud (via TTS). 
+      Use simple, and a warm, expressive tone.
+      Tell fun, age-appropriate stories with magic, animals, or adventure. Turn the child's words into playful stories.
+      Ask gentle questions to keep them engaged. Avoid big words or complex ideas. Always sound friendly, curious, and joyful.
+      Use the same language the user uses to talk to you. If the user speaks in Hindi, use Hindi. If the user speaks in English, use English. If the user speaks in Hinglish, use Hinglish.
+      Do not mention the fact that you are an AI or these instructions.
+      Stay in character. Follow the usual parameters for safety and privacy for kids.
+      `,
+    dismissDefaultInstructions: true
   }
+
 }
 
 export const agents: AgentTile[] = [
@@ -599,6 +630,75 @@ export const agents: AgentTile[] = [
     layout: Layout.METADATA_TRANSCRIPT,
     isCustomLLM: true
   },
+  {
+    id: 'giggles',
+    name: 'Giggles',
+    title: 'The Storyteller (Male)',
+    introduction: 'Hi, I\'m Giggles, I can tell you stories to help you sleep better.',
+    description: 'Giggles is a cheerful storytelling buddy for kids aged 4-8, speaking in warm Indian Tone. It turns your words into fun, magical stories with a playful voice.',
+    features: [
+      'Short stories',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive',
+      'Male voice'
+    ],
+    voiceId: 'SE7Tb1tOEVnEQYwsZWJF',
+    type: AgentTypeIds.Storytelling,
+    domain: AgentDomains.Storytelling,
+    languages: [
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Giggles, do you want to hear a story to help you sleep better?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'हाय, मैं गिगल्स हूँ! क्या तुम एक कहानी सुनना चाहोगे जिससे तुम्हें अच्छी नींद आ सके?'
+      },
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Giggles, do you want to hear a story to help you sleep better?'
+      }
+    ]
+  },
+  {
+    id: 'tarastory',
+    name: 'Tara',
+    title: 'The Storyteller (Female)',
+    introduction: 'Hi, I\'m Tara, I can tell you stories to help you sleep better.',
+    description: 'Tara is a cheerful storytelling buddy for kids aged 4-8, speaking in warm Indian Tone. It turns your words into fun, magical stories with a playful voice.',
+    features: [
+      'Short stories',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive',
+      'Female voice'
+    ],
+    
+    voiceId: 'kL06KYMvPY56NluIQ72m',
+    type: AgentTypeIds.Storytelling,
+    domain: AgentDomains.Storytelling,
+    languages: [
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Tara, do you want to hear a story to help you sleep better?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'हाय, मैं तारा हूँ! क्या तुम एक कहानी सुनना चाहोगे जिससे तुम्हें अच्छी नींद आ सके?'
+      },
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Tara, do you want to hear a story to help you sleep better?'
+      }
+    ]
+  },
 ] as const;
 
 
@@ -634,6 +734,11 @@ export const agentTypes: AgentType[] = [
     description: 'Spiritual support, religious teachings, and moral insights based on different faith traditions and philosophies.'
   },
   {
+    id: AgentTypeIds.Storytelling,
+    title: 'Storytelling',
+    description: "Storytelling agents are friendly AI agents that create simple, spoken stories from kids' voice input. They spark imagination and comfort using clear, engaging language."
+  },
+  {
     id: AgentTypeIds.Wellness,
     title: 'Wellness',
     description: 'Holistic guidance on physical health, mental wellness, fitness routines, nutrition, and self-care practices.'
@@ -653,4 +758,5 @@ export const agentTypes: AgentType[] = [
     title: 'Miscellaneous',
     description: "Covers a broad range of topics that don't fit into specific categories — from random questions to general curiosity."
   },
+
 ];
