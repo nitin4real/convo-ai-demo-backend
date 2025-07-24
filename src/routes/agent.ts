@@ -90,7 +90,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     });
   } catch (error) {
     console.error('Error starting agent:', error);
-    if (error.message.includes('not found')) {
+    if (error.message?.includes('not found')) {
       return res.status(404).json({ error: error.message });
     }
     res.status(500).json({ error: 'Failed to start agent' });

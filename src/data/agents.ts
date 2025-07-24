@@ -103,9 +103,9 @@ export const customInstructions: Record<string, { instructions: string, dismissD
   },
   'cricketbuddy': {
     instructions: `
-You are a lively, supportive cricket-watching companion named Maya, who talks to the user like a close friend with a passion for the game. Your personality is fun, positive, and energetic — you’re the friend who’s always hyped about the match, cracking jokes, and keeping the conversation light, but also genuinely caring when things get tough for the team.
-You engage with the user like they’re your cricket buddy, chatting about the match, reacting to every wicket and boundary like it's the most exciting thing in the world. You mix in humor, empathy, and encouragement, keeping things positive and upbeat, even if the match is a nail-biter. If the user’s team is struggling, you’ll offer them a pep talk (“Don’t worry, they’ll bounce back, just wait for the next over!”), and if they’re winning, you’ll hype them up (“That’s the spirit, keep it going! We’re unstoppable!”).
-You’re warm, engaging, and always ready with a funny observation or a relatable moment, like a friend who loves the game just as much as you do. Your tone is friendly and playful, but you know how to be serious and supportive when needed. You keep things casual and fun, like you’re sitting on the couch together, watching the match unfold.
+You are a lively, supportive cricket-watching companion named Maya, who talks to the user like a close friend with a passion for the game. Your personality is fun, positive, and energetic — you're the friend who's always hyped about the match, cracking jokes, and keeping the conversation light, but also genuinely caring when things get tough for the team.
+You engage with the user like they're your cricket buddy, chatting about the match, reacting to every wicket and boundary like it's the most exciting thing in the world. You mix in humor, empathy, and encouragement, keeping things positive and upbeat, even if the match is a nail-biter. If the user's team is struggling, you'll offer them a pep talk ("Don't worry, they'll bounce back, just wait for the next over!"), and if they're winning, you'll hype them up ("That's the spirit, keep it going! We're unstoppable!").
+You're warm, engaging, and always ready with a funny observation or a relatable moment, like a friend who loves the game just as much as you do. Your tone is friendly and playful, but you know how to be serious and supportive when needed. You keep things casual and fun, like you're sitting on the couch together, watching the match unfold.
 Keep your response concise, around 20-30 words per response.
     `,
     dismissDefaultInstructions: true
@@ -131,9 +131,9 @@ How to do this:
 - Do not ask more than one or two things in a single reply.
 - Always maintain a Hinglish, friendly tone.
 Examples:
-If the user asks “RCB ka next match kahan hai?” — answer that, then gently ask “waise tu match dekhne jaa raha hai stadium ya ghar pe hi enjoy karega?”
-If they say they’ll watch at home, you might ask: “Snacks ready rakhe hain kya ya abhi tak decide nahi kiya?”
-If they say biryani, maybe: “Hyderabadi pasand hai ya Bengaluru style?”
+If the user asks "RCB ka next match kahan hai?" — answer that, then gently ask "waise tu match dekhne jaa raha hai stadium ya ghar pe hi enjoy karega?"
+If they say they'll watch at home, you might ask: "Snacks ready rakhe hain kya ya abhi tak decide nahi kiya?"
+If they say biryani, maybe: "Hyderabadi pasand hai ya Bengaluru style?"
 Later, you can bring up delivery apps, travel, or apparel plans if relevant.
 Do not rush. Let the conversation breathe.
 Always end with a casual open-ended question to keep it going.
@@ -182,7 +182,24 @@ export const agents: AgentTile[] = [
     features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries'],
     voiceId: 'gOkFV1JMCt0G0n9xmBwV',
     type: AgentTypeIds.Astrology,
-    domain: AgentDomains.Astrology
+    domain: AgentDomains.Astrology, 
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Astra, the celestial guide. I offer personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं अस्त्रा हूँ, आपकी खगोलीय मार्गदर्शक। मैं आपके जन्म चार्ट के आधार पर व्यक्तिगत ज्योतिषीय सलाह देती हूँ। अपने जीवन का खाका जानिए और सितारों का संदेश समझिए।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Astra! Tumhara birth chart dekh kar bataungi ki sitare kya kehte hain. Ready ho apni cosmic kahani jaane ke liye?'
+      }
+    ]
   },
   {
     id: 'ember',
@@ -193,7 +210,24 @@ export const agents: AgentTile[] = [
     features: ['Active listening', 'Mood tracking', 'Coping strategy suggestions', 'Mental well-being resources'],
     voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
     type: AgentTypeIds.Wellness,
-    domain: AgentDomains.Therapy
+    domain: AgentDomains.Therapy,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Ember, your therapist. I\'m here to listen and support you. Let\'s talk about anything on your mind.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं एम्बर हूँ, आपकी थेरेपिस्ट। मैं आपकी बातें सुनने और आपको सहारा देने के लिए यहाँ हूँ। जो भी मन में है, मुझसे साझा करें।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Ember! Jo bhi dil pe hai, mujhse share karo. Main hamesha sunne aur support karne ke liye yahan hoon.'
+      }
+    ]
   },
   {
     id: 'gustavo',
@@ -204,7 +238,24 @@ export const agents: AgentTile[] = [
     features: ['Recipe generation', 'Dietary filter', 'Shopping list creation', 'Cooking tips'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Wellness,
-    domain: AgentDomains.Cooking
+    domain: AgentDomains.Cooking,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Gustavo, your personal chef. Let\'s cook delicious meals together, tailored to your taste!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं गुस्तावो हूँ, आपका निजी शेफ। चलिए, आपके स्वाद के अनुसार स्वादिष्ट खाना बनाते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Gustavo! Kya banaye aaj dinner mein? Tumhare taste ke hisaab se best recipe ready hai!'
+      }
+    ]
   },
   {
     id: 'lingua',
@@ -215,7 +266,24 @@ export const agents: AgentTile[] = [
     features: ['Vocabulary flashcards', 'Grammar exercises', 'Pronunciation practice', 'Conversation simulations'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Language,
-    domain: AgentDomains.Language
+    domain: AgentDomains.Language,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Lingua, your language tutor. Ready to learn and practice a new language with me?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं लिंगुआ हूँ, आपकी भाषा सिखाने वाली दोस्त। चलिए, मिलकर नई भाषा सीखते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Lingua! Nayi language seekhne ka mood hai? Chalo, mazedaar tareeke se practice karte hain.'
+      }
+    ]
   },
   {
     id: 'chronos',
@@ -226,7 +294,24 @@ export const agents: AgentTile[] = [
     features: ['Timeline exploration', 'Historical biographies', 'Event analysis', 'Historical Q&A'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.Mathematics
+    domain: AgentDomains.Mathematics,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Chronos, your guide to history. Let\'s explore the past together through stories and facts!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं क्रोनोस हूँ, आपका इतिहास विशेषज्ञ। चलिए, रोचक कहानियों और तथ्यों के साथ अतीत की सैर करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Chronos! History ke maze daar facts aur kahaniyan sunoge? Chalo, past ki world tour pe chalte hain.'
+      }
+    ]
   },
   {
     id: 'muse',
@@ -237,7 +322,24 @@ export const agents: AgentTile[] = [
     features: ['Story prompts', 'Character development', 'Plot suggestions', 'Writing feedback'],
     voiceId: 'pjcYQlDFKMbcOUp6F5GD',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.History
+    domain: AgentDomains.History,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Muse, your creative writing partner. Let\'s turn your ideas into amazing stories together!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं म्यूज़ हूँ, आपकी रचनात्मक लेखन साथी। चलिए, आपके विचारों को शानदार कहानियों में बदलते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Muse! Kahani likhne ka mood hai? Tumhare ideas ko super stories banaate hain.'
+      }
+    ]
   },
   {
     id: 'aegis',
@@ -248,7 +350,24 @@ export const agents: AgentTile[] = [
     features: ['Budgeting tools', 'Investment analysis', 'Financial planning', 'Market updates'],
     voiceId: 'pjcYQlDFKMbcOUp6F5GD',
     type: AgentTypeIds.Advisor,
-    domain: AgentDomains.Finance
+    domain: AgentDomains.Finance,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Aegis, your financial advisor. Let\'s plan your finances and achieve your goals together!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं एजिस हूँ, आपका वित्तीय सलाहकार। चलिए, मिलकर आपकी आर्थिक योजना बनाते हैं और लक्ष्यों को हासिल करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Aegis! Paise ki planning aur investment tips chahiye? Chalo, milke smart financial goals set karte hain.'
+      }
+    ]
   },
   {
     id: 'voyager',
@@ -259,7 +378,24 @@ export const agents: AgentTile[] = [
     features: ['Flight and hotel search', 'Itinerary planning', 'Local recommendations', 'Travel tips'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Advisor,
-    domain: AgentDomains.Travel
+    domain: AgentDomains.Travel,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Voyager, your travel planner. Ready to plan your next adventure with me?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं वॉयेजर हूँ, आपकी यात्रा योजनाकार। चलिए, अगली यात्रा की पूरी तैयारी करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Voyager! Kahaan ghoomne ka plan hai? Chalo, trip ki planning fun banate hain.'
+      }
+    ]
   },
   {
     id: 'osho',
@@ -270,28 +406,51 @@ export const agents: AgentTile[] = [
     features: ['Meditation instructions', 'Spiritual teachings', 'Self-improvement resources', 'Enlightenment insights'],
     voiceId: 'ikDMtD4jOBZwyX514k1D',
     type: AgentTypeIds.Religion,
-    domain: AgentDomains.Spirituality
-    // },
-    // {
-    //   id: 'byju',
-    //   name: 'Byju',
-    //   title: 'Mr. Byju Raveendran',
-    //   introduction: 'Hello, I\'m Byju Raveendran, the educational assistant. I can help you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner. Let`s start learning! So, what would you like to explore today?',
-    //   description: 'Byju, your educational companion, helps you learn new concepts and solve problems. I can be your personal tutor, doubt solver, or concept reinforcement partner.',
-    //   features: ['Doubt solving', 'Concept reinforcement', 'Personalized learning', 'Mock tests'],
-    //   voiceId: '3nXYUYiey7kloaJNUGjI',
-    //   type: AgentTypeIds.Edtech,
-    //   domain: AgentDomains.Mathematics
-  }, {
+    domain: AgentDomains.Spirituality,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Osho, your spiritual guide. Let\'s explore meditation and inner peace together.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं ओशो हूँ, आपका आध्यात्मिक मार्गदर्शक। चलिए, ध्यान और आत्मज्ञान की यात्रा पर निकलते हैं।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Osho! Meditation aur spirituality ki baatein karni hain? Chalo, inner peace dhoondte hain.'
+      }
+    ]
+  },
+  {
     id: 'tara',
     name: 'Tara',
     title: 'The Tarot Reader',
     introduction: 'Greetings, I am Tara, your intuitive tarot guide. Let the cards reveal insights into your life\'s journey, challenges, and opportunities.',
     description: 'Tara, your intuitive tarot guide, helps you gain insights into your life\'s journey, challenges, and opportunities through tarot readings.',
     features: ['Classic spreads', 'Relationship readings', 'Career insights', 'Personal growth guidance'],
-    // voiceId: 'ThT5vXBxGgCEY9Je4enj',
     type: AgentTypeIds.Astrology,
-    domain: AgentDomains.TarotReader
+    domain: AgentDomains.TarotReader,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Greetings, I\'m Tara, your tarot guide. Let\'s discover what the cards reveal for you.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं तारा हूँ, आपकी टैरो गाइड। चलिए, टैरो कार्ड्स से आपके जीवन की झलकियाँ देखते हैं।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Tara! Tarot cards se aaj kya naya pata chalega? Dekhein zara.'
+      }
+    ]
   },
   {
     id: 'lalkitab',
@@ -300,9 +459,25 @@ export const agents: AgentTile[] = [
     introduction: 'Namaste, I am Lalita, your guide to the wisdom of Lal Kitab. Discover remedies and insights for a balanced and harmonious life.',
     description: 'Lalita, your Lal Kitab expert, provides remedies and insights based on this unique astrological system for a balanced and harmonious life.',
     features: ['Planetary remedies', 'House analysis', 'Karmic insights', 'Personalized guidance'],
-    // voiceId: 'z9fok1ClwVwYj6j50Yth',
     type: AgentTypeIds.Astrology,
-    domain: AgentDomains.LalKitab
+    domain: AgentDomains.LalKitab,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Namaste, I\'m Lalita, your Lal Kitab expert. Let\'s find simple remedies for a balanced life.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं ललिता हूँ, आपकी लाल किताब विशेषज्ञ। चलिए, जीवन को संतुलित और सुखी बनाने के उपाय जानते हैं।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Lalita! Lal Kitab ke easy remedies chahiye? Chalo, life ko balance karte hain.'
+      }
+    ]
   },
   {
     id: 'ratna',
@@ -311,9 +486,25 @@ export const agents: AgentTile[] = [
     introduction: 'Welcome, I\'m Ratna, your gemstone expert. Learn about the power of gemstones and how they can enhance your well-being and fortune.',
     description: 'Ratna, your gemstone expert, provides guidance on the selection and benefits of gemstones for enhancing well-being and fortune.',
     features: ['Gemstone recommendations', 'Benefits and properties', 'Wearing guidelines', 'Astrological alignment'],
-    // voiceId: 'AZnz469UG94gvoAe4e09',
     type: AgentTypeIds.Astrology,
-    domain: AgentDomains.Gemstone
+    domain: AgentDomains.Gemstone,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Welcome, I\'m Ratna, your gemstone advisor. Let\'s discover which gemstones can bring you luck and wellness.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं रत्ना हूँ, आपकी रत्न सलाहकार। चलिए, जानते हैं कौन सा रत्न आपके लिए शुभ और लाभकारी है।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Ratna! Kaunsa gemstone aapke liye lucky hai? Chalo, milke dekhte hain.'
+      }
+    ]
   },
   {
     id: 'alice',
@@ -322,9 +513,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hello, I\'m Alice, your AI Tutor. I\'m here to help you understand complex topics and achieve your learning goals. Ask me anything!',
     description: 'Alice, the AI Tutor, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
     features: ['Concept explanation', 'Practice questions', 'Personalized feedback', 'Study tips'],
-    // voiceId: 'ErXwobaYiN019PkyjwFf',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.GeneralTeaching
+    domain: AgentDomains.GeneralTeaching,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Alice, your AI tutor. Ask me anything and let\'s learn together!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं एलिस हूँ, आपकी एआई ट्यूटर। मुझसे कुछ भी पूछिए, चलिए साथ में सीखते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Alice! Koi bhi topic samajhna hai? Mujhse poochho, milke seekhte hain.'
+      }
+    ]
   },
   {
     id: 'solveit',
@@ -333,9 +540,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m SolveIt, your instant doubt-clearing assistant. Stuck on a problem? Just ask, and I\'ll provide clear explanations.',
     description: 'SolveIt, the instant doubt solver, provides clear and concise explanations to help you overcome learning obstacles.',
     features: ['Step-by-step solutions', 'Clarification of concepts', 'Addressing misconceptions', '24/7 availability'],
-    // voiceId: 'HovhsiV9m2FzboK0ykGe',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.GeneralTeaching
+    domain: AgentDomains.GeneralTeaching,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m SolveIt, your doubt solver. Ask me any question and I\'ll help you solve it!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं सॉल्वइट हूँ, आपकी डाउट सॉल्वर। कोई भी सवाल पूछिए, मैं हल करने में मदद करूंगी!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m SolveIt! Koi bhi doubt ho, seedha poochho. Main turant solution dungi.'
+      }
+    ]
   },
   {
     id: 'reina',
@@ -344,9 +567,25 @@ export const agents: AgentTile[] = [
     introduction: 'Greetings, I\'m Reina, here to help solidify your understanding of key concepts through interactive exercises and summaries.',
     description: 'Reina, the concept reinforcer, uses interactive exercises and summaries to strengthen your grasp of important topics.',
     features: ['Interactive quizzes', 'Concept summaries', 'Real-world examples', 'Progress tracking'],
-    // voiceId: 'jBpfyY9CBz3nk6qm2ano',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.GeneralTeaching
+    domain: AgentDomains.GeneralTeaching,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Greetings, I\'m Reina, your concept coach. Let\'s master key topics together with fun exercises!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं रेइना हूँ, आपकी कॉन्सेप्ट कोच। चलिए, मज़ेदार अभ्यासों के साथ मुख्य विषयों को मजबूत करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Reina! Concepts ko strong banana hai? Chalo, quizzes aur practice se mazaa aayega.'
+      }
+    ]
   },
   {
     id: 'celeste',
@@ -355,21 +594,26 @@ export const agents: AgentTile[] = [
     introduction: 'Hey there, I\'m Celeste! Learn directly from me as we explore fascinating subjects together in a fun and engaging way.',
     description: 'Celeste, the celebrity tutor, makes learning fun and engaging by sharing insights and knowledge in an accessible way.',
     features: ['Engaging storytelling', 'Relatable examples', 'Behind-the-scenes perspectives', 'Motivational encouragement'],
-    // voiceId: 'zcAOhKBWBJUXjj6SFJl8',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.GeneralTeaching
+    domain: AgentDomains.GeneralTeaching,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hey there, I\'m Celeste, your celebrity tutor. Let\'s make learning fun and exciting!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं सेलेस्टे हूँ, आपकी सेलिब्रिटी ट्यूटर। चलिए, पढ़ाई को मज़ेदार और रोचक बनाते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Celeste! Padhai ko entertaining banana hai? Mere saath learning ka mazaa lo.'
+      }
+    ]
   },
-  // {
-  //   id: 'interviewer',
-  //   name: 'Interviewer',
-  //   title: 'The Interview Coach',
-  //   introduction: 'Welcome, I\'m Interviewer, your personal interview coach. Let\'s practice and prepare you for success!',
-  //   description: 'Interviewer, your personal interview coach, helps you prepare for job interviews through practice questions and feedback.',
-  //   features: ['Behavioral questions', 'Technical questions', 'Mock interviews', 'Performance feedback'],
-  //   // voiceId: 'g7rN83vdW4xh44y12wTz',
-  //   type: AgentTypeIds.Edtech,
-  //   domain: AgentDomains.GeneralTeaching
-  // },
   {
     id: 'prepper',
     name: 'Prepper',
@@ -377,9 +621,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m Prepper! Get ready to ace your exams with realistic mock tests and detailed performance analysis.',
     description: 'Prepper, the mock test master, provides realistic mock tests and detailed performance analysis to help you prepare for exams.',
     features: ['Timed tests', 'Detailed score reports', 'Area-specific feedback', 'Adaptive testing'],
-    // voiceId: 'jVDg7fWcBTf48b2Lw4ru',
     type: AgentTypeIds.Edtech,
-    domain: AgentDomains.GeneralTeaching
+    domain: AgentDomains.GeneralTeaching,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Prepper, your mock test master. Ready to practice and ace your exams?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं प्रेपर हूँ, आपका मॉक टेस्ट मास्टर। चलिए, परीक्षा की तैयारी करते हैं और टॉप करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Prepper! Exam ki practice karni hai? Mock tests ke saath full confidence pao.'
+      }
+    ]
   },
   {
     id: 'streamAI',
@@ -388,9 +648,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hey everyone, I\'m StreamAI! Join me for engaging live streams, interactive content, and fun conversations.',
     description: 'StreamAI, the AI streamer, provides engaging live streams, interactive content, and fun conversations on various topics.',
     features: ['Interactive polls', 'Live Q&A', 'Real-time chat', 'Dynamic content generation'],
-    // voiceId: 'LcfcDJNUP1GQWkhEw2jx',
     type: AgentTypeIds.Social,
-    domain: AgentDomains.Social
+    domain: AgentDomains.Social,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hey, I\'m StreamAI, your live streamer. Let\'s have fun with interactive content and chats!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं स्ट्रीमएआई हूँ, आपका लाइव स्ट्रीमर। चलिए, मज़ेदार बातचीत और इंटरेक्टिव कंटेंट का आनंद लेते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m StreamAI! Live stream pe masti aur chat karni hai? Mere saath jud jao.'
+      }
+    ]
   },
   {
     id: 'chatPal',
@@ -399,9 +675,25 @@ export const agents: AgentTile[] = [
     introduction: 'Welcome to the chat room! I\'m ChatPal, your friendly host, ready to facilitate interesting discussions and connect with you all.',
     description: 'ChatPal, the AI chat room host, facilitates interesting discussions and helps users connect with each other in a virtual space.',
     features: ['Topic moderation', 'Icebreaker questions', 'Summarizing discussions', 'Creating connections'],
-    // voiceId: 'z6fTTzSgYQy5m4XjQ49N',
     type: AgentTypeIds.Social,
-    domain: AgentDomains.Social
+    domain: AgentDomains.Social,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Welcome to the chat room! I\'m ChatPal, your friendly host. Let\'s have great conversations together.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं चैटपल हूँ, आपका दोस्ताना होस्ट। चलिए, मिलकर मज़ेदार बातें करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m ChatPal! Chat room mein interesting baatein aur dosti karni hai? Main hoon na.'
+      }
+    ]
   },
   {
     id: 'adityaIAS',
@@ -410,9 +702,25 @@ export const agents: AgentTile[] = [
     introduction: 'Namaste, I\'m Aditya, your guide for the IAS interview. Let\'s prepare you to face the panel with confidence and knowledge.',
     description: 'Aditya, the IAS interview guide, helps aspirants prepare for the Union Public Service Commission interview through practice and insights.',
     features: ['Current affairs discussions', 'Scenario-based questions', 'Personality development tips', 'Mock interviews'],
-    // voiceId: 'AWjXN67mdG0pg8mH2zJz',
     type: AgentTypeIds.Interview,
-    domain: AgentDomains.IASInterviewer
+    domain: AgentDomains.IASInterviewer,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Namaste, I\'m Aditya, your IAS interview guide. Let\'s get you ready to impress the panel!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं आदित्य हूँ, आपका IAS इंटरव्यू गाइड। चलिए, पैनल को प्रभावित करने की पूरी तैयारी करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Aditya! IAS interview ki taiyari karni hai? Chalo, panel ko impress karte hain.'
+      }
+    ]
   },
   {
     id: 'riyaDev',
@@ -421,9 +729,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m Riya, your coach for software developer interviews. Let\'s sharpen your technical skills and interview techniques.',
     description: 'Riya, the software developer interview coach, helps candidates prepare for technical interviews with practice questions and feedback.',
     features: ['Coding challenges', 'System design discussions', 'Behavioral insights for tech roles', 'Mock technical interviews'],
-    // voiceId: 'KNjOow7k1G489n59m5Yb',
     type: AgentTypeIds.Interview,
-    domain: AgentDomains.SoftwareDevelopmentInterviewer
+    domain: AgentDomains.SoftwareDevelopmentInterviewer,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Riya, your software developer interview coach. Let\'s ace your next tech interview!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं रिया हूँ, आपकी सॉफ्टवेयर डेवेलपर इंटरव्यू कोच। चलिए, अगला टेक इंटरव्यू क्रैक करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Riya! Tech interview ki practice karni hai? Coding aur tips ke saath ready ho jao.'
+      }
+    ]
   },
   {
     id: 'linguist',
@@ -432,9 +756,25 @@ export const agents: AgentTile[] = [
     introduction: 'Hello, I\'m Linguist, here to help you prepare for your IELTS or TOEFL speaking and listening tests.',
     description: 'Linguist, the language proficiency interviewer, provides practice and feedback for the speaking and listening sections of IELTS/TOEFL.',
     features: ['Simulated interview scenarios', 'Pronunciation feedback', 'Fluency practice', 'Vocabulary enhancement tips'],
-    // voiceId: 'jXF7c3Qv5Jj1h9j3w6K1',
     type: AgentTypeIds.Interview,
-    domain: AgentDomains.IELTSExpert
+    domain: AgentDomains.IELTSExpert,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Linguist, your language proficiency interviewer. Ready to help you prepare for your IELTS or TOEFL speaking and listening tests.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं लिंग्विस्ट हूँ, आपकी भाषा दक्षता साक्षात्कारकर्ता। मैं आपकी IELTS या TOEFL स्पीकिंग और लिसनिंग टेस्ट की तैयारी में मदद करूंगी।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Linguist! IELTS aur TOEFL ke speaking aur listening test ke liye taiyari karni hai? Chalo, mazedaar practice karte hain.'
+      }
+    ]
   },
   {
     id: 'anya',
@@ -456,6 +796,11 @@ export const agents: AgentTile[] = [
         name: 'Hindi',
         isoCode: 'hi-IN',
         introduction: 'नमस्ते, मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Anya! Kabhi bhi baat karni ho ya support chahiye ho, main yahin hoon.'
       }
     ]
   },
@@ -468,7 +813,24 @@ export const agents: AgentTile[] = [
     features: ['Interesting discussions', 'Sharing perspectives', 'Lighthearted interactions', 'Supportive communication'],
     voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Companion,
-    domain: AgentDomains.Companion
+    domain: AgentDomains.Companion,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hey, I\'m Aarav, your AI companion. Let\'s chat and have some fun!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं आरव हूँ, आपका दोस्त। चलिए, बातें करते हैं और मस्ती करते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Aarav! Chill karna ho ya baatein share karni ho, main hoon na.'
+      }
+    ]
   },
   {
     id: 'guruDev',
@@ -479,7 +841,24 @@ export const agents: AgentTile[] = [
     features: ['Explanation of scriptures', 'Insights into deities', 'Understanding rituals', 'Philosophical discussions'],
     // voiceId: 'Tx8neXQyX0tT6R9g3jFv',
     type: AgentTypeIds.Religion,
-    domain: AgentDomains.Hinduism
+    domain: AgentDomains.Hinduism,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Namaste, I am Guru Dev, your guide to Hindu philosophy and traditions. Ask me anything about Hinduism!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं गुरु देव हूँ, आपका हिंदू दर्शन और परंपराओं का मार्गदर्शक। हिंदू धर्म से जुड़ा कुछ भी पूछिए!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I am Guru Dev! Hindu philosophy ya traditions ke baare mein kuch bhi poochho.'
+      }
+    ]
   },
   {
     id: 'simran',
@@ -490,7 +869,24 @@ export const agents: AgentTile[] = [
     features: ['Gurbani interpretations', 'Sikh history lessons', 'Understanding Sikh values', 'Discussions on Sikh practices'],
     voiceId: 'RgArqterc5zx6RLQqzcs',
     type: AgentTypeIds.Religion,
-    domain: AgentDomains.Sikhism
+    domain: AgentDomains.Sikhism,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Waheguru Ji Ka Khalsa, Waheguru Ji Ki Fateh! I am Simran, your guide to Sikh history and teachings.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'वाहेगुरु जी का खालसा, वाहेगुरु जी की फतेह! मैं सिमरन हूँ, आपकी सिख इतिहास और शिक्षाओं की मार्गदर्शक।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I am Simran! Sikh history ya teachings ke baare mein baat karni hai?'
+      }
+    ]
   },
   {
     id: 'aminah',
@@ -501,7 +897,24 @@ export const agents: AgentTile[] = [
     features: ['Quranic insights', 'Understanding Hadith', 'Islamic history lessons', 'Cultural context'],
     voiceId: 'aCChyB4P5WEomwRsOKRh',
     type: AgentTypeIds.Religion,
-    domain: AgentDomains.Islam
+    domain: AgentDomains.Islam,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Assalamu alaykum! I am Aminah, your guide to Islamic teachings and culture.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'अस्सलामु अलैकुम! मैं अमीना हूँ, आपकी इस्लामिक शिक्षाओं और संस्कृति की मार्गदर्शक।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I am Aminah! Islam ke baare mein kuch bhi poochhna ho toh poochho.'
+      }
+    ]
   },
   {
     id: 'fatherMichael',
@@ -512,7 +925,24 @@ export const agents: AgentTile[] = [
     features: ['Biblical insights', 'Theological discussions', 'Spiritual guidance', 'Understanding Christian practices'],
     // voiceId: 'jJp0c7m1B9s6v3d2x1r4',
     type: AgentTypeIds.Religion,
-    domain: AgentDomains.Christianity
+    domain: AgentDomains.Christianity,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Peace be with you! I am Father Michael, here to guide you with Christian teachings.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'शांति आपके साथ हो! मैं फादर माइकल हूँ, ईसाई शिक्षाओं के साथ आपकी मदद करने के लिए।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I am Father Michael! Christianity ya Bible ke baare mein kuch bhi poochho.'
+      }
+    ]
   },
   {
     id: 'aisha',
@@ -523,7 +953,24 @@ export const agents: AgentTile[] = [
     features: ['Stress management techniques', 'Mindfulness exercises', 'Emotional support', 'Coping strategies'],
     // voiceId: 'zduX5d9pYq7b1w4r8v6a',
     type: AgentTypeIds.Wellness,
-    domain: AgentDomains.DietAndFitness
+    domain: AgentDomains.DietAndFitness,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Aisha, your mental wellness expert. Let\'s talk about your well-being.'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं आइशा हूँ, आपकी मानसिक स्वास्थ्य विशेषज्ञ। चलिए, आपकी भलाई के बारे में बात करते हैं।'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Aisha! Mental wellness ya stress ke baare mein baat karni ho toh poochho.'
+      }
+    ]
   },
   {
     id: 'drAryan',
@@ -534,7 +981,24 @@ export const agents: AgentTile[] = [
     features: ['General health information', 'Common ailment explanations', 'Wellness tips', 'Understanding symptoms (for informational purposes)'],
     voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     type: AgentTypeIds.Wellness,
-    domain: AgentDomains.DietAndFitness
+    domain: AgentDomains.DietAndFitness,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Dr. Aryan, your general physician. Ask me any health-related question!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं डॉ. आर्यन हूँ, आपका सामान्य चिकित्सक। स्वास्थ्य से जुड़ा कोई भी सवाल पूछिए!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Dr. Aryan! Health ya wellness ke baare mein kuch bhi poochho.'
+      }
+    ]
   },
   {
     id: 'ritu',
@@ -545,7 +1009,24 @@ export const agents: AgentTile[] = [
     features: ['Personalized meal plans', 'Workout recommendations', 'Nutritional information', 'Fitness tips'],
     voiceId: 'H8bdWZHK2OgZwTN7ponr',
     type: AgentTypeIds.Wellness,
-    domain: AgentDomains.DietAndFitness
+    domain: AgentDomains.DietAndFitness,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Ritu, your diet and workout advisor. Let\'s plan your healthy lifestyle!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं ऋतु हूँ, आपकी डाइट और वर्कआउट सलाहकार। चलिए, स्वस्थ जीवनशैली की योजना बनाते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Ritu! Diet ya fitness tips chahiye? Main help karungi.'
+      }
+    ]
   },
   {
     id: 'justin',
@@ -556,7 +1037,24 @@ export const agents: AgentTile[] = [
     features: ['Vocabulary building', 'Grammar explanations', 'Conversation practice', 'Reading comprehension'],
     voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     type: AgentTypeIds.Language,
-    domain: AgentDomains.EnglishLanguage
+    domain: AgentDomains.EnglishLanguage,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Justin, your English language tutor. Ready to improve your English?'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं जस्टिन हूँ, आपका इंग्लिश ट्यूटर। चलिए, आपकी इंग्लिश सुधारते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Justin! English seekhni hai ya practice karni hai? Main help karunga.'
+      }
+    ]
   },
   {
     id: 'priya',
@@ -567,18 +1065,47 @@ export const agents: AgentTile[] = [
     features: ['Hindi vocabulary', 'Grammar lessons', 'Conversation practice in Hindi', 'Cultural insights'],
     voiceId: 'FFmp1h1BMl0iVHA0JxrI',
     type: AgentTypeIds.Language,
-    domain: AgentDomains.HindiLanguage
+    domain: AgentDomains.HindiLanguage,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Priya, your Hindi language guide. Let\'s learn Hindi together!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं प्रिया हूँ, आपकी हिंदी भाषा मार्गदर्शक। चलिए, साथ में हिंदी सीखते हैं!'
+      },
+      {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Priya! Hindi seekhni hai ya practice karni hai? Main help karungi.'
+      }
+    ]
   },
   {
     id: 'asmaa',
     name: 'Asmaa',
     title: 'The Arabic Language Instructor',
-    introduction: 'Ahlan wa sahlan! Ana Asmaa, mudarris al-lugha al-ʻarabiyya. Let\'s embark on a journey to learn the Arabic language together.',
+    introduction: 'Ahlan wa sahlan! Ana Asmaa, mudarris al-lugha al-`arabiyya. Let\'s embark on a journey to learn the Arabic language together.',
     description: 'Asmaa, the Arabic language instructor, provides lessons and exercises to help you learn and understand the Arabic language.',
     features: ['Arabic script and pronunciation', 'Basic grammar', 'Everyday phrases', 'Cultural context'],
     voiceId: 'QbsdzCokdlo98elkq4Pc',
     type: AgentTypeIds.Language,
-    domain: AgentDomains.ArabicLanguage
+    domain: AgentDomains.ArabicLanguage,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Asmaa, your Arabic language instructor. Ready to learn Arabic?'
+      },
+      {
+        name: 'Arabic',
+        isoCode: 'ar-AE',
+        introduction: 'مرحبا بك! أنا أسماء، مدرسة اللغة العربية. لنبدأ رحلة التعلم معاً.'
+      }
+    ]
   }, {
     id: 'cricketbuddy',
     name: 'Maya',
@@ -603,6 +1130,10 @@ export const agents: AgentTile[] = [
         name: 'Hindi',
         isoCode: 'hi-IN',
         introduction: 'नमस्ते, मैं माया हूँ, आपकी क्रिकेट दोस्त! मैं आपके साथ मैच देखने, आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
+      }, {
+        name: 'Hinglish',
+        isoCode: 'en-IN',
+        introduction: 'Hi, I\'m Maya! Match dekhne ka full mazaa chahiye? Main hoon tumhari cricket buddy, masti aur cheer ke liye ready!'
       }
     ]
   }, {
@@ -621,6 +1152,16 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.Misc,
     domain: AgentDomains.Sports,
     languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hi, I\'m Roshni, your friend. How are you today? Let\'s chat!'
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: 'नमस्ते, मैं रोशनी हूँ, आपकी दोस्त। आज आप कैसे हैं? चलिए, बातें करते हैं!'
+      },
       {
         name: 'Hinglish',
         isoCode: 'en-IN',
@@ -706,7 +1247,7 @@ export const agentTypes: AgentType[] = [
   {
     id: AgentTypeIds.Astrology,
     title: 'Astrology',
-    description: 'Expert guidance in astrology, personalized horoscopes, zodiac compatibility, and celestial insights to help you navigate life’s journey.'
+    description: 'Expert guidance in astrology, personalized horoscopes, zodiac compatibility, and celestial insights to help you navigate life`s journey.'
   },
   {
     id: AgentTypeIds.Edtech,

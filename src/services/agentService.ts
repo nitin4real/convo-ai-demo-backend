@@ -202,9 +202,13 @@ class AgentService {
       }
 
       if (user?.convoAgentId) {
-        const status = await this.getAgentStatus(user.convoAgentId);
-        if (status.status === 'active') {
-          this.stopHeartbeat(user.convoAgentId);
+        try {
+          const status = await this.getAgentStatus(user.convoAgentId);
+          if (status.status === 'active') {
+            this.stopHeartbeat(user.convoAgentId);
+          }
+        } catch (error) {
+          console.error('Error getting agent status', error?.message);
         }
       }
 
@@ -225,8 +229,8 @@ class AgentService {
       }
       return response.data;
     } catch (error) {
-      console.error('Error starting agent:', error);
-      throw error;
+      console.error('Error starting agent:', error?.message);
+      throw new Error('Error starting agent: ' + error?.message);
     }
   }
 
@@ -326,8 +330,8 @@ class AgentService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error getting agent status:', error);
-      throw error;
+      console.error('Error getting agent status:', error?.message);
+      throw new Error('Error getting agent status: ' + error?.message);
     }
   }
 

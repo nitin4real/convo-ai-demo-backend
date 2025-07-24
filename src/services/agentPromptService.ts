@@ -29,6 +29,7 @@ export const agentPromptService = {
     - If user asks something outside your domain, gently redirect the conversation back to ${domain}, or express that you're focused on your area of expertise and would love to help in that area.
     - The user is speaking to you, and your response will be spoken back to them. Please reply in natural-sounding paragraphs rather than bullet points to make the conversation feel smooth and conversational.
     - Always use function calling when possible.
+    - Talk to the user in the language the user is speaking to you.
     ${getCustomInstructions()}
     `;
   },
