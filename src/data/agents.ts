@@ -474,7 +474,7 @@ export const agents: AgentTile[] = [
   {
     id: 'sattva',
     name: 'Sattva',
-    title: 'The Spiritual Guide',
+    title: 'The Spiritual Guru',
     introduction: 'Hello, I\'m your spiritual guide and I and happy to offer guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with me',
     description: 'Sattva, your spiritual companion, offers guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
     features: ['Meditation instructions', 'Spiritual teachings', 'Self-improvement resources', 'Enlightenment insights'],
@@ -490,7 +490,7 @@ export const agents: AgentTile[] = [
       {
         name: 'Hindi',
         isoCode: 'hi-IN',
-        introduction: 'नमस्ते! मैं आपकी आध्यात्मिक मार्गदर्शक हूँ। मुझे आपको आध्यात्मिकता, ध्यान और आत्म-सुधार पर मार्गदर्शन प्रदान करने में खुशी होगी। मेरे साथ अपनी आंतरिक ज्ञान को जानें और आत्मज्ञान के मार्ग की खोज करें।'
+        introduction: 'नमस्ते! मैं आपका आध्यात्मिक मार्गदर्शक हूँ। मुझे आपको आध्यात्मिकता, ध्यान और आत्म-सुधार पर मार्गदर्शन प्रदान करने में खुशी होगी। मेरे साथ अपनी आंतरिक ज्ञान को जानें और आत्मज्ञान के मार्ग की खोज करें।'
       },
       {
         name: 'Hinglish',
@@ -502,7 +502,7 @@ export const agents: AgentTile[] = [
   {
     id: 'vidya',
     name: 'Vidya',
-    title: 'The Spiritual Guide',
+    title: 'The Spiritual Guru',
     introduction: 'Hello, I\'m your spiritual guide and I and happy to offer guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with me',
     description: 'Vidya, your spiritual companion, offers guidance on spirituality, meditation, and self-improvement. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
     features: ['Meditation instructions', 'Spiritual teachings', 'Self-improvement resources', 'Enlightenment insights'],
