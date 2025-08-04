@@ -37,6 +37,7 @@ interface StartAgentConfig {
   ttsVendor?: "microsoft" | "elevenlabs";
   languageCode?: string;
   agentId: string;
+  properties?: any;
 }
 
 interface AgentProperties {
@@ -135,8 +136,17 @@ class AgentService {
   }
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
-     
-    let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US" } = config;
+
+    let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US", properties } = config;
+    if (config.agentId === 'custom') {
+      return {
+        ...properties,
+        channel: channelName,
+        token: token,
+        agent_rtc_uid: agentUid,
+        remote_rtc_uids: ["*"], // use req user id as remote uid
+      }
+    }
     const agentDetails = agents.find(agent => agent.id === config.agentId);
     if (!agentDetails) {
       throw new Error(`Agent ${config.agentId} not found`);

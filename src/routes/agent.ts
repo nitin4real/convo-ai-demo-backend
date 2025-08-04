@@ -56,7 +56,7 @@ router.get('/:agentId', authenticateToken, async (req, res) => {
 // Start an agent in a channel
 router.post('/start/:agentId', authenticateToken, async (req, res) => {
   try {
-    let { channelName, languageCode = 'en-US' } = req.body;
+    let { channelName, languageCode = 'en-US', properties } = req.body;
 
     const { agentId } = req.params;
     const userId = req.user?.id || "0";
@@ -77,7 +77,8 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       agentRTCUid: agentUid.toString(),
       token: tokenData.token,
       userId: Number(userId),
-      languageCode: languageCode
+      languageCode: languageCode,
+      properties
     });
 
     if (agent.status === 'NO_MINUTES_REMAINING') {

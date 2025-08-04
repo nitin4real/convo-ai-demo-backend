@@ -72,7 +72,8 @@ const enum AgentDomains {
   Travel = 'Travel',
   Language = 'Language',
   Sports = 'Sports',
-  Storytelling = 'Storytelling'
+  Storytelling = 'Storytelling',
+  Custom = 'Custom'
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -215,7 +216,7 @@ Whenever you get a data point, make sure to save it using function calling. Don'
     `,
     dismissDefaultInstructions: true
   },
-  
+
 }
 
 export const agents: AgentTile[] = [
@@ -228,7 +229,7 @@ export const agents: AgentTile[] = [
     features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries'],
     voiceId: 'gOkFV1JMCt0G0n9xmBwV',
     type: AgentTypeIds.Astrology,
-    domain: AgentDomains.Astrology, 
+    domain: AgentDomains.Astrology,
     languages: [
       {
         name: 'English',
@@ -1320,7 +1321,7 @@ export const agents: AgentTile[] = [
       'Engaging and interactive',
       'Female voice'
     ],
-    
+
     voiceId: 'kL06KYMvPY56NluIQ72m',
     type: AgentTypeIds.Storytelling,
     domain: AgentDomains.Storytelling,
@@ -1342,6 +1343,16 @@ export const agents: AgentTile[] = [
       }
     ]
   },
+  {
+    id: 'custom',
+    name: 'Custom Agent',
+    title: 'Create your own agent',
+    introduction: '',
+    description: 'Custom Agent, your custom agent, offers guidance on a wide range of topics. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
+    features: ['Custom guidance', 'Custom insights', 'Custom resources', 'Custom recommendations'],
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Custom,
+  }
 ] as const;
 
 
