@@ -68,6 +68,8 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     // Create a new unique uid for the agent with request user id by adding 2 digits to the end
     const agentUid = Number(req.user?.id) * 100 + 1; // the agent id is {req.user?.id}01
     const tokenData = tokenService.generateToken(channelName, agentUid);
+    const avatarUid = Number(req.user?.id) * 100 + 2;
+    const avatarTokenData = tokenService.generateToken(channelName, avatarUid);
 
 
     // Start the agent with the generated token and system prompt
@@ -78,7 +80,9 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       token: tokenData.token,
       userId: Number(userId),
       languageCode: languageCode,
-      properties
+      properties,
+      avatarUid,
+      avatarToken: avatarTokenData.token
     });
 
     if (agent.status === 'NO_MINUTES_REMAINING') {

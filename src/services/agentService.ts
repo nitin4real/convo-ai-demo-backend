@@ -24,6 +24,7 @@ interface ElevenLabsTTSParams {
     use_speaker_boost?: boolean;
     speed?: number;
     adjust_volume?: number;
+    sample_rate?: number;
   }
 }
 
@@ -38,6 +39,31 @@ interface StartAgentConfig {
   languageCode?: string;
   agentId: string;
   properties?: any;
+  avatarUid?: number;
+  avatarToken?: string;
+}
+
+interface HeygenAvatarSettings {
+  api_key: string;
+  quality: string;
+  agora_uid: string;
+  agora_token: string;
+  avatar_id: string;
+  disable_idle_timeout: boolean;
+  activity_idle_timeout: number;
+}
+
+interface AkoolAvatarSettings {
+  api_key: string;
+  agora_uid: string;
+  agora_token: string;
+  avatar_id: string;
+}
+
+interface AvatarSettings {
+  enable: boolean;
+  vendor: string;
+  params: HeygenAvatarSettings | AkoolAvatarSettings;
 }
 
 interface AgentProperties {
@@ -67,6 +93,7 @@ interface AgentProperties {
     language: string;
   };
   tts: TTSParams;
+  avatar?: AvatarSettings;
 }
 
 interface AgentResponse {
@@ -128,6 +155,7 @@ class AgentService {
           voice_id: voiceId || "21m00Tcm4TlvDq8ikWAM",
           stability: 1,
           similarity_boost: 0.75,
+          sample_rate: 24000,
           // use_speaker_boost: true,
           // FIX: Fix this later with configs
           adjust_volume: voiceId === 'tJ2B69tloiOhZn8Gk9Lp' ? 3000 : 1000
@@ -137,7 +165,7 @@ class AgentService {
 
   private getAgentProperties(config: StartAgentConfig): AgentProperties {
 
-    let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US", properties } = config;
+    let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US", properties, avatarUid, avatarToken, userId } = config;
     if (config.agentId === 'custom') {
       return {
         ...properties,
@@ -157,9 +185,9 @@ class AgentService {
     let introduction = agentPromptService.generateIntroduction(config.agentId, language);
     let llmEndPoint = process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
     let llmApiKey = process.env.OPENAI_API_KEY || "";
-    
-    if(agentDetails.isCustomLLM){
-    llmEndPoint = process.env.CUSTOM_LLM_ENDPOINT || "";
+
+    if (agentDetails.isCustomLLM) {
+      llmEndPoint = process.env.CUSTOM_LLM_ENDPOINT || "";
       llmApiKey = jwt.sign({
         appId: this.appId,
         userId: config.userId.toString()
@@ -167,12 +195,43 @@ class AgentService {
     }
 
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
- 
+    let avatarConfig: AvatarSettings | undefined = undefined;
+    if (agentDetails.avatarSettings?.enable) {
+      if (agentDetails.avatarSettings.vendor === 'heygen') {
+        avatarConfig = {
+          enable: true,
+          vendor: 'heygen',
+          params: {
+            api_key: process.env.HEYGEN_API_KEY || "",
+            quality: agentDetails.avatarSettings.quality,
+            agora_uid: avatarUid?.toString() || "",
+            agora_token: avatarToken || "",
+            avatar_id: agentDetails.avatarSettings.avatarId,
+            disable_idle_timeout: true,
+            activity_idle_timeout: 60,
+          }
+        }
+      } else if (agentDetails.avatarSettings.vendor === 'akool') {
+        avatarConfig = {
+          enable: true,
+          vendor: agentDetails.avatarSettings.vendor,
+          params: {
+            api_key: process.env.AKOOL_API_KEY || "",
+            agora_uid: avatarUid?.toString() || "",
+            agora_token: avatarToken || "",
+            avatar_id: agentDetails.avatarSettings.avatarId,
+          }
+        }
+      }
+    }
+
     return {
       channel: channelName,
       token: token,
       agent_rtc_uid: agentUid,
-      remote_rtc_uids: ["*"], // use req user id as remote uid
+      remote_rtc_uids: [
+        userId.toString(),
+      ], // use req user id as remote uid
       enable_string_uid: false,
       idle_timeout: 120,
       llm: {
@@ -194,7 +253,8 @@ class AgentService {
       asr: {
         language
       },
-      tts: ttsConfig
+      tts: ttsConfig,
+      avatar: avatarConfig
     };
   }
 
@@ -327,7 +387,7 @@ class AgentService {
       // Remove from heartbeat map when stopping
       this.heartbeatMap.delete(convoAgentId);
     } catch (error) {
-      console.error('Error stopping agent:', error);
+      console.error('Error stopping agent:', error?.message);
       throw error;
     }
   }

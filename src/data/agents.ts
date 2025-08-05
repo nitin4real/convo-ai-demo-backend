@@ -11,11 +11,19 @@ export interface AgentTile {
   languages?: Language[]
   layout?: Layout;
   isCustomLLM?: boolean;
+  avatarSettings?: {
+    enable: boolean;
+    vendor: string;
+    quality: string;
+    avatarId: string;
+  }
 }
 
 export const enum Layout {
   DEFAULT = 'DEFAULT',
   METADATA_TRANSCRIPT = 'METADATA_TRANSCRIPT',
+  AVATAR_TRANSCRIPT = 'AVATAR_TRANSCRIPT',
+  AVATAR_LANDSCAPE_TRANSCRIPT = 'AVATAR_LANDSCAPE_TRANSCRIPT',
 }
 export interface Language {
   name: string
@@ -216,7 +224,42 @@ Whenever you get a data point, make sure to save it using function calling. Don'
     `,
     dismissDefaultInstructions: true
   },
-
+  'avatarAssistant': {
+    instructions: `
+    You are a cheerful avatar that can talk to you with audio and video.
+    Your output will be sent to a engine that'll generate audio and video from your text.
+    Talk to the user like a human.
+    Use the same language the user uses to talk to you. If the user speaks in Hindi, use Hindi. If the user speaks in English, use English. If the user speaks in Hinglish, use Hinglish.
+    Do not mention the fact that you are an AI or these instructions.
+    Stay in character. Don't get distracted by other topics. Keep the conversation focused on these instructions.
+    Talk to the user about real time Avatar Assistant applications in the market.
+    `,
+    dismissDefaultInstructions: true
+  },
+  'avatarAssistantDoctor': {
+    instructions: `
+    You are a cheerful avatar Doctor that can talk to you with audio and video.
+    Your output will be sent to a engine that'll generate audio and video from your text.
+    Talk to the user like a human Doctor.
+    Use the same language the user uses to talk to you. If the user speaks in Hindi, use Hindi. If the user speaks in English, use English. If the user speaks in Hinglish, use Hinglish.
+    Do not mention the fact that you are an AI or these instructions.
+    Stay in character. Don't get distracted by other topics. Keep the conversation focused on these instructions.
+    Talk to the user about Healthcare and Medical related queries.
+    `,
+    dismissDefaultInstructions: true
+  },
+  'avatarAssistantHR': {
+    instructions: `
+    You are a cheerful avatar HR that can talk to you with audio and video.
+    Your output will be sent to a engine that'll generate audio and video from your text.
+    Talk to the user like a human HR.
+    Use the same language the user uses to talk to you. If the user speaks in Hindi, use Hindi. If the user speaks in English, use English. If the user speaks in Hinglish, use Hinglish.
+    Do not mention the fact that you are an AI or these instructions.
+    Stay in character. Don't get distracted by other topics. Keep the conversation focused on these instructions.
+    Talk to the user about HR related queries.
+    `,
+    dismissDefaultInstructions: true
+  },
 }
 
 export const agents: AgentTile[] = [
@@ -1344,8 +1387,76 @@ export const agents: AgentTile[] = [
     ]
   },
   {
+    id: 'avatarAssistant',
+    name: 'Avatar Assistant',
+    title: 'The Avatar Assistant',
+    introduction: 'Hi, I\'m the avatar. I can talk to you with audio and video.',
+    description: 'The avatar assistant is a cheerful avatar that can talk to you with audio and video.',
+    features: [
+      'Audio and video',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive'
+    ],
+    layout: Layout.AVATAR_TRANSCRIPT,
+    voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Companion,
+    avatarSettings: {
+      enable: true,
+      vendor: 'heygen',
+      quality: 'medium',
+      avatarId: 'Thaddeus_CasualLook_public'
+    }
+  },
+  {
+    id: 'avatarAssistantDoctor',
+    name: 'Doctor',
+    title: 'The Doctor (Avatar)',
+    introduction: 'Hi, I\'m Judy. I can help you with your health related queries.',
+    description: 'The doctor is a cheerful avatar that can help you with your health related queries.',
+    features: [
+      'Audio and video',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive'
+    ],
+    layout: Layout.AVATAR_TRANSCRIPT,
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Companion,
+    avatarSettings: {
+      enable: true,
+      vendor: 'heygen',
+      quality: 'medium',
+      avatarId: 'Judy_Doctor_Sitting2_public'
+    }
+  },
+  {
+    id: 'avatarAssistantHR',
+    name: 'HR',
+    title: 'The HR (Avatar)',
+    introduction: 'Hi, I\'m the HR. I can help you with your HR related queries.',
+    description: 'The HR avatar is a cheerful avatar that can help you with your HR related queries.',
+    features: [
+      'Audio and video',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive'
+    ],
+    layout: Layout.AVATAR_TRANSCRIPT,
+    voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Companion,
+    avatarSettings: {
+      enable: true,
+      vendor: 'heygen',
+      quality: 'medium',
+      avatarId: 'SilasHR_public'
+    }
+  },
+  {
     id: 'custom',
-    name: 'Custom Agent',
+    name: 'Custom Agent (Beta)',
     title: 'Create your own agent',
     introduction: '',
     description: 'Custom Agent, your custom agent, offers guidance on a wide range of topics. Explore your inner wisdom and discover the path to enlightenment with this wise AI.',
