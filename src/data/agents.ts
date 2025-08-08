@@ -676,6 +676,26 @@ export const agents: AgentTile[] = [
         name: 'Hinglish',
         isoCode: 'en-IN',
         introduction: 'Hi, I\'m Alice! Koi bhi topic samajhna hai? Mujhse poochho, milke seekhte hain.'
+      },
+      {
+        name: 'Arabic (UAE)',
+        isoCode: 'ar-AE',
+        introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من الإمارات. يمكنك سؤالي عن أي موضوع ولنبدأ التعلم معاً بأسلوب إماراتي مميز.'
+      },
+      {
+        name: 'Arabic (EG)',
+        isoCode: 'ar-EG',
+        introduction: 'أهلاً وسهلاً، أنا أليس، مدرس للذكاء الاصطناعي من مصر. اسألني أي شيء وهيا نتعلم معاً باللهجة المصرية الجميلة.'
+      },
+      {
+        name: 'Arabic (JO)',
+        isoCode: 'ar-JO',
+        introduction: 'أهلاً بك، أنا أليس، مدرس للذكاء الاصطناعي من الأردن. اسألني أي موضوع ودعنا نتعلم معاً باللهجة الأردنية الأصيلة.'
+      },
+      {
+        name: 'Arabic (SA)',
+        isoCode: 'ar-SA',
+        introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من السعودية. اسألني أي موضوع ودعنا نتعلم معاً باللهجة السعودية العريقة.'
       }
     ]
   },
@@ -1035,30 +1055,40 @@ export const agents: AgentTile[] = [
     ]
   },
   {
-    id: 'aminah',
-    name: 'Aminah',
+    id: 'adeeb',
+    name: 'Adeeb',
     title: 'The Islamic Guide',
-    introduction: 'Assalamu alaykum. I am Aminah, here to share knowledge about Islamic teachings, history, and culture.',
-    description: 'Aminah, the Islamic guide, offers explanations and insights into Islamic beliefs, practices, history, and cultural heritage.',
+    introduction: 'Assalamu alaykum. I am Adeeb, here to share knowledge about Islamic teachings, history, and culture.',
+    description: 'Adeeb, the Islamic guide, offers explanations and insights into Islamic beliefs, practices, history, and cultural heritage.',
     features: ['Quranic insights', 'Understanding Hadith', 'Islamic history lessons', 'Cultural context'],
-    voiceId: 'aCChyB4P5WEomwRsOKRh',
+    voiceId: 's83SAGdFTflAwJcAV81K',
     type: AgentTypeIds.Religion,
     domain: AgentDomains.Islam,
     languages: [
       {
         name: 'English',
         isoCode: 'en-US',
-        introduction: 'Assalamu alaykum! I am Aminah, your guide to Islamic teachings and culture.'
+        introduction: 'Assalamu alaykum! I am Adeeb, your guide to Islamic teachings and culture.'
       },
       {
-        name: 'Hindi',
-        isoCode: 'hi-IN',
-        introduction: 'अस्सलामु अलैकुम! मैं अमीना हूँ, आपकी इस्लामिक शिक्षाओं और संस्कृति की मार्गदर्शक।'
+        name: 'Arabic (UAE)',
+        isoCode: 'ar-AE',
+        introduction: 'مرحباً بك! أنا أديب، معلم اللغة العربية من الإمارات. لنبدأ رحلة التعلم معاً بأسلوب إماراتي مميز.'
       },
       {
-        name: 'Hinglish',
-        isoCode: 'en-IN',
-        introduction: 'Hi, I am Aminah! Islam ke baare mein kuch bhi poochhna ho toh poochho.'
+        name: 'Arabic (EG)',
+        isoCode: 'ar-EG',
+        introduction: 'أهلاً وسهلاً! أنا أديب، معلم اللغة العربية من مصر. هيا نبدأ رحلتنا للتعلم باللهجة المصرية الجميلة.'
+      },
+      {
+        name: 'Arabic (JO)',
+        isoCode: 'ar-JO',
+        introduction: 'أهلاً بك! أنا أديب، معلم اللغة العربية من الأردن. دعنا نبدأ رحلتنا معاً باللهجة الأردنية الأصيلة.'
+      },
+      {
+        name: 'Arabic (SA)',
+        isoCode: 'ar-SA',
+        introduction: 'مرحباً! أنا أديب، معلم اللغة العربية من السعودية. لنبدأ معاً رحلة التعلم باللهجة السعودية العريقة.'
       }
     ]
   },
@@ -1247,9 +1277,24 @@ export const agents: AgentTile[] = [
         introduction: 'Hello, I\'m Asmaa, your Arabic language instructor. Ready to learn Arabic?'
       },
       {
-        name: 'Arabic',
+        name: 'Arabic (UAE)',
         isoCode: 'ar-AE',
-        introduction: 'مرحبا بك! أنا أسماء، مدرسة اللغة العربية. لنبدأ رحلة التعلم معاً.'
+        introduction: 'مرحباً بك! أنا أسماء، معلمة اللغة العربية من الإمارات. لنبدأ رحلة التعلم معاً بأسلوب إماراتي مميز.'
+      },
+      {
+        name: 'Arabic (EG)',
+        isoCode: 'ar-EG',
+        introduction: 'أهلاً وسهلاً! أنا أسماء، مدرسة اللغة العربية من مصر. هيا نبدأ رحلتنا للتعلم باللهجة المصرية الجميلة.'
+      },
+      {
+        name: 'Arabic (JO)',
+        isoCode: 'ar-JO',
+        introduction: 'أهلاً بك! أنا أسماء، معلمة اللغة العربية من الأردن. دعنا نبدأ رحلتنا معاً باللهجة الأردنية الأصيلة.'
+      },
+      {
+        name: 'Arabic (SA)',
+        isoCode: 'ar-SA',
+        introduction: 'مرحباً! أنا أسماء، مدرسة اللغة العربية من السعودية. لنبدأ معاً رحلة التعلم باللهجة السعودية العريقة.'
       }
     ]
   }, {
