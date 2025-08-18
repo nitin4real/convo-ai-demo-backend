@@ -47,6 +47,7 @@ const enum AgentTypeIds {
   Language = 'language',
   Advisor = 'advisor',
   Misc = 'misc',
+  Arabic = 'arabic',
   Storytelling = 'storytelling',
 }
 
@@ -1500,6 +1501,98 @@ export const agents: AgentTile[] = [
     }
   },
   {
+    id: 'asmaa-ar',
+    name: 'Asmaa (UAE)',
+    title: 'The Arabic Language Instructor',
+    introduction: 'Ahlan wa sahlan! Ana Asmaa, mudarris al-lugha al-`arabiyya. Let\'s embark on a journey to learn the Arabic language together.',
+    description: 'Asmaa, the Arabic language instructor, provides lessons and exercises to help you learn and understand the Arabic language.',
+    features: ['Arabic script and pronunciation', 'Basic grammar', 'Everyday phrases', 'Cultural context'],
+    voiceId: 'QbsdzCokdlo98elkq4Pc',
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.ArabicLanguage,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Asmaa, your Arabic language instructor. Ready to learn Arabic?'
+      },
+      {
+        name: 'Arabic (UAE)',
+        isoCode: 'ar-AE',
+        introduction: 'مرحباً! أنا أسماء، معلمة عربية من الإمارات. يلا نبدأ مشوارنا في التعلّم مع بعض.'
+      },
+    ]
+  },
+  {
+    id: 'adeeb-ar',
+    name: 'Adeeb (Saudi Arabia)',
+    title: 'The Islamic Guide',
+    introduction: 'Assalamu alaykum. I am Adeeb, here to share knowledge about Islamic teachings, history, and culture.',
+    description: 'Adeeb, the Islamic guide, offers explanations and insights into Islamic beliefs, practices, history, and cultural heritage.',
+    features: ['Quranic insights', 'Understanding Hadith', 'Islamic history lessons', 'Cultural context'],
+    voiceId: 's83SAGdFTflAwJcAV81K',
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.Islam,
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Assalamu alaykum! I am Adeeb, your guide to Islamic teachings and culture.'
+      },
+      {
+        name: 'Arabic (SA)',
+        isoCode: 'ar-SA',
+        introduction: 'وعليكم السلام! أنا أديب، دليلك في التعاليم الإسلامية والثقافة.'
+      }
+    ]
+  },
+  {
+    id: 'omar-ar',
+    name: 'Omar (Egypt)',
+    title: 'The AI Tutor',
+    introduction: 'Hello, I\'m Omar, your AI Tutor. I\'m here to help you understand complex topics and achieve your learning goals. Ask me anything!',
+    description: 'Omar, the AI Tutor, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
+    features: ['Concept explanation', 'Practice questions', 'Personalized feedback', 'Study tips'],
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.GeneralTeaching,
+    voiceId: 'amSNjVC0vWYiE8iGimVb',
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Omar, your AI tutor. Ask me anything and let\'s learn together!'
+      },
+      {
+        name: 'Arabic (EG)',
+        isoCode: 'ar-EG',
+        introduction: 'أهلاً! أنا عمر، مدرسك بالذكاء الاصطناعي. إسألني أي حاجة وخلينا نتعلم سوا!'
+      },
+    ]
+  },
+  {
+    id: 'farah-ar',
+    name: 'Farah (Jordan)',
+    title: 'Wellness Coach',
+    introduction: 'Hello, I\'m Farah, your wellness coach. I\'m here to help you with your physical and mental health.',
+    description: 'Farah, the wellness coach, provides personalized learning support to help you understand complex topics and achieve your academic goals.',
+    features: ['Physical health', 'Mental health', 'Wellness tips', 'Understanding symptoms (for informational purposes)'],
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.Wellness,
+    voiceId: '4wf10lgibMnboGJGCLrP',
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m Farah, your wellness coach. Ask me anything and let\'s talk about your health!'
+      },
+      {
+        name: 'Arabic (JO)',
+        isoCode: 'ar-JO',
+        introduction: 'مرحباً! أنا فرح، مدرّبتك للصحة والعافية. إسألني أي إشي وخلينا نحكي عن صحتك!'
+      },
+    ]
+  },
+  {
     id: 'custom',
     name: 'Custom Agent (Beta)',
     title: 'Create your own agent',
@@ -1517,6 +1610,11 @@ export const agentTypes: AgentType[] = [
     id: AgentTypeIds.Astrology,
     title: 'Astrology',
     description: 'Expert guidance in astrology, personalized horoscopes, zodiac compatibility, and celestial insights to help you navigate life`s journey.'
+  },
+  {
+    id: AgentTypeIds.Arabic,
+    title: 'Arabic Agents',
+    description: 'Covers multiple variations for the Arabic language (SA, UAE, Modern, EGY, JOR)'
   },
   {
     id: AgentTypeIds.Edtech,
