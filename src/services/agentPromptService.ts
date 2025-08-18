@@ -1,4 +1,5 @@
 import { agents, customInstructions } from '../data/agents';
+import { StartAgentConfig } from './agentService';
 
 export const agentPromptService = {
   generateSystemPrompt: (agentId: string, languageCode: string): string => {
@@ -48,3 +49,22 @@ export const agentPromptService = {
   }
 };
 
+export const updateSystemPrompt = (systemPrompt: string, config: StartAgentConfig): string => {
+  switch (config.agentId) {
+    case 'adeeb':
+    case 'asmaa':
+    case 'alice':
+      if (config.languageCode === 'ar-AE') {
+        return systemPrompt + `Speak in UAE Arabic dialect`
+      } else if (config.languageCode === 'ar-EG') {
+        return systemPrompt + `Speak in Egyptian Arabic dialect`
+      } else if (config.languageCode === 'ar-JO') {
+        return systemPrompt + `Speak in Jordanian Arabic dialect`
+      } else if (config.languageCode === 'ar-SA') {
+        return systemPrompt + `Speak in Saudi Arabian Arabic dialect`
+      }
+      return systemPrompt;
+    default:
+      return systemPrompt;
+  }
+}

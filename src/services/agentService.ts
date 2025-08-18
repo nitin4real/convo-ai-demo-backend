@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { UserService } from './userService';
-import { agentPromptService } from '../services/agentPromptService';
+import { agentPromptService, updateSystemPrompt } from '../services/agentPromptService';
 import { agents } from '../data/agents';
 import jwt from 'jsonwebtoken';
 interface MicrosoftTTSParams {
@@ -30,7 +30,7 @@ interface ElevenLabsTTSParams {
 
 type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams;
 
-interface StartAgentConfig {
+export interface StartAgentConfig {
   channelName: string;
   agentRTCUid: string;
   token: string;
@@ -182,6 +182,7 @@ class AgentService {
 
     const voiceId = agentDetails?.voiceId;
     let systemPrompt = agentPromptService.generateSystemPrompt(config.agentId, language);
+    systemPrompt = updateSystemPrompt(systemPrompt, config);
     let introduction = agentPromptService.generateIntroduction(config.agentId, language);
     let llmEndPoint = process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
     let llmApiKey = process.env.OPENAI_API_KEY || "";
