@@ -185,7 +185,6 @@ class AgentService {
     const voiceId = agentDetails?.voiceId;
     let systemPrompt = agentPromptService.generateSystemPrompt(config.agentId, language);
     systemPrompt = updateSystemPrompt(systemPrompt, config);
-    console.log("systemPrompt", systemPrompt);
     let introduction = agentPromptService.generateIntroduction(config.agentId, language);
     let llmEndPoint = process.env.OPENAI_API_URL || "https://api.openai.com/v1/chat/completions";
     let llmApiKey = process.env.OPENAI_API_KEY || "";

@@ -1479,7 +1479,7 @@ export const agents: AgentTile[] = [
     avatarSettings: {
       enable: true,
       vendor: 'heygen',
-      quality: 'medium',
+      quality: 'high',
       avatarId: 'Thaddeus_CasualLook_public'
     }
   },
@@ -1495,13 +1495,13 @@ export const agents: AgentTile[] = [
       'Easy to understand',
       'Engaging and interactive'
     ],
-    layout: Layout.AVATAR_TRANSCRIPT,
+    layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
     type: AgentTypeIds.Misc,
     domain: AgentDomains.Companion,
     avatarSettings: {
       enable: true,
       vendor: 'heygen',
-      quality: 'medium',
+      quality: 'high',
       avatarId: 'Judy_Doctor_Sitting2_public'
     }
   },
@@ -1517,14 +1517,14 @@ export const agents: AgentTile[] = [
       'Easy to understand',
       'Engaging and interactive'
     ],
-    layout: Layout.AVATAR_TRANSCRIPT,
+    layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
     voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     type: AgentTypeIds.Misc,
     domain: AgentDomains.Companion,
     avatarSettings: {
       enable: true,
       vendor: 'heygen',
-      quality: 'medium',
+      quality: 'high',
       avatarId: 'SilasHR_public'
     }
   },
