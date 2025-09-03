@@ -311,12 +311,12 @@ export const agents: AgentTile[] = [
       {
         name: 'Hindi',
         isoCode: 'hi-IN',
-        introduction: 'नमस्ते, मैं अस्त्रा हूँ, आपकी खगोलीय मार्गदर्शक। मैं आपके जन्म चार्ट के आधार पर व्यक्तिगत ज्योतिषीय सलाह देती हूँ। अपने जीवन का खाका जानिए और सितारों का संदेश समझिए।'
+        introduction: 'नमस्ते, मैं अस्त्रा हूँ, आपका खगोलीय मार्गदर्शक। मैं आपके जन्म चार्ट के आधार पर व्यक्तिगत ज्योतिषीय सलाह देती हूँ। अपने जीवन का खाका जानिए और सितारों का संदेश समझिए।'
       },
       {
         name: 'Hinglish',
         isoCode: 'en-IN',
-        introduction: 'Hi, I\'m Astra! Tumhara birth chart dekh kar bataungi ki sitare kya kehte hain. Ready ho apni cosmic kahani jaane ke liye?'
+        introduction: 'Hi, I\'m Astra! Tumhara birth chart dekh kar bataunga ki sitare kya kehte hain. Ready ho apni cosmic kahani jaane ke liye?'
       }
     ]
   },
