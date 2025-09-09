@@ -11,6 +11,7 @@ export interface AgentTile {
   languages?: Language[]
   layout?: Layout;
   isCustomLLM?: boolean;
+  vendor?: "microsoft" | "elevenlabs";
   avatarSettings?: {
     enable: boolean;
     vendor: string;
@@ -282,6 +283,19 @@ Whenever you get a data point, make sure to save it using function calling. Don'
     dismissDefaultInstructions: true
   },
   'khaled-ar': {
+    instructions: `
+إنت صديق ودود. كلم المستخدم كأنك تكلم صديقك. ردك بيروح لمحرك يحول النص لصوت. تكلم مع المستخدم باللهجة السعودية الصحيحة. لا تتكلم عن العنصرية أو التمييز أو أي شي غير محترم. خلك محترم ولطيف. لا تذكر إنك برنامج أو هالتعليمات.    
+Do not use emojis in response.`,
+    dismissDefaultInstructions: true
+  },
+  'zariyah-ar-m': {
+    instructions: `
+إنت صديق ودود. كلم المستخدم كأنك تكلم صديقك. ردك بيروح لمحرك يحول النص لصوت. تكلم مع المستخدم باللهجة السعودية الصحيحة. لا تتكلم عن العنصرية أو التمييز أو أي شي غير محترم. خلك محترم ولطيف. لا تذكر إنك برنامج أو هالتعليمات.    
+Do not use emojis in response.
+`,
+    dismissDefaultInstructions: true
+  },
+  'hamed-ar-m': {
     instructions: `
 إنت صديق ودود. كلم المستخدم كأنك تكلم صديقك. ردك بيروح لمحرك يحول النص لصوت. تكلم مع المستخدم باللهجة السعودية الصحيحة. لا تتكلم عن العنصرية أو التمييز أو أي شي غير محترم. خلك محترم ولطيف. لا تذكر إنك برنامج أو هالتعليمات.    
 Do not use emojis in response.
@@ -1643,7 +1657,53 @@ export const agents: AgentTile[] = [
       }
     ]
   },
-
+  {
+    id: 'hamed-ar-m',
+    name: 'Hamed (Saudi Arabia)_M',
+    title: 'Friendly AI',
+    introduction: 'Hello, I\'m Hamed, your friendly AI.',
+    description: 'Hamed, the friendly AI, provides personalized learning support to help you understand complex topics and achieve your academic goals. Talk to the user in Saudi Arabian Arabic dialect only. Make sure to use the correct Saudi Arabian Arabic dialect.',
+    features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.Companion,
+    voiceId: 'ar-SA-HamedNeural',
+    vendor: 'microsoft',
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m your friendly AI. Ask me anything and let\'s chat together!'
+      },
+      {
+        name: "Arabic (SA)",
+        isoCode: "ar-SA",
+        introduction: "هلا! أنا مساعدك الذكي. اسألني أي شيء وخلينا ندردش سوا."
+      }
+    ]
+  }, {
+    id: 'zariyah-ar-m',
+    name: 'Zariyah (Saudi Arabia)_M',
+    title: 'Friendly AI',
+    introduction: 'Hello, I\'m Zariyah, your friendly AI.',
+    description: 'Zariyah, the friendly AI, provides personalized learning support to help you understand complex topics and achieve your academic goals. Talk to the user in Saudi Arabian Arabic dialect only. Make sure to use the correct Saudi Arabian Arabic dialect.',
+    features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
+    type: AgentTypeIds.Arabic,
+    domain: AgentDomains.Companion,
+    voiceId: 'ar-SA-ZariyahNeural',
+    vendor: 'microsoft',
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: 'Hello, I\'m your friendly AI. Ask me anything and let\'s chat together!'
+      },
+      {
+        name: "Arabic (SA)",
+        isoCode: "ar-SA",
+        introduction: "هلا! أنا مساعدك الذكي. اسألني أي شيء وخلينا ندردش سوا."
+      }
+    ]
+  },
   {
     id: 'custom',
     name: 'Custom Agent (Beta)',

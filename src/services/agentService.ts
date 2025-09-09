@@ -146,7 +146,7 @@ class AgentService {
         params: {
           key: process.env.AZURE_TTS_KEY || "",
           region: process.env.AZURE_TTS_REGION || "eastus",
-          voice_name: "en-US-AndrewMultilingualNeural"
+          voice_name: voiceId || "en-US-AndrewMultilingualNeural"
         }
       }
       : {
@@ -190,10 +190,23 @@ class AgentService {
     let llmApiKey = process.env.OPENAI_API_KEY || "";
     let llmModel = "gpt-4o-mini"
 
-    if (config.agentId === 'khaled-ar') {
-      llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
-      llmApiKey = process.env.MISTRAL_LLM_KEY || ""
-      llmModel = "mistral-saba-latest"
+    const ttsVendorName: "microsoft" | "elevenlabs" = agentDetails.vendor || ttsVendor;
+    const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendorName, voiceId);
+
+    if (agentDetails.isCustomLLM) {
+      llmEndPoint = process.env.CUSTOM_LLM_ENDPOINT || "";
+      llmApiKey = jwt.sign({
+        appId: this.appId,
+        userId: config.userId.toString()
+      }, process.env.JWT_SECRET || "");
+    }
+
+    if (config.agentId === 'khaled-ar' || config.agentId === 'hamed-ar-m' || config.agentId === 'zariyah-ar-m') {
+      if (config.languageCode === 'ar-SA') {
+        llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
+        llmApiKey = process.env.MISTRAL_LLM_KEY || ""
+        llmModel = "mistral-saba-latest"
+      }
       if (config.languageCode === 'en-US') {
         systemPrompt = `
         You are helpful friend. Talk to the user like a friend.
@@ -206,15 +219,6 @@ class AgentService {
       }
     }
 
-    if (agentDetails.isCustomLLM) {
-      llmEndPoint = process.env.CUSTOM_LLM_ENDPOINT || "";
-      llmApiKey = jwt.sign({
-        appId: this.appId,
-        userId: config.userId.toString()
-      }, process.env.JWT_SECRET || "");
-    }
-
-    const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendor, voiceId);
     let avatarConfig: AvatarSettings | undefined = undefined;
     if (agentDetails.avatarSettings?.enable) {
       if (agentDetails.avatarSettings.vendor === 'heygen') {

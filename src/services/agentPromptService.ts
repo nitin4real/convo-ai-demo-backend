@@ -84,6 +84,16 @@ export const updateSystemPrompt = (systemPrompt: string, config: StartAgentConfi
         return systemPrompt + `- Speak in Egyptian Arabic dialect`
       }
       return systemPrompt;
+    case 'hamed-ar-m':
+      if (config.languageCode === 'ar-SA') {
+        return systemPrompt + `- Speak in Saudi Arabian Arabic dialect only. Make sure to use the correct Saudi Arabian Arabic dialect.`
+      }
+      return systemPrompt;
+    case 'zariyah-ar-m':
+      if (config.languageCode === 'ar-SA') {
+        return systemPrompt + `- Speak in Saudi Arabian Arabic dialect only. Make sure to use the correct Saudi Arabian Arabic dialect.`
+      }
+      return systemPrompt;
     default:
       return systemPrompt;
   }
