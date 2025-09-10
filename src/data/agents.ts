@@ -1636,10 +1636,10 @@ export const agents: AgentTile[] = [
   },
   {
     id: 'khaled-ar',
-    name: 'Khaled (Saudi Arabia)',
+    name: 'Khaled',
     title: 'Friendly AI',
     introduction: 'Hello, I\'m Khaled, your friendly AI.',
-    description: 'Khaled, the friendly AI, provides personalized learning support to help you understand complex topics and achieve your academic goals. Talk to the user in Saudi Arabian Arabic dialect only. Make sure to use the correct Saudi Arabian Arabic dialect.',
+    description: 'Khaled, the friendly AI, provides personalized learning support to help you understand complex topics and achieve your academic goals. Talks to the user in Arabic dialect.',
     features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
     type: AgentTypeIds.Arabic,
     domain: AgentDomains.Companion,
@@ -1654,7 +1654,12 @@ export const agents: AgentTile[] = [
         name: "Arabic (SA)",
         isoCode: "ar-SA",
         introduction: "هلا! أنا مساعدك الذكي. اسألني أي شيء وخلينا ندردش سوا."
-      }
+      },
+      {
+        name: 'Arabic (EG)',
+        isoCode: 'ar-EG',
+        introduction: "أهلاً، أنا الذكاء الاصطناعي الصحاب بتاعك. إسألني أي حاجة ونتكلم مع بعض."
+      },
     ]
   },
   {
