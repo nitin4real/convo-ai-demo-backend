@@ -230,6 +230,10 @@ class AgentService {
       }
     }
 
+    if(language === 'ar-SA') {
+      language = 'ar-SA,en-US';
+    }
+
     let avatarConfig: AvatarSettings | undefined = undefined;
     if (agentDetails.avatarSettings?.enable) {
       if (agentDetails.avatarSettings.vendor === 'heygen') {
