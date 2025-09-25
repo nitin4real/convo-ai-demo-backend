@@ -1537,6 +1537,7 @@ export const agents: AgentTile[] = [
       'Easy to understand',
       'Engaging and interactive'
     ],
+    voiceId: 'uFIXVu9mmnDZ7dTKCBTX',
     layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
     type: AgentTypeIds.Misc,
     domain: AgentDomains.Companion,
