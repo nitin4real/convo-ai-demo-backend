@@ -202,7 +202,7 @@ class AgentService {
     }
 
     if (config.agentId === 'khaled-ar' || config.agentId === 'hamed-ar-m' || config.agentId === 'zariyah-ar-m') {
-      if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG') {
+      if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG' || config.languageCode === 'ar-JO' || config.languageCode === 'ar-AE'  ) {
         llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
         llmApiKey = process.env.MISTRAL_LLM_KEY || ""
         llmModel = "mistral-saba-latest"
@@ -230,8 +230,8 @@ class AgentService {
       }
     }
 
-    if(language === 'ar-SA') {
-      language = 'ar-SA,en-US';
+    if(language === 'ar-SA' || language === 'ar-EG' || language === 'ar-JO' || language === 'ar-AE') {
+      language+=',en-US';
     }
 
     let avatarConfig: AvatarSettings | undefined = undefined;

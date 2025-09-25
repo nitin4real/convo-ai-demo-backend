@@ -1,3 +1,5 @@
+import { bigPrompts } from "./bigPrompts";
+
 export interface AgentTile {
   id: string;
   name: string;
@@ -300,6 +302,10 @@ Do not use emojis in response.
 إنت صديق ودود. كلم المستخدم كأنك تكلم صديقك. ردك بيروح لمحرك يحول النص لصوت. تكلم مع المستخدم باللهجة السعودية الصحيحة. لا تتكلم عن العنصرية أو التمييز أو أي شي غير محترم. خلك محترم ولطيف. لا تذكر إنك برنامج أو هالتعليمات.    
 Do not use emojis in response.
 `,
+    dismissDefaultInstructions: true
+  },
+  'interviewAssistant': {
+    instructions: bigPrompts.crizac,
     dismissDefaultInstructions: true
   },
 
@@ -1517,6 +1523,28 @@ export const agents: AgentTile[] = [
       vendor: 'heygen',
       quality: 'high',
       avatarId: 'Judy_Doctor_Sitting2_public'
+    }
+  },
+  {
+    id: 'interviewAssistant',
+    name: 'Interview Assistant',
+    title: 'The Interview Assistant (Avatar)',
+    introduction: 'Hi, Lets start your interview. Are you ready, Should we start?',
+    description: 'The interview assistant is a cheerful avatar that can help you with your interview related queries.',
+    features: [
+      'Audio and video',
+      'Simple language',
+      'Easy to understand',
+      'Engaging and interactive'
+    ],
+    layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
+    type: AgentTypeIds.Misc,
+    domain: AgentDomains.Companion,
+    avatarSettings: {
+      enable: true,
+      vendor: 'heygen',
+      quality: 'high',
+      avatarId: 'Graham_Chair_Sitting_public'
     }
   },
   {
