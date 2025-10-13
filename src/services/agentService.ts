@@ -9,6 +9,7 @@ interface MicrosoftTTSParams {
     key: string;
     region: string;
     voice_name: string;
+    sample_rate?: number;
   }
 }
 
@@ -202,7 +203,7 @@ class AgentService {
     }
 
     if (config.agentId === 'khaled-ar' || config.agentId === 'hamed-ar-m' || config.agentId === 'zariyah-ar-m') {
-      if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG' || config.languageCode === 'ar-JO' || config.languageCode === 'ar-AE'  ) {
+      if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG' || config.languageCode === 'ar-JO' || config.languageCode === 'ar-AE') {
         llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
         llmApiKey = process.env.MISTRAL_LLM_KEY || ""
         llmModel = "mistral-saba-latest"
@@ -230,8 +231,8 @@ class AgentService {
       }
     }
 
-    if(language === 'ar-SA' || language === 'ar-EG' || language === 'ar-JO' || language === 'ar-AE') {
-      language+=',en-US';
+    if (language === 'ar-SA' || language === 'ar-EG' || language === 'ar-JO' || language === 'ar-AE') {
+      language += ',en-US';
     }
 
     let avatarConfig: AvatarSettings | undefined = undefined;
@@ -242,7 +243,7 @@ class AgentService {
           vendor: 'heygen',
           params: {
             api_key: process.env.HEYGEN_API_KEY || "",
-            quality: agentDetails.avatarSettings.quality,
+            quality: agentDetails.avatarSettings.quality || 'high',
             agora_uid: avatarUid?.toString() || "",
             agora_token: avatarToken || "",
             avatar_id: agentDetails.avatarSettings.avatarId,
@@ -261,6 +262,7 @@ class AgentService {
             avatar_id: agentDetails.avatarSettings.avatarId,
           }
         }
+        ttsConfig.params.sample_rate = 16000;
       }
     }
 

@@ -17,7 +17,7 @@ export interface AgentTile {
   avatarSettings?: {
     enable: boolean;
     vendor: string;
-    quality: string;
+    quality?: string;
     avatarId: string;
   }
 }
@@ -50,6 +50,7 @@ const enum AgentTypeIds {
   Language = 'language',
   Advisor = 'advisor',
   Misc = 'misc',
+  Akool = 'akool',
   Arabic = 'arabic',
   Storytelling = 'storytelling',
 }
@@ -85,7 +86,8 @@ const enum AgentDomains {
   Language = 'Language',
   Sports = 'Sports',
   Storytelling = 'Storytelling',
-  Custom = 'Custom'
+  Custom = 'Custom',
+  Assistant = 'Assistant'
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -306,6 +308,10 @@ Do not use emojis in response.
   },
   'interviewAssistant': {
     instructions: bigPrompts.crizac,
+    dismissDefaultInstructions: true
+  },
+  'productAssistant': {
+    instructions: bigPrompts.productAssistant,
     dismissDefaultInstructions: true
   },
 
@@ -1739,6 +1745,28 @@ export const agents: AgentTile[] = [
     ]
   },
   {
+    id: 'productAssistant',
+    name: 'Agora Product Assistant',
+    title: 'The Agora Product Assistant (Avatar)',
+    introduction: 'Hi, I’m the Agora Product Assistant. I can help you explore and understand Agora.io’s real-time engagement products and solutions.',
+    description: 'The Agora Product Assistant avatar is a friendly and knowledgeable guide that helps you learn about Agora.io’s SDKs, APIs, and real-time engagement capabilities — including voice, video, chat, and interactive live streaming.',
+    features: [
+      'Explains Agora.io products and features clearly',
+      'Helps compare and choose the right SDK or API',
+      'Simple, conversational, and easy to understand',
+      'Engaging and interactive Video Avatar'
+    ],
+    layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
+    voiceId: 'pjcYQlDFKMbcOUp6F5GD',
+    type: AgentTypeIds.Akool,
+    domain: AgentDomains.Assistant,
+    avatarSettings: {
+      enable: true,
+      vendor: 'akool',
+      avatarId: 'dvp_Alinna_emotionsit_agora'
+    }
+  },
+  {
     id: 'custom',
     name: 'Custom Agent (Beta)',
     title: 'Create your own agent',
@@ -1806,6 +1834,11 @@ export const agentTypes: AgentType[] = [
     id: AgentTypeIds.Advisor,
     title: 'Advisor',
     description: 'Insightful advice on finance, travel, career, lifestyle, and more — helping you make smarter decisions.'
+  },
+  {
+    id: AgentTypeIds.Akool,
+    title: 'Akool',
+    description: 'Akool Video Avatar Agents are friendly AI agents that use Video Avatar technology to talk to the user.'
   },
   {
     id: AgentTypeIds.Misc,
