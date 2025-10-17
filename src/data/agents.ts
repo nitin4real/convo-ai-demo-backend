@@ -27,6 +27,7 @@ export const enum Layout {
   METADATA_TRANSCRIPT = 'METADATA_TRANSCRIPT',
   AVATAR_TRANSCRIPT = 'AVATAR_TRANSCRIPT',
   AVATAR_LANDSCAPE_TRANSCRIPT = 'AVATAR_LANDSCAPE_TRANSCRIPT',
+  SIP_CALL = 'SIP_CALL',
 }
 export interface Language {
   name: string
@@ -53,6 +54,7 @@ const enum AgentTypeIds {
   Akool = 'akool',
   Arabic = 'arabic',
   Storytelling = 'storytelling',
+  PhoneCallAgent = 'phonecallagent',
 }
 
 const enum AgentDomains {
@@ -87,7 +89,8 @@ const enum AgentDomains {
   Sports = 'Sports',
   Storytelling = 'Storytelling',
   Custom = 'Custom',
-  Assistant = 'Assistant'
+  Assistant = 'Assistant',
+  PhoneCallAgent = 'Phone Call Agent',
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -1767,6 +1770,51 @@ export const agents: AgentTile[] = [
     }
   },
   {
+    id: 'sip_wifi_agent',
+    name: 'Asha (WiFi Support Agent)',
+    title: 'WiFi Technical Support Agent',
+    introduction: 'Hello, I\'m your WiFi support specialist. I\'ll help diagnose and resolve any WiFi connectivity issues you\'re experiencing. What seems to be the problem?',
+    description: 'A specialized technical support agent that helps troubleshoot WiFi connectivity issues over phone calls. Provides step-by-step guidance for router setup, network diagnostics, and common WiFi problems.',
+    features: [
+      'Step-by-step WiFi troubleshooting',
+      'Router configuration assistance',
+      'Network connectivity diagnostics',
+      'Transfer to human technician if needed'
+    ],
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: ''
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: ''
+      }
+    ],
+    layout: Layout.SIP_CALL,
+    type: AgentTypeIds.PhoneCallAgent,
+    domain: AgentDomains.PhoneCallAgent,
+  },
+  // {
+  //   id: 'sip_astrology_agent',
+  //   name: 'Astrology Guide',
+  //   title: 'Phone Astrology Consultation',
+  //   introduction: 'Hello, I\'m your personal astrology guide. I can help you understand your birth chart, planetary influences, and provide guidance on life\'s important questions through astrological insights. What would you like to explore today?',
+  //   description: 'A knowledgeable astrology consultant available via phone call to provide personalized astrological readings, birth chart analysis, compatibility insights, and guidance on career, relationships, and personal growth through celestial wisdom.',
+  //   features: [
+  //     'Detailed birth chart readings',
+  //     'Relationship compatibility analysis', 
+  //     'Career and life path guidance',
+  //     'Daily horoscope and transit interpretations',
+  //     'Transfer to human astrologer if needed'
+  //   ],
+  //   layout: Layout.SIP_CALL,
+  //   type: AgentTypeIds.PhoneCallAgent,
+  //   domain: AgentDomains.PhoneCallAgent,
+  // },
+  {
     id: 'custom',
     name: 'Custom Agent (Beta)',
     title: 'Create your own agent',
@@ -1841,9 +1889,13 @@ export const agentTypes: AgentType[] = [
     description: 'Akool Video Avatar Agents are friendly AI agents that use Video Avatar technology to talk to the user.'
   },
   {
+    id: AgentTypeIds.PhoneCallAgent,
+    title: 'Phone Call Agent',
+    description: 'Phone Call Agent are friendly AI agents that use SIP Phone Call to talk to the user. Make Inbound and Outbound calls to the user using these agents.'
+  },
+  {
     id: AgentTypeIds.Misc,
     title: 'Miscellaneous',
     description: "Covers a broad range of topics that don't fit into specific categories — from random questions to general curiosity."
   },
-
 ];

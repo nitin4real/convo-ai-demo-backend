@@ -4,6 +4,7 @@ import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
 import { agents, agentTypes } from '../data/agents';
+import { startSIPCall_withAgent } from '../services/sipService';
 
 const router = Router();
 
@@ -118,6 +119,27 @@ router.post('/stop', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error stopping agent:', error);
     res.status(500).json({ error: 'Failed to stop agent' });
+  }
+});
+
+router.post('/start-sip-call', authenticateToken, async (req, res) => {
+  try {
+    const { agentId, phoneNumber, language = 'en-US' } = req.body;
+    if (!agentId || !phoneNumber) {
+      return res.status(400).json({ error: 'Agent ID and phone number are required' });
+    }
+    if (!/^\d{11}$/.test(phoneNumber.toString())) {
+      return res.status(400).json({
+        error: 'phoneNumber must be exactly 11 digits'
+      })
+    }
+    const uid = Number(req.user?.id) || 0;
+    const channelName = tokenService.generateChannelName(agentId, uid);
+    await startSIPCall_withAgent(channelName, uid.toString(), language);
+    return res.status(200).json({ message: 'SIP call started successfully', channelName: channelName });
+  } catch (error) {
+    console.error('Error starting SIP call:', error);
+    return res.status(500).json({ error: 'Failed to start SIP call' });
   }
 });
 
