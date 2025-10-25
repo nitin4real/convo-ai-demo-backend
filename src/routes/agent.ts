@@ -177,7 +177,7 @@ router.post('/start-sip-call', authenticateToken, checkAllowedSIPUser, async (re
     const channelName = tokenService.generateChannelName("sip", uid);
     //  return a token for the user to join the channel
     const tokenData = tokenService.generateToken(channelName, uid);
-    const sipCallData = await startSIPCall_withAgent(channelName, uid.toString() + "01", language);
+    const sipCallData = await startSIPCall_withAgent(channelName, uid.toString() + "01", language, phoneNumber);
     return res.status(200).json({ message: 'SIP call started successfully', tokenData: tokenData, sipCallData: sipCallData });
   } catch (error) {
     console.error('Error starting SIP call:', error);

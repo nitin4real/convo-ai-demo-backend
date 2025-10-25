@@ -5,14 +5,13 @@ const sip_auth = process.env.SIP_AUTH
 const sip_url = process.env.SIP_URL || ""
 const agora_pstn_endpoint = process.env.AGORA_PSTN_URL || ""
 const sip_from_number = process.env.SIP_FROM_NUMBER || ""
-const sip_to_number = process.env.SIP_TO_NUMBER || ""
 const start_agent_lambda_url = process.env.START_AGENT_LAMBDA_URL || ""
 
 
-export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US'): Promise<any> => {
+export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US', phoneNumber: string): Promise<any> => {
     try {
         await startAgentUsingLambda(channelName, uid, language);
-        return await outboundSipCallWithAgent(channelName, uid);
+        return await outboundSipCallWithAgent(channelName, uid, phoneNumber);
     } catch (error) {
         console.error('Error starting call', error?.message);
         throw error
@@ -40,7 +39,7 @@ const startAgentUsingLambda = async (channelName: string, uid: string, language:
     }
 }
 
-export const outboundSipCallWithAgent = async (channelName: string, uid: string, to_number: string = sip_to_number): Promise<string> => {
+export const outboundSipCallWithAgent = async (channelName: string, uid: string, to_number: string): Promise<string> => {
     const tokenData = tokenService.generateToken(channelName, Number(uid));
     console.log('outboundSipCallWithAgent initialized', 'channelName', channelName, 'uid', uid, 'to_number', to_number);
     const response = await axios.post(agora_pstn_endpoint, {
