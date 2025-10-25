@@ -27,7 +27,8 @@ export const enum Layout {
   METADATA_TRANSCRIPT = 'METADATA_TRANSCRIPT',
   AVATAR_TRANSCRIPT = 'AVATAR_TRANSCRIPT',
   AVATAR_LANDSCAPE_TRANSCRIPT = 'AVATAR_LANDSCAPE_TRANSCRIPT',
-  SIP_CALL = 'SIP_CALL',
+  SIP_CALL_INBOUND = 'SIP_CALL_INBOUND',
+  SIP_CALL_OUTBOUND = 'SIP_CALL_OUTBOUND',
 }
 export interface Language {
   name: string
@@ -40,7 +41,7 @@ export interface AgentType {
   description: string;
 }
 
-const enum AgentTypeIds {
+export const enum AgentTypeIds {
   Astrology = 'astrology',
   Edtech = 'edtech',
   Social = 'social',
@@ -1770,8 +1771,24 @@ export const agents: AgentTile[] = [
     }
   },
   {
-    id: 'sip_wifi_agent',
-    name: 'Asha (WiFi Support Agent)',
+    id: 'sip_wifi_agent_inbound',
+    name: 'Asha (WiFi Support Agent) Inbound',
+    title: 'WiFi Technical Support Agent',
+    introduction: 'Hello, I\'m your WiFi support specialist. I\'ll help diagnose and resolve any WiFi connectivity issues you\'re experiencing. What seems to be the problem?',
+    description: 'A specialized technical support agent that helps troubleshoot WiFi connectivity issues over phone calls. Provides step-by-step guidance for router setup, network diagnostics, and common WiFi problems.',
+    features: [
+      'Step-by-step WiFi troubleshooting',
+      'Router configuration assistance',
+      'Network connectivity diagnostics',
+      'Transfer to human technician if needed'
+    ],
+    layout: Layout.SIP_CALL_INBOUND,
+    type: AgentTypeIds.PhoneCallAgent,
+    domain: AgentDomains.PhoneCallAgent,
+  },
+  {
+    id: 'sip_wifi_agent_outbound',
+    name: 'Asha (WiFi Support Agent) Outbound',
     title: 'WiFi Technical Support Agent',
     introduction: 'Hello, I\'m your WiFi support specialist. I\'ll help diagnose and resolve any WiFi connectivity issues you\'re experiencing. What seems to be the problem?',
     description: 'A specialized technical support agent that helps troubleshoot WiFi connectivity issues over phone calls. Provides step-by-step guidance for router setup, network diagnostics, and common WiFi problems.',
@@ -1793,7 +1810,7 @@ export const agents: AgentTile[] = [
         introduction: ''
       }
     ],
-    layout: Layout.SIP_CALL,
+    layout: Layout.SIP_CALL_OUTBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
   },

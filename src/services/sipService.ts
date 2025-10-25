@@ -9,10 +9,10 @@ const sip_to_number = process.env.SIP_TO_NUMBER || ""
 const start_agent_lambda_url = process.env.START_AGENT_LAMBDA_URL || ""
 
 
-export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US'): Promise<void> => {
+export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US'): Promise<any> => {
     try {
         await startAgentUsingLambda(channelName, uid, language);
-        await outboundSipCallWithAgent(channelName, uid);
+        return await outboundSipCallWithAgent(channelName, uid);
     } catch (error) {
         console.error('Error starting call', error?.message);
         throw error

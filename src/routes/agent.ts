@@ -3,14 +3,23 @@ import { authenticateToken } from '../middleware/auth';
 import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
-import { agents, agentTypes } from '../data/agents';
+import { agents, AgentTypeIds, agentTypes } from '../data/agents';
 import { startSIPCall_withAgent } from '../services/sipService';
-
+import { checkAllowedSIPUser, allowedSIPUsers } from './webhook';
 const router = Router();
+
 
 // Get list of available agents
 router.get('/agents', authenticateToken, async (req, res) => {
   try {
+    // send sip agents only for allowed sip users 
+    const userId = Number(req.user?.id) || 0;
+    if (!allowedSIPUsers.includes(userId)) {
+      // send without sip agents
+      const filteredAgents = agents.filter(agent => agent.id !== 'sip_wifi_agent_inbound' && agent.id !== 'sip_wifi_agent_outbound');
+      res.json(filteredAgents);
+      return;
+    }
     res.json(agents);
   } catch (error) {
     console.error('Error getting agents list:', error);
@@ -23,6 +32,13 @@ router.get('/agents/:type', authenticateToken, async (req, res) => {
   try {
     const { type } = req.params;
     const agentsByType = agents.filter(agent => agent.type === type);
+    if (type === AgentTypeIds.PhoneCallAgent) {
+      const userId = Number(req.user?.id) || 0;
+      if (!allowedSIPUsers.includes(userId)) {
+        // send empty
+        res.json([])
+      }
+    }
     res.json(agentsByType);
   } catch (error) {
     console.error('Error getting agents by type:', error);
@@ -33,12 +49,36 @@ router.get('/agents/:type', authenticateToken, async (req, res) => {
 // Get list of available agent types
 router.get('/agent-types', authenticateToken, async (req, res) => {
   try {
+    const userId = Number(req.user?.id) || 0;
+    if (!allowedSIPUsers.includes(userId)) {
+      // send without phone call agent type
+      const filteredAgentTypes = agentTypes.filter(agentType => agentType.id !== AgentTypeIds.PhoneCallAgent);
+      res.json(filteredAgentTypes);
+      return;
+    }
     res.json(agentTypes);
   } catch (error) {
     console.error('Error getting agent types:', error);
     res.status(500).json({ error: 'Failed to get agent types' });
   }
 });
+
+router.get('/channel-for-sip', authenticateToken, checkAllowedSIPUser, async (req, res) => {
+  try {
+    const { channelName } = req.query;
+    if (!channelName) {
+      return res.status(400).json({ error: 'UID and channel name are required' });
+    }
+    const uid = Number(req.user?.id) || 0;
+    const tokenData = tokenService.generateToken(channelName as any, uid);
+    res.status(200).json({
+      message: 'SIP call started successfully', tokenData: tokenData
+    })
+  } catch (error) {
+    console.error('Error getting channel for SIP:', error);
+    res.status(500).json({ error: 'Failed to get channel for SIP' });
+  }
+})
 
 router.get('/:agentId', authenticateToken, async (req, res) => {
   try {
@@ -122,7 +162,7 @@ router.post('/stop', authenticateToken, async (req, res) => {
   }
 });
 
-router.post('/start-sip-call', authenticateToken, async (req, res) => {
+router.post('/start-sip-call', authenticateToken, checkAllowedSIPUser, async (req, res) => {
   try {
     const { agentId, phoneNumber, language = 'en-US' } = req.body;
     if (!agentId || !phoneNumber) {
@@ -134,9 +174,11 @@ router.post('/start-sip-call', authenticateToken, async (req, res) => {
       })
     }
     const uid = Number(req.user?.id) || 0;
-    const channelName = tokenService.generateChannelName(agentId, uid);
-    await startSIPCall_withAgent(channelName, uid.toString(), language);
-    return res.status(200).json({ message: 'SIP call started successfully', channelName: channelName });
+    const channelName = tokenService.generateChannelName("sip", uid);
+    //  return a token for the user to join the channel
+    const tokenData = tokenService.generateToken(channelName, uid);
+    const sipCallData = await startSIPCall_withAgent(channelName, uid.toString() + "01", language);
+    return res.status(200).json({ message: 'SIP call started successfully', tokenData: tokenData, sipCallData: sipCallData });
   } catch (error) {
     console.error('Error starting SIP call:', error);
     return res.status(500).json({ error: 'Failed to start SIP call' });
