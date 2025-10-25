@@ -54,7 +54,8 @@ export const outboundSipCallWithAgent = async (channelName: string, uid: string,
         regional_gateways: "true",
         prompt: "false",
         sip: sip_url,
-        token: tokenData.token
+        token: tokenData.token,
+        webhook_url: "https://convo.agoraaidemo.in:3009/api/webhook/agora"
     }, {
         headers: {
             'Authorization': 'Basic ' + sip_auth,
