@@ -2,6 +2,8 @@ interface WebhookEvent {
   event: string;
   callid: string;
   timestamp: number;
+  eventId: string;
+  eventTimestamp: number;
   uid?: string;
   channel?: string;
   to?: string;
@@ -27,13 +29,31 @@ class WebhookService {
   }
 
   getBufferEvents(): WebhookEvent[] {
+    // Filter out events older than 10 seconds
+    const now = Date.now();
+    const tenSecondsAgo = now - 10000; // 10 seconds in milliseconds
+    
+    this.bufferEvents = this.bufferEvents.filter(event => event.eventTimestamp > tenSecondsAgo);
+    
     return this.bufferEvents;
+  }
+
+  private generateUniqueId(): string {
+    return crypto.randomUUID();
   }
 
   processEvent(eventData: WebhookEvent): void {
     try {
       console.log(`Processing ${eventData.event} event for call ${eventData.callid}`);
-      this.bufferEvents = [eventData];
+      
+      // Generate unique ID and add event timestamp
+      const eventWithId = {
+        ...eventData,
+        eventId: this.generateUniqueId(),
+        eventTimestamp: Date.now()
+      };
+      
+      this.bufferEvents = [eventWithId];
       switch (eventData.event) {
         case 'call_initiated':
           this.handleCallInitiated(eventData);

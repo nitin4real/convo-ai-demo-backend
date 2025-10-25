@@ -76,7 +76,6 @@ router.get('/exotel', (req, res) => {
 
 router.get('/buffer-logs', authenticateToken, checkAllowedSIPUser, (req, res) => {
     const bufferLogs = webhookService.getBufferEvents();
-    webhookService.flushBufferEvents();
     res.status(200).json({
         bufferLogs: bufferLogs,
         status: 'healthy',
