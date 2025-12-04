@@ -74,6 +74,12 @@ interface AgentProperties {
   remote_rtc_uids: string[];
   enable_string_uid: boolean;
   idle_timeout: number;
+  advanced_features: {
+    enable_rtm: boolean;
+  };
+  parameters: {
+    enable_metrics: boolean;
+  };
   llm: {
     url: string;
     api_key: string;
@@ -275,6 +281,12 @@ class AgentService {
       ], // use req user id as remote uid
       enable_string_uid: false,
       idle_timeout: 120,
+      advanced_features: {
+        enable_rtm: false,
+      },
+      parameters: {
+        enable_metrics: true,
+      },
       llm: {
         url: llmEndPoint,
         api_key: llmApiKey,
@@ -430,7 +442,6 @@ class AgentService {
       this.heartbeatMap.delete(convoAgentId);
     } catch (error) {
       console.error('Error stopping agent:', error?.message);
-      throw error;
     }
   }
 
