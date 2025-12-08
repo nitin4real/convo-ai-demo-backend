@@ -1814,6 +1814,35 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
   },
+  { 
+    id: 'sip_customer_support_agent_outbound_multilingual',
+    name: 'Rohan (Support Agent) Outbound',
+    title: 'Customer Support Agent',
+    introduction: 'Hello, I\'m Rohan, your customer support specialist. I\'m here to help you with any questions or concerns you may have. How can I assist you today?',
+    description: 'A general-purpose customer support agent available via phone calls. Provides assistance with product inquiries, account management, order support, billing questions, and general customer service needs.',
+    features: [
+      'Product and service inquiries',
+      'Account management assistance',
+      'Order and billing support',
+      'General customer service',
+      'Transfer to human agent if needed'
+    ],
+    languages: [
+      {
+        name: 'English',
+        isoCode: 'en-US',
+        introduction: ''
+      },
+      {
+        name: 'Hindi',
+        isoCode: 'hi-IN',
+        introduction: ''
+      }
+    ],
+    layout: Layout.SIP_CALL_OUTBOUND,
+    type: AgentTypeIds.PhoneCallAgent,
+    domain: AgentDomains.PhoneCallAgent,
+  },
   // {
   //   id: 'sip_astrology_agent',
   //   name: 'Astrology Guide',

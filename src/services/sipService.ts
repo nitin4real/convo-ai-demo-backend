@@ -8,9 +8,9 @@ const sip_from_number = process.env.SIP_FROM_NUMBER || ""
 const start_agent_lambda_url = process.env.START_AGENT_LAMBDA_URL || ""
 
 
-export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US', phoneNumber: string): Promise<any> => {
+export const startSIPCall_withAgent = async (channelName: string, uid: string, language: string = 'en-US', phoneNumber: string, agent_id: string): Promise<any> => {
     try {
-        await startAgentUsingLambda(channelName, uid, language);
+        await startAgentUsingLambda(channelName, uid, language, agent_id);
         return await outboundSipCallWithAgent(channelName, uid, phoneNumber);
     } catch (error) {
         console.error('Error starting call', error?.message);
@@ -18,16 +18,22 @@ export const startSIPCall_withAgent = async (channelName: string, uid: string, l
     }
 }
 
-const startAgentUsingLambda = async (channelName: string, uid: string, language: string = 'en-US'): Promise<string> => {
-    console.log('startAgentUsingLambda initialized', 'channelName', channelName, 'uid', uid, 'language', language);
+const startAgentUsingLambda = async (channelName: string, uid: string, language: string = 'en-US', agent_id: string ): Promise<string> => {
+    console.log('startAgentUsingLambda initialized', 'channelName', channelName, 'uid', uid, 'language', language, 'service_provider', agent_id);
     const lambdaUrl = start_agent_lambda_url;
     const params = {
         pin: language === 'en-US' ? "123" : "321",
         channel_name: channelName,
         remote_uid: uid,
         agent_uid: "67371",
-        enable_string_uid: "false"
+        enable_string_uid: "false",
+        tts_provider: ""
     };
+
+    if (agent_id === 'sip_customer_support_agent_outbound_multilingual') {
+        params.tts_provider = 'cartesia'
+        params.pin = language === 'en-US' ? '678' : '876'
+    }
 
     try {
         const response = await axios.get(lambdaUrl, { params });
