@@ -29,14 +29,31 @@ interface ElevenLabsTTSParams {
   }
 }
 
-type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams;
+interface CartesiaTTSParams {
+  vendor: "cartesia";
+  params: {
+    api_key: string;
+    model_id: string;
+    voice: {
+      mode: string;
+      id: string;
+    };
+    output_format: {
+      container: string;
+      sample_rate: number;
+    };
+    language?: string;
+  }
+}
+
+type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams | CartesiaTTSParams;
 
 export interface StartAgentConfig {
   channelName: string;
   agentRTCUid: string;
   token: string;
   userId: number;
-  ttsVendor?: "microsoft" | "elevenlabs";
+  ttsVendor?: "microsoft" | "elevenlabs" | "cartesia";
   languageCode?: string;
   agentId: string;
   properties?: any;
@@ -97,6 +114,7 @@ interface AgentProperties {
       appId?: string;
       userId?: string;
     };
+
   };
   asr: {
     language: string;
@@ -146,7 +164,34 @@ class AgentService {
     }
   }
 
-  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" = "elevenlabs", voiceId?: string): TTSParams {
+  private getSonioxASRConfig = () => {
+    return {
+      vendor: "soniox",
+      params: {
+        api_key: process.env.SONIOX_API_KEY || "",
+        language_hints: ["en", "hi", "ta"]
+      }
+    }
+  }
+
+  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" | "cartesia" = "elevenlabs", voiceId?: string): TTSParams {
+    if (ttsVendor === "cartesia") {
+      return {
+        vendor: "cartesia",
+        params: {
+          api_key: process.env.CARTESIA_API_KEY || "",
+          model_id: "sonic-3",
+          voice: {
+            mode: "id",
+            id: voiceId || "228fca29-3a0a-435c-8728-5cb483251068"
+          },
+          output_format: {
+            container: "raw",
+            sample_rate: 16000
+          }
+        }
+      }
+    }
     return ttsVendor === "microsoft"
       ? {
         vendor: "microsoft",
@@ -197,7 +242,7 @@ class AgentService {
     let llmApiKey = process.env.OPENAI_API_KEY || "";
     let llmModel = "gpt-4o-mini"
 
-    const ttsVendorName: "microsoft" | "elevenlabs" = agentDetails.vendor || ttsVendor;
+    const ttsVendorName: "microsoft" | "elevenlabs" | "cartesia" = agentDetails.vendor || ttsVendor;
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendorName, voiceId);
 
     if (agentDetails.isCustomLLM) {
@@ -268,7 +313,11 @@ class AgentService {
             avatar_id: agentDetails.avatarSettings.avatarId,
           }
         }
-        ttsConfig.params.sample_rate = 16000;
+        if (ttsConfig.vendor === 'cartesia') {
+          ttsConfig.params.output_format.sample_rate = 16000;
+        } else {
+          ttsConfig.params.sample_rate = 16000;
+        }
       }
     }
 
@@ -337,6 +386,10 @@ class AgentService {
       }
 
       const properties = this.getAgentProperties(config);
+      if (config.agentId === 'help_desk_agent_male' || config.agentId === 'help_desk_agent_female') {
+        properties.asr = this.getSonioxASRConfig() as any;
+      }
+
       const response = await axios.post(
         `${this.baseUrl}/join`,
         {

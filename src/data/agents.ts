@@ -13,7 +13,8 @@ export interface AgentTile {
   languages?: Language[]
   layout?: Layout;
   isCustomLLM?: boolean;
-  vendor?: "microsoft" | "elevenlabs";
+  showMetric?: boolean;
+  vendor?: "microsoft" | "elevenlabs" | 'cartesia';
   avatarSettings?: {
     enable: boolean;
     vendor: string;
@@ -56,6 +57,7 @@ export const enum AgentTypeIds {
   Arabic = 'arabic',
   Storytelling = 'storytelling',
   PhoneCallAgent = 'phonecallagent',
+  HelpDesk = 'helpdesk',
 }
 
 const enum AgentDomains {
@@ -92,6 +94,7 @@ const enum AgentDomains {
   Custom = 'Custom',
   Assistant = 'Assistant',
   PhoneCallAgent = 'Phone Call Agent',
+  HelpDesk = 'Help Desk Agent',
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -318,6 +321,14 @@ Do not use emojis in response.
     instructions: bigPrompts.productAssistant,
     dismissDefaultInstructions: true
   },
+  'help_desk_agent_male': {
+    instructions: "you are a male helpdesk ai assitant. Try to help the customer with their queries. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS",
+    dismissDefaultInstructions: true
+  },
+  'help_desk_agent_female': {
+    instructions: 'you are a female helpdesk ai assitant. Try to help the customer with their queries. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS',
+    dismissDefaultInstructions: true
+  }
 
 }
 
@@ -1814,7 +1825,7 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
   },
-  { 
+  {
     id: 'sip_customer_support_agent_outbound_multilingual',
     name: 'Rohan (Support Agent) Outbound',
     title: 'Customer Support Agent',
@@ -1861,6 +1872,32 @@ export const agents: AgentTile[] = [
   //   domain: AgentDomains.PhoneCallAgent,
   // },
   {
+    id: 'help_desk_agent_male',
+    name: 'Rohan',
+    title: 'Help Desk Agent (Male)',
+    introduction: 'Hello, I\'m Rohan, How can I assist you today?',
+    description: 'Help Desk agent are AI Agent that resolve customer inquiries, provide support, and offer solutions for businesses, enhancing customer service efficiency.',
+    features: ['Customer support', 'Inquiry resolution', 'Business support', 'Solution provision'],
+    type: AgentTypeIds.HelpDesk,
+    domain: AgentDomains.HelpDesk,
+    vendor: 'cartesia',
+    voiceId: '228fca29-3a0a-435c-8728-5cb483251068',
+    showMetric: true
+  },
+  {
+    id: 'help_desk_agent_female',
+    name: 'Asha',
+    title: 'Help Desk Agent (Female)',
+    introduction: 'Hello, I\'m Asha, How can I assist you today?',
+    description: 'Help Desk agent are AI Agent that resolve customer inquiries, provide support, and offer solutions for businesses, enhancing customer service efficiency.',
+    features: ['Customer support', 'Inquiry resolution', 'Business support', 'Solution provision'],
+    type: AgentTypeIds.HelpDesk,
+    domain: AgentDomains.HelpDesk,
+    vendor: 'cartesia',
+    voiceId: 'f786b574-daa5-4673-aa0c-cbe3e8534c02',
+    showMetric: true
+  },
+  {
     id: 'custom',
     name: 'Custom Agent (Beta)',
     title: 'Create your own agent',
@@ -1905,6 +1942,11 @@ export const agentTypes: AgentType[] = [
     description: 'A friendly, supportive conversational partner for casual chats, emotional support, or just to brighten your day.'
   },
   {
+    id: AgentTypeIds.HelpDesk,
+    title: 'Help Desk',
+    description: 'AI agents designed to resolve customer inquiries, provide support, and offer solutions for businesses, enhancing customer service efficiency.'
+  },
+  {
     id: AgentTypeIds.Religion,
     title: 'Religious Guidance',
     description: 'Spiritual support, religious teachings, and moral insights based on different faith traditions and philosophies.'
@@ -1944,4 +1986,5 @@ export const agentTypes: AgentType[] = [
     title: 'Miscellaneous',
     description: "Covers a broad range of topics that don't fit into specific categories — from random questions to general curiosity."
   },
+
 ];
