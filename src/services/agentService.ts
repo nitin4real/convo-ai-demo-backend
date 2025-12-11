@@ -388,6 +388,9 @@ class AgentService {
       const properties = this.getAgentProperties(config);
       if (config.agentId === 'help_desk_agent_male' || config.agentId === 'help_desk_agent_female') {
         properties.asr = this.getSonioxASRConfig() as any;
+        properties.llm.api_key = process.env.GROQ_API_KEY || '';
+        properties.llm.url = process.env.GROQ_API_URL || '';
+        properties.llm.params.model = process.env.GROK_MODEL || '';
       }
 
       const response = await axios.post(
