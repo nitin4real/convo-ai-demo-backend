@@ -285,7 +285,7 @@ Whenever you get a data point, make sure to save it using function calling. Don'
   },
   'alice': {
     instructions: `
-    You are a Tutor. Help the user learn new things. Answer user questions and help them learn as a teacher would help a student.
+    You are a female AI Tutor. Help the user learn new things. Answer user questions and help them learn as a teacher would help a student.
     Your response will be sent to a engine that'll generate audio from your text.
     Talk to the user in the language user talks to you in.
     Stay in character. Don't get distracted by other topics. Keep the conversation focused on these instructions.
@@ -731,43 +731,47 @@ export const agents: AgentTile[] = [
     features: ['Concept explanation', 'Practice questions', 'Personalized feedback', 'Study tips'],
     type: AgentTypeIds.Edtech,
     domain: AgentDomains.GeneralTeaching,
-    languages: [
-      {
-        name: 'English',
-        isoCode: 'en-US',
-        introduction: 'Hello, I\'m Alice, your AI tutor. Ask me anything and let\'s learn together!'
-      },
-      {
-        name: 'Hindi',
-        isoCode: 'hi-IN',
-        introduction: 'नमस्ते, मैं एलिस हूँ, आपकी एआई ट्यूटर। मुझसे कुछ भी पूछिए, चलिए साथ में सीखते हैं!'
-      },
-      {
-        name: 'Hinglish',
-        isoCode: 'en-IN',
-        introduction: 'Hi, I\'m Alice! Koi bhi topic samajhna hai? Mujhse poochho, milke seekhte hain.'
-      },
-      {
-        name: 'Arabic (UAE)',
-        isoCode: 'ar-AE',
-        introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من الإمارات. يمكنك سؤالي عن أي موضوع ولنبدأ التعلم معاً بأسلوب إماراتي مميز.'
-      },
-      {
-        name: 'Arabic (EG)',
-        isoCode: 'ar-EG',
-        introduction: 'أهلاً وسهلاً، أنا أليس، مدرس للذكاء الاصطناعي من مصر. اسألني أي شيء وهيا نتعلم معاً باللهجة المصرية الجميلة.'
-      },
-      {
-        name: 'Arabic (JO)',
-        isoCode: 'ar-JO',
-        introduction: 'أهلاً بك، أنا أليس، مدرس للذكاء الاصطناعي من الأردن. اسألني أي موضوع ودعنا نتعلم معاً باللهجة الأردنية الأصيلة.'
-      },
-      {
-        name: 'Arabic (SA)',
-        isoCode: 'ar-SA',
-        introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من السعودية. اسألني أي موضوع ودعنا نتعلم معاً باللهجة السعودية العريقة.'
-      }
-    ]
+    showMetric: true,
+    vendor: 'cartesia',
+    voiceId: 'f786b574-daa5-4673-aa0c-cbe3e8534c02',
+
+    // languages: [
+    //   {
+    //     name: 'English',
+    //     isoCode: 'en-US',
+    //     introduction: 'Hello, I\'m Alice, your AI tutor. Ask me anything and let\'s learn together!'
+    //   },
+    //   {
+    //     name: 'Hindi',
+    //     isoCode: 'hi-IN',
+    //     introduction: 'नमस्ते, मैं एलिस हूँ, आपकी एआई ट्यूटर। मुझसे कुछ भी पूछिए, चलिए साथ में सीखते हैं!'
+    //   },
+    //   {
+    //     name: 'Hinglish',
+    //     isoCode: 'en-IN',
+    //     introduction: 'Hi, I\'m Alice! Koi bhi topic samajhna hai? Mujhse poochho, milke seekhte hain.'
+    //   },
+    //   {
+    //     name: 'Arabic (UAE)',
+    //     isoCode: 'ar-AE',
+    //     introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من الإمارات. يمكنك سؤالي عن أي موضوع ولنبدأ التعلم معاً بأسلوب إماراتي مميز.'
+    //   },
+    //   {
+    //     name: 'Arabic (EG)',
+    //     isoCode: 'ar-EG',
+    //     introduction: 'أهلاً وسهلاً، أنا أليس، مدرس للذكاء الاصطناعي من مصر. اسألني أي شيء وهيا نتعلم معاً باللهجة المصرية الجميلة.'
+    //   },
+    //   {
+    //     name: 'Arabic (JO)',
+    //     isoCode: 'ar-JO',
+    //     introduction: 'أهلاً بك، أنا أليس، مدرس للذكاء الاصطناعي من الأردن. اسألني أي موضوع ودعنا نتعلم معاً باللهجة الأردنية الأصيلة.'
+    //   },
+    //   {
+    //     name: 'Arabic (SA)',
+    //     isoCode: 'ar-SA',
+    //     introduction: 'مرحباً، أنا أليس، مدرس للذكاء الاصطناعي من السعودية. اسألني أي موضوع ودعنا نتعلم معاً باللهجة السعودية العريقة.'
+    //   }
+    // ]
   },
   {
     id: 'solveit',
