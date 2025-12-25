@@ -51,6 +51,30 @@ router.post('/agora', (req, res) => {
     }
 });
 
+router.post('/agora-lc', (req, res) => {
+    try {
+        const eventData = req.body;
+        // console.log('Received Agora LC webhook event:', JSON.stringify(eventData, null, 2));
+        
+        // Process the Agora LC event
+        webhookService.processAgoraLCEvent(eventData);
+        
+        // Always return 200 OK as per webhook best practices
+        res.status(200).json({
+            success: true,
+            message: 'Agora LC webhook event processed successfully'
+        });
+    } catch (error) {
+        console.error('Error processing Agora LC webhook event:', error);
+        
+        // Still return 200 OK to prevent retries
+        res.status(200).json({
+            success: false,
+            message: 'Error processing Agora LC webhook event'
+        });
+    }
+});
+
 router.get('/exotel', (req, res) => {
     try {
         // print params
@@ -76,8 +100,11 @@ router.get('/exotel', (req, res) => {
 
 router.get('/buffer-logs', authenticateToken, checkAllowedSIPUser, (req, res) => {
     const bufferLogs = webhookService.getBufferEvents();
+    const agoraLCEvents = webhookService.getAgoraLCEvents();
+    
     res.status(200).json({
         bufferLogs: bufferLogs,
+        agoraLCEvents: agoraLCEvents,
         status: 'healthy',
         message: 'Buffer logs retrieved successfully'
     });

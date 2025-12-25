@@ -96,6 +96,7 @@ interface AgentProperties {
   };
   parameters: {
     enable_metrics: boolean;
+    enable_dump: boolean
   };
   llm: {
     url: string;
@@ -169,7 +170,7 @@ class AgentService {
       vendor: "soniox",
       params: {
         api_key: process.env.SONIOX_API_KEY || "",
-        language_hints: ["en", "hi", "ta"]
+        language_hints: ["en", "hi", "ta", "ar"]
       }
     }
   }
@@ -335,6 +336,7 @@ class AgentService {
       },
       parameters: {
         enable_metrics: true,
+        enable_dump: true
       },
       llm: {
         url: llmEndPoint,

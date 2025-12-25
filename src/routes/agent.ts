@@ -4,7 +4,7 @@ import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
 import { agents, AgentTypeIds, agentTypes } from '../data/agents';
-import { startSIPCall_withAgent } from '../services/sipService';
+import { startSIPCall_withAgent, startSIPWithLC } from '../services/sipService';
 import { checkAllowedSIPUser, allowedSIPUsers } from './webhook';
 const router = Router();
 
@@ -16,7 +16,7 @@ router.get('/agents', authenticateToken, async (req, res) => {
     const userId = Number(req.user?.id) || 0;
     if (!allowedSIPUsers.includes(userId)) {
       // send without sip agents
-      const filteredAgents = agents.filter(agent => agent.id !== 'sip_wifi_agent_inbound' && agent.id !== 'sip_wifi_agent_outbound');
+      const filteredAgents = agents.filter(agent => agent.id !== 'sip_wifi_agent_inbound' && agent.id !== 'sip_wifi_agent_outbound' && agent.id !== 'sip_property_assistant_agent_inbound' && agent.id !== 'sip_property_assistant_agent_outbound');
       res.json(filteredAgents);
       return;
     }
@@ -177,6 +177,10 @@ router.post('/start-sip-call', authenticateToken, checkAllowedSIPUser, async (re
     const channelName = tokenService.generateChannelName("sip", uid);
     //  return a token for the user to join the channel
     const tokenData = tokenService.generateToken(channelName, uid);
+    if (agentId === 'sip_property_assistant_agent_inbound' || agentId === 'sip_property_assistant_agent_outbound') {
+      const sipCallData = await startSIPWithLC(channelName, uid.toString() + "01", language, phoneNumber, agentId);
+      return res.status(200).json({ message: 'SIP call started successfully', tokenData: tokenData, sipCallData: {...sipCallData, success: true, isLC: true} });
+    }
     const sipCallData = await startSIPCall_withAgent(channelName, uid.toString() + "01", language, phoneNumber, agentId);
     return res.status(200).json({ message: 'SIP call started successfully', tokenData: tokenData, sipCallData: sipCallData });
   } catch (error) {

@@ -1902,6 +1902,40 @@ export const agents: AgentTile[] = [
     showMetric: true
   },
   {
+    id: 'sip_property_assistant_agent_inbound',
+    name: 'Maira (Property Assistant Agent) Inbound',
+    title: 'Property Assistant Agent',
+    introduction: 'Hello, I\'m your property assistant. I\'ll help you with your property related questions and concerns. What seems to be the problem?',
+    description: 'A specialized property assistant agent that helps with property related questions and concerns over phone calls. Provides step-by-step guidance for property related questions and concerns.',
+    features: [
+      'Property related questions and concerns',
+      'Property related information',
+      'Property related assistance',
+      'Transfer to human property assistant if needed'
+    ],
+    layout: Layout.SIP_CALL_INBOUND,
+    type: AgentTypeIds.PhoneCallAgent,
+    domain: AgentDomains.PhoneCallAgent,
+    showMetric: true
+  },
+  {
+    id: 'sip_property_assistant_agent_outbound',
+    name: 'Maira (Property Assistant Agent) Outbound',
+    title: 'Property Assistant Agent',
+    introduction: 'Hello, I\'m your property assistant. I\'ll help you with your property related questions and concerns. What seems to be the problem?',
+    description: 'A specialized property assistant agent that helps with property related questions and concerns over phone calls. Provides step-by-step guidance for property related questions and concerns.',
+    features: [
+      'Property related questions and concerns',
+      'Property related information',
+      'Property related assistance',
+      'Transfer to human property assistant if needed'
+    ],
+    layout: Layout.SIP_CALL_OUTBOUND,
+    type: AgentTypeIds.PhoneCallAgent,
+    domain: AgentDomains.PhoneCallAgent,
+    showMetric: true
+  },
+  {
     id: 'custom',
     name: 'Custom Agent (Beta)',
     title: 'Create your own agent',

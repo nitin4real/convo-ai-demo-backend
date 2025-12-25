@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 interface WebhookEvent {
   event: string;
   callid: string;
@@ -18,8 +20,39 @@ interface WebhookEvent {
   sdk_options?: string;
 }
 
+interface AgoraLCEventPayload {
+  agent_id: string;
+  channel: string;
+  state: string;
+  report_ms: number;
+  labels?: {
+    campaign_id?: string;
+    customer_group?: string;
+    [key: string]: any;
+  };
+}
+
+interface AgoraLCEvent {
+  agent_id: string;
+  channel: string;
+  state: string;
+  report_ms: number;
+  labels?: {
+    campaign_id?: string;
+    customer_group?: string;
+    [key: string]: any;
+  };
+  eventType: number;
+  storedAt: number;
+}
+
 class WebhookService {
   private bufferEvents: WebhookEvent[] = [];
+  // Buffer for Agora LC events, keyed by agent_id
+  private agoraLCBuffer: Map<string, AgoraLCEvent> = new Map();
+  // TTL for Agora LC events: 7 seconds
+  private readonly AGORA_LC_TTL_MS = 7000;
+  
   /**
    * Process incoming webhook events from Agora PSTN/SIP Gateway
    */
@@ -166,6 +199,88 @@ class WebhookService {
     // - Process billing information
     // - Send call summary notifications
     // - Clean up resources
+  }
+
+  /**
+   * Process Agora LC webhook events
+   * Only processes eventType 201 (inbound) and 202 (outbound)
+   */
+  processAgoraLCEvent(eventData: {
+    sid: string;
+    noticeId: string;
+    productId: number;
+    eventType: number;
+    notifyMs: number;
+    payload: AgoraLCEventPayload;
+  }): void {
+    try {
+      // Only process eventType 201 (inbound) or 202 (outbound)
+      if (eventData.eventType !== 201 && eventData.eventType !== 202) {
+        console.log(`Skipping Agora LC event with eventType ${eventData.eventType} (only processing 201/202)`);
+        return;
+      }
+
+      const payload = eventData.payload;
+      
+      if (!payload || !payload.agent_id) {
+        console.error('Invalid Agora LC event payload: missing agent_id');
+        return;
+      }
+
+      // Store event in buffer, isolated by agent_id
+      // Each agent_id will only keep the latest event
+      const agoraLCEvent: AgoraLCEvent = {
+        agent_id: payload.agent_id,
+        channel: payload.channel || '',
+        state: payload.state || '',
+        report_ms: payload.report_ms || Date.now(),
+        labels: payload.labels,
+        eventType: eventData.eventType,
+        storedAt: Date.now()
+      };
+
+      this.agoraLCBuffer.set(payload.agent_id, agoraLCEvent);
+      console.log(`Stored Agora LC event for agent_id: ${payload.agent_id}, state: ${payload.state}, eventType: ${eventData.eventType}`);
+    } catch (error) {
+      console.error('Error processing Agora LC webhook event:', error);
+    }
+  }
+
+  /**
+   * Get latest Agora LC event
+   * Automatically cleans up events older than 7 seconds
+   * Returns only the most recent event across all agent_ids
+   */
+  getAgoraLCEvents(): AgoraLCEvent[] {
+    const now = Date.now();
+    const sevenSecondsAgo = now - this.AGORA_LC_TTL_MS;
+
+    // Clean up expired events
+    for (const [agentId, event] of this.agoraLCBuffer.entries()) {
+      if (event.storedAt < sevenSecondsAgo) {
+        this.agoraLCBuffer.delete(agentId);
+        console.log(`Removed expired Agora LC event for agent_id: ${agentId}`);
+      }
+    }
+
+    // Find the latest event (highest storedAt timestamp)
+    let latestEvent: AgoraLCEvent | null = null;
+    for (const [, event] of this.agoraLCBuffer.entries()) {
+      if (!latestEvent || event.storedAt > latestEvent.storedAt) {
+        latestEvent = {
+          agent_id: event.agent_id,
+          channel: event.channel,
+          state: event.state,
+          report_ms: event.report_ms,
+          labels: event.labels,
+          eventType: event.eventType,
+          storedAt: event.storedAt
+        };
+      }
+    }
+
+    // Return array with only the latest event, or empty array if none
+    return latestEvent ? [latestEvent] : [];
   }
 }
 
