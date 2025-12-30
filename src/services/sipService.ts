@@ -45,9 +45,9 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
                 token: agentTokenData.token,
                 agent_rtc_uid: agentRtcUid.toString(),
                 remote_rtc_uids: [`${sipRtcUid}`],
-                llm: getAgentLLM(agent_id, language),
-                asr: getAgentASR(agent_id),
-                tts: getAgentTTS(agent_id),
+                // llm: getAgentLLM(agent_id, language),
+                // asr: getAgentASR(agent_id),
+                // tts: getAgentTTS(agent_id),
             },
             sip: {
                 to_number: phoneNumber,
@@ -56,7 +56,7 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
                 rtc_token: sipTokenData.token,
                 enable_recording: false,
                 timeout: 60,
-                allowed_tools: ["*"]
+                allowed_tools: []
             }
         };
         // console.log('requestBody', requestBody);
