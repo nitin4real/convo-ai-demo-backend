@@ -1652,18 +1652,7 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.Arabic,
     domain: AgentDomains.GeneralTeaching,
     voiceId: 'amSNjVC0vWYiE8iGimVb',
-    languages: [
-      {
-        name: 'English',
-        isoCode: 'en-US',
-        introduction: 'Hello, I\'m Omar, your AI tutor. Ask me anything and let\'s learn together!'
-      },
-      {
-        name: 'Arabic (EG)',
-        isoCode: 'ar-EG',
-        introduction: 'أهلاً! أنا عمر، مدرسك بالذكاء الاصطناعي. إسألني أي حاجة وخلينا نتعلم سوا!'
-      },
-    ]
+    showMetric: true,
   },
   {
     id: 'farah-ar',
