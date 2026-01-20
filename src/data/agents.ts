@@ -343,7 +343,7 @@ export const agents: AgentTile[] = [
     type: AgentTypeIds.Astrology,
     domain: AgentDomains.Astrology,
     vendor: 'cartesia',
-    voiceId: 'f786b574-daa5-4673-aa0c-cbe3e8534c02',
+    voiceId: 'faf0731e-dfb9-4cfc-8119-259a79b27e12',
   },
   {
     id: 'ember',
