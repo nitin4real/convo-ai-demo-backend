@@ -340,26 +340,10 @@ export const agents: AgentTile[] = [
     introduction: 'Hello, I\'m Astra, the celestial guide. I offer personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.',
     description: 'Astra, the celestial guide, offers personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.',
     features: ['Birth chart analysis', 'Daily horoscopes', 'Compatibility readings', 'Astrological queries'],
-    voiceId: 'gOkFV1JMCt0G0n9xmBwV',
     type: AgentTypeIds.Astrology,
     domain: AgentDomains.Astrology,
-    languages: [
-      {
-        name: 'English',
-        isoCode: 'en-US',
-        introduction: 'Hello, I\'m Astra, the celestial guide. I offer personalized astrological insights based on your birth chart. Explore your cosmic blueprint and discover what the stars have in store.'
-      },
-      {
-        name: 'Hindi',
-        isoCode: 'hi-IN',
-        introduction: 'नमस्ते, मैं अस्त्रा हूँ, आपका खगोलीय मार्गदर्शक। मैं आपके जन्म चार्ट के आधार पर व्यक्तिगत ज्योतिषीय सलाह देता हूँ। अपने जीवन का खाका जानिए और सितारों का संदेश समझिए।'
-      },
-      {
-        name: 'Hinglish',
-        isoCode: 'en-IN',
-        introduction: 'Hi, I\'m Astra! Tumhara birth chart dekh kar bataunga ki sitare kya kehte hain. Ready ho apni cosmic kahani jaane ke liye?'
-      }
-    ]
+    vendor: 'cartesia',
+    voiceId: 'f786b574-daa5-4673-aa0c-cbe3e8534c02',
   },
   {
     id: 'ember',

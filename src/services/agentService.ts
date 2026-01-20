@@ -388,7 +388,7 @@ class AgentService {
       }
 
       const properties = this.getAgentProperties(config);
-      if (config.agentId === 'help_desk_agent_male' || config.agentId === 'help_desk_agent_female' || config.agentId === 'alice' || config.agentId === 'omar-ar') {
+      if (config.agentId === 'help_desk_agent_male' || config.agentId === 'help_desk_agent_female' || config.agentId === 'alice' || config.agentId === 'omar-ar' || config.agentId === 'astra') {
         properties.asr = this.getSonioxASRConfig() as any;
         properties.llm.api_key = process.env.GROQ_API_KEY || '';
         properties.llm.url = process.env.GROQ_API_URL || '';
