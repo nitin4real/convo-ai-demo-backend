@@ -395,6 +395,10 @@ class AgentService {
         properties.llm.params.model = process.env.GROK_MODEL || '';
       }
 
+      if (config.agentId === 'legal_assistant') {
+        properties.asr = this.getSonioxASRConfig() as any;
+      }
+
       const response = await axios.post(
         `${this.baseUrl}/join`,
         {

@@ -58,6 +58,7 @@ export const enum AgentTypeIds {
   Storytelling = 'storytelling',
   PhoneCallAgent = 'phonecallagent',
   HelpDesk = 'helpdesk',
+  Legal = 'legal',
 }
 
 const enum AgentDomains {
@@ -95,6 +96,7 @@ const enum AgentDomains {
   Assistant = 'Assistant',
   PhoneCallAgent = 'Phone Call Agent',
   HelpDesk = 'Help Desk Agent',
+  Legal = 'Legal',
 }
 
 export const customInstructions: Record<string, { instructions: string, dismissDefaultInstructions: boolean }> = {
@@ -328,8 +330,11 @@ Do not use emojis in response.
   'help_desk_agent_female': {
     instructions: 'you are a female helpdesk ai assitant. Try to help the customer with their queries. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS',
     dismissDefaultInstructions: true
+  },
+  'legal_assistant': {
+    instructions: 'You are a legal Advisor ai assitant. Try to help the customer with their legal related questions and concerns. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS',
+    dismissDefaultInstructions: true
   }
-
 }
 
 export const agents: AgentTile[] = [
@@ -1917,6 +1922,22 @@ export const agents: AgentTile[] = [
     features: ['Custom guidance', 'Custom insights', 'Custom resources', 'Custom recommendations'],
     type: AgentTypeIds.Misc,
     domain: AgentDomains.Custom,
+  },
+  {
+    id: 'legal_assistant',
+    name: 'Legal Assistant',
+    title: 'Legal Assistant',
+    introduction: 'Hello, I\'m your legal assistant. I\'ll help you with your legal related questions and concerns. What seems to be the problem?',
+    description: 'A specialized legal assistant agent that helps with legal related questions and concerns over phone calls. Provides step-by-step guidance for legal related questions and concerns.',
+    features: [
+      'Legal related questions and concerns',
+      'Legal related information',
+      'Legal related assistance'
+    ],
+    vendor: 'cartesia',
+    voiceId: '228fca29-3a0a-435c-8728-5cb483251068',
+    type: AgentTypeIds.Legal,
+    domain: AgentDomains.Legal
   }
 ] as const;
 
@@ -1963,6 +1984,11 @@ export const agentTypes: AgentType[] = [
     description: 'Spiritual support, religious teachings, and moral insights based on different faith traditions and philosophies.'
   },
   {
+    id: AgentTypeIds.Legal,
+    title: 'Legal',
+    description: 'Legal agents are friendly AI agents that provide legal advice and support to the user.'
+  },
+  {
     id: AgentTypeIds.Storytelling,
     title: 'Storytelling',
     description: "Storytelling agents are friendly AI agents that create simple, spoken stories from kids' voice input. They spark imagination and comfort using clear, engaging language."
@@ -1996,6 +2022,5 @@ export const agentTypes: AgentType[] = [
     id: AgentTypeIds.Misc,
     title: 'Miscellaneous',
     description: "Covers a broad range of topics that don't fit into specific categories — from random questions to general curiosity."
-  },
-
+  }
 ];
