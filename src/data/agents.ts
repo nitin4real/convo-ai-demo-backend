@@ -1935,7 +1935,7 @@ export const agents: AgentTile[] = [
       'Legal related assistance'
     ],
     vendor: 'cartesia',
-    voiceId: '228fca29-3a0a-435c-8728-5cb483251068',
+    voiceId: '42b39f37-515f-4eee-8546-73e841679c1d',
     type: AgentTypeIds.Legal,
     domain: AgentDomains.Legal
   }
