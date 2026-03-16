@@ -1012,26 +1012,29 @@ export const agents: AgentTile[] = [
     introduction: 'Hi, I\'m Anya, your friend. I\'m here to chat, listen, and offer support whenever you need it.',
     description: 'Anya, your AI companion, provides companionship, engaging in conversations and offering emotional support.',
     features: ['Friendly conversation', 'Active listening', 'Personalized interactions', 'Emotional support'],
-    voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
+    // voiceId: 'tJ2B69tloiOhZn8Gk9Lp',
     type: AgentTypeIds.Companion,
     domain: AgentDomains.Companion,
-    languages: [
-      {
-        name: 'English',
-        isoCode: 'en-US',
-        introduction: 'Hi, I\'m Anya, your friend. I\'m here to chat, listen, and offer support whenever you need it.'
-      },
-      {
-        name: 'Hindi',
-        isoCode: 'hi-IN',
-        introduction: 'नमस्ते, मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
-      },
-      {
-        name: 'Hinglish',
-        isoCode: 'en-IN',
-        introduction: 'Hi, I\'m Anya! Kabhi bhi baat karni ho ya support chahiye ho, main yahin hoon.'
-      }
-    ]
+
+    vendor: 'cartesia',
+    voiceId: 'f786b574-daa5-4673-aa0c-cbe3e8534c02',
+    // languages: [
+    //   {
+    //     name: 'English',
+    //     isoCode: 'en-US',
+    //     introduction: 'Hi, I\'m Anya, your friend. I\'m here to chat, listen, and offer support whenever you need it.'
+    //   },
+    //   {
+    //     name: 'Hindi',
+    //     isoCode: 'hi-IN',
+    //     introduction: 'नमस्ते, मैं अन्या हूँ, आपकी दोस्त। मैं यहाँ आपसे बात करने, आपकी बातें सुनने और जब भी आपको ज़रूरत हो, आपका समर्थन करने के लिए हूँ।'
+    //   },
+    //   {
+    //     name: 'Hinglish',
+    //     isoCode: 'en-IN',
+    //     introduction: 'Hi, I\'m Anya! Kabhi bhi baat karni ho ya support chahiye ho, main yahin hoon.'
+    //   }
+    // ]
   },
   {
     id: 'aarav',
@@ -1040,26 +1043,28 @@ export const agents: AgentTile[] = [
     introduction: 'Hey, I\'m Aarav, your AI companion. I\'m here to share thoughts, have fun conversations, and be a supportive presence.',
     description: 'Aarav, your AI companion, offers engaging conversations, shares insights, and provides a supportive virtual presence.',
     features: ['Interesting discussions', 'Sharing perspectives', 'Lighthearted interactions', 'Supportive communication'],
-    voiceId: 'NFG5qt843uXKj4pFvR7C',
+    // voiceId: 'NFG5qt843uXKj4pFvR7C',
     type: AgentTypeIds.Companion,
     domain: AgentDomains.Companion,
-    languages: [
-      {
-        name: 'English',
-        isoCode: 'en-US',
-        introduction: 'Hey, I\'m Aarav, your AI companion. Let\'s chat and have some fun!'
-      },
-      {
-        name: 'Hindi',
-        isoCode: 'hi-IN',
-        introduction: 'नमस्ते, मैं आरव हूँ, आपका दोस्त। चलिए, बातें करते हैं और मस्ती करते हैं!'
-      },
-      {
-        name: 'Hinglish',
-        isoCode: 'en-IN',
-        introduction: 'Hi, I\'m Aarav! Chill karna ho ya baatein share karni ho, main hoon na.'
-      }
-    ]
+    vendor: 'cartesia',
+    voiceId: '228fca29-3a0a-435c-8728-5cb483251068',
+    // languages: [
+    //   {
+    //     name: 'English',
+    //     isoCode: 'en-US',
+    //     introduction: 'Hey, I\'m Aarav, your AI companion. Let\'s chat and have some fun!'
+    //   },
+    //   {
+    //     name: 'Hindi',
+    //     isoCode: 'hi-IN',
+    //     introduction: 'नमस्ते, मैं आरव हूँ, आपका दोस्त। चलिए, बातें करते हैं और मस्ती करते हैं!'
+    //   },
+    //   {
+    //     name: 'Hinglish',
+    //     isoCode: 'en-IN',
+    //     introduction: 'Hi, I\'m Aarav! Chill karna ho ya baatein share karni ho, main hoon na.'
+    //   }
+    // ]
   },
   {
     id: 'guruDev',
