@@ -323,6 +323,10 @@ Do not use emojis in response.
     instructions: bigPrompts.productAssistant,
     dismissDefaultInstructions: true
   },
+  'edtLumaAssistant': {
+    instructions: bigPrompts.edtLumaAssistant,
+    dismissDefaultInstructions: true
+  },
   'help_desk_agent_male': {
     instructions: "you are a male helpdesk ai assitant. Try to help the customer with their queries. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS",
     dismissDefaultInstructions: true
@@ -1766,6 +1770,29 @@ export const agents: AgentTile[] = [
       enable: true,
       vendor: 'akool',
       avatarId: 'dvp_Alinna_emotionsit_agora'
+    }
+  },
+  {
+    id: 'edtLumaAssistant',
+    name: 'EDT Luma Product Assistant',
+    title: 'The EDT Luma Product Assistant',
+    introduction: 'Hi, I’m the EDT Luma Product Assistant. I can show you how the Luma Air Fryer works and help you understand what makes it different from traditional air fryers.',
+    description: 'A friendly EDT product specialist avatar that demonstrates the Luma Air Fryer, explains its pure glass technology and key features, and helps customers make confident purchase decisions in a warm, non-pushy way.',
+    features: [
+      'Demonstrates the Luma Air Fryer clearly',
+      'Explains pure glass technology and safety benefits',
+      'Answers usage, shipping, returns, and product questions',
+      'Engaging and interactive Video Avatar'
+    ],
+    layout: Layout.AVATAR_LANDSCAPE_TRANSCRIPT,
+    voiceId: 'pjcYQlDFKMbcOUp6F5GD',
+    type: AgentTypeIds.Akool,
+    domain: AgentDomains.Assistant,
+    showMetric: false,
+    avatarSettings: {
+      enable: true,
+      vendor: 'akool',
+      avatarId: 'dvp_Alexandra_3_pd'
     }
   },
   {
