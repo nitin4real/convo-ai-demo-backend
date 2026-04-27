@@ -393,6 +393,7 @@ class AgentService {
         || config.agentId === 'alice' 
         || config.agentId === 'omar-ar' 
         || config.agentId === 'astra' 
+        || config.agentId === 'ridemate'
         || config.agentId === 'anya' 
         || config.agentId === 'aarav'
         || config.agentId === 'ananya'
