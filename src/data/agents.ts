@@ -356,6 +356,10 @@ Do not use emojis in response.
     instructions: bigPrompts.edtLumaAssistant,
     dismissDefaultInstructions: true
   },
+  'podcastAssistant': {
+    instructions: bigPrompts.podcastAssistant,
+    dismissDefaultInstructions: true
+  },
   'help_desk_agent_male': {
     instructions: "you are a male helpdesk ai assitant. Try to help the customer with their queries. Stay on topic. Don\'t get distracted. Talk to the user in the language that user talks to you in. User speech will be converted via a asr and given to you and your output will be spoken out to the user using a TTS",
     dismissDefaultInstructions: true
@@ -995,6 +999,22 @@ export const agents: AgentTile[] = [
         introduction: 'Hi, I\'m ChatPal! Chat room mein interesting baatein aur dosti karni hai? Main hoon na.'
       }
     ]
+  },
+  {
+    id: 'podcastAssistant',
+    name: 'Sama',
+    title: 'The Music and Podcast Companion',
+    introduction: 'Hi, I\'m Sama, your music and podcast discovery companion. Tell me your mood, activity, favorite artists, or podcast interests, and I\'ll suggest what to explore.',
+    description: 'Sama helps users discover Arabic and international music, artists, playlists, and podcasts through natural voice conversations based on mood, activity, genre, language, era, and topic preferences.',
+    features: [
+      'Mood and activity-based recommendations',
+      'Arabic and international music discovery',
+      'Podcast topic suggestions',
+      'Artist, genre, era, and playlist guidance'
+    ],
+    type: AgentTypeIds.Social,
+    domain: AgentDomains.Social,
+    voiceId: 'ihycSANIrpHfhWoaq1g3',
   },
   {
     id: 'adityaIAS',
