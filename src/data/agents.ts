@@ -14,7 +14,7 @@ export interface AgentTile {
   layout?: Layout;
   isCustomLLM?: boolean;
   showMetric?: boolean;
-  vendor?: "microsoft" | "elevenlabs" | 'cartesia';
+  vendor?: "microsoft" | "elevenlabs" | 'cartesia' | 'murf';
   avatarSettings?: {
     enable: boolean;
     vendor: string;
@@ -1157,6 +1157,19 @@ export const agents: AgentTile[] = [
     //     introduction: 'Hi, I\'m Aarav! Chill karna ho ya baatein share karni ho, main hoon na.'
     //   }
     // ]
+  },
+  {
+    id: 'rohan',
+    name: 'Rohan',
+    title: 'Your AI Companion(Male)',
+    introduction: 'Hey, I\'m Rohan, your AI companion. I\'m here to share thoughts, have fun conversations, and be a supportive presence.',
+    description: 'Rohan, your AI companion, offers engaging conversations, shares insights, and provides a supportive virtual presence.',
+    features: ['Interesting discussions', 'Sharing perspectives', 'Lighthearted interactions', 'Supportive communication'],
+    // voiceId: 'NFG5qt843uXKj4pFvR7C',
+    type: AgentTypeIds.Companion,
+    domain: AgentDomains.Companion,
+    vendor: 'murf',
+    voiceId: 'Aman',
   },
   {
     id: 'guruDev',

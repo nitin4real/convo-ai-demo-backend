@@ -13,6 +13,16 @@ interface MicrosoftTTSParams {
   }
 }
 
+interface MurfTTSParams {
+  vendor: "murf";
+  params: {
+    api_key: string;
+    voiceId: string;
+    sample_rate?: number;
+  }
+}
+
+
 interface ElevenLabsTTSParams {
   vendor: "elevenlabs";
   params: {
@@ -46,14 +56,14 @@ interface CartesiaTTSParams {
   }
 }
 
-type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams | CartesiaTTSParams;
+type TTSParams = MicrosoftTTSParams | ElevenLabsTTSParams | CartesiaTTSParams | MurfTTSParams;
 
 export interface StartAgentConfig {
   channelName: string;
   agentRTCUid: string;
   token: string;
   userId: number;
-  ttsVendor?: "microsoft" | "elevenlabs" | "cartesia";
+  ttsVendor?: "microsoft" | "elevenlabs" | "cartesia" | "murf";
   languageCode?: string;
   agentId: string;
   properties?: any;
@@ -175,7 +185,7 @@ class AgentService {
     }
   }
 
-  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" | "cartesia" = "elevenlabs", voiceId?: string): TTSParams {
+  private getTTSConfig(ttsVendor: "microsoft" | "elevenlabs" | "cartesia" | "murf" = "elevenlabs", voiceId?: string): TTSParams {
     if (ttsVendor === "cartesia") {
       return {
         vendor: "cartesia",
@@ -192,6 +202,14 @@ class AgentService {
           }
         }
       }
+    } else if(ttsVendor === "murf") {
+      return {
+        vendor: "murf",
+        params: {
+          api_key: process.env.MURF_TTS_KEY || "",
+          voiceId: voiceId
+        }
+      } as MurfTTSParams
     }
     return ttsVendor === "microsoft"
       ? {
@@ -243,7 +261,7 @@ class AgentService {
     let llmApiKey = process.env.OPENAI_API_KEY || "";
     let llmModel = "gpt-4o-mini"
 
-    const ttsVendorName: "microsoft" | "elevenlabs" | "cartesia" = agentDetails.vendor || ttsVendor;
+    const ttsVendorName: "microsoft" | "elevenlabs" | "cartesia" | "murf" = agentDetails.vendor || ttsVendor;
     const ttsConfig: AgentProperties["tts"] = this.getTTSConfig(ttsVendorName, voiceId);
 
     if (agentDetails.isCustomLLM) {
@@ -407,7 +425,6 @@ class AgentService {
       if (config.agentId === 'legal_assistant') {
         properties.asr = this.getSonioxASRConfig() as any;
       }
-
       const response = await axios.post(
         `${this.baseUrl}/join`,
         {
@@ -544,4 +561,4 @@ class AgentService {
   // }
 }
 
-export const agentService = new AgentService(); 
+export const agentService = new AgentService();
