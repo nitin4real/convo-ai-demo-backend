@@ -3,6 +3,7 @@ import { UserService } from './userService';
 import { agentPromptService, updateSystemPrompt } from '../services/agentPromptService';
 import { agents } from '../data/agents';
 import jwt from 'jsonwebtoken';
+import { withRtmDelivery } from './agoraRtmConfig';
 interface MicrosoftTTSParams {
   vendor: "microsoft";
   params: {
@@ -106,7 +107,8 @@ interface AgentProperties {
   };
   parameters: {
     enable_metrics: boolean;
-    enable_dump: boolean
+    enable_dump: boolean;
+    data_channel: 'rtm';
   };
   llm: {
     url: string;
@@ -240,13 +242,13 @@ class AgentService {
 
     let { channelName, agentRTCUid: agentUid, token, ttsVendor = "elevenlabs", languageCode: language = "en-US", properties, avatarUid, avatarToken, userId } = config;
     if (config.agentId === 'custom') {
-      return {
+      return withRtmDelivery({
         ...properties,
         channel: channelName,
         token: token,
         agent_rtc_uid: agentUid,
         remote_rtc_uids: ["*"], // use req user id as remote uid
-      }
+      }) as AgentProperties
     }
     const agentDetails = agents.find(agent => agent.id === config.agentId);
     if (!agentDetails) {
@@ -340,7 +342,7 @@ class AgentService {
       }
     }
 
-    return {
+    return withRtmDelivery({
       channel: channelName,
       token: token,
       agent_rtc_uid: agentUid,
@@ -350,11 +352,12 @@ class AgentService {
       enable_string_uid: false,
       idle_timeout: 120,
       advanced_features: {
-        enable_rtm: false,
+        enable_rtm: true,
       },
       parameters: {
         enable_metrics: true,
-        enable_dump: true
+        enable_dump: true,
+        data_channel: 'rtm'
       },
       llm: {
         url: llmEndPoint,
@@ -378,7 +381,7 @@ class AgentService {
       },
       tts: ttsConfig,
       avatar: avatarConfig
-    };
+    });
   }
 
   async startAgent(config: StartAgentConfig): Promise<AgentResponse> {

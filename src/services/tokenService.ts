@@ -1,4 +1,7 @@
 import { RtcTokenBuilder, RtmTokenBuilder, RtcRole } from 'agora-token';
+import { buildRtcAndRtmToken } from './agoraCombinedTokenBuilder';
+
+const TOKEN_EXPIRATION_IN_SECONDS = 24 * 3600;
 
 export class TokenService {
   private readonly appId: string;
@@ -16,11 +19,6 @@ export class TokenService {
 
   generateToken(channelName: string, uid: number): { token: string; channelName: string; uid: number; appId: string; rtmToken: string } {
     try {
-      // Calculate token expiration time (24 hours from now)
-      const expirationTimeInSeconds = 24 * 3600;
-      const currentTimestamp = Math.floor(Date.now() / 1000);
-      const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds;
-
       // Generate the token
       const token = RtcTokenBuilder.buildTokenWithUid(
         this.appId,
@@ -28,16 +26,11 @@ export class TokenService {
         channelName,
         uid,
         RtcRole.PUBLISHER,
-        privilegeExpiredTs,
-        privilegeExpiredTs // Join channel privilege expiration time
+        TOKEN_EXPIRATION_IN_SECONDS,
+        TOKEN_EXPIRATION_IN_SECONDS
       );
 
-      const rtmToken = RtmTokenBuilder.buildToken(
-        this.appId,
-        this.appCertificate,
-        uid.toString(),
-        privilegeExpiredTs
-      );
+      const rtmToken = this.generateRtmToken(uid);
 
       return {
         token,
@@ -51,6 +44,26 @@ export class TokenService {
       throw error;
     }
   }
+
+  generateRtmToken(uid: number): string {
+    return RtmTokenBuilder.buildToken(
+      this.appId,
+      this.appCertificate,
+      uid.toString(),
+      TOKEN_EXPIRATION_IN_SECONDS
+    );
+  }
+
+  generateTokenWithRtm(channelName: string, uid: number): string {
+    return buildRtcAndRtmToken(
+      this.appId,
+      this.appCertificate,
+      channelName,
+      uid.toString(),
+      TOKEN_EXPIRATION_IN_SECONDS,
+      TOKEN_EXPIRATION_IN_SECONDS
+    );
+  }
 }
 
-export const tokenService = new TokenService(); 
+export const tokenService = new TokenService();

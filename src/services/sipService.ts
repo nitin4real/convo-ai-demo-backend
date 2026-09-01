@@ -31,7 +31,7 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
         // Generate tokens for agent and SIP RTC UIDs
         const agentRtcUid = 111; // Agent RTC UID
         const sipRtcUid = 222; // SIP RTC UID
-        const agentTokenData = tokenService.generateToken(channelName, agentRtcUid);
+        const agentRtcRtmToken = tokenService.generateTokenWithRtm(channelName, agentRtcUid);
         const sipTokenData = tokenService.generateToken(channelName, sipRtcUid);
         
         // Construct the API URL
@@ -42,9 +42,15 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
             name: channelName,
             properties: {
                 channel: channelName,
-                token: agentTokenData.token,
+                token: agentRtcRtmToken,
                 agent_rtc_uid: agentRtcUid.toString(),
                 remote_rtc_uids: [`${sipRtcUid}`],
+                advanced_features: {
+                    enable_rtm: true,
+                },
+                parameters: {
+                    data_channel: "rtm",
+                },
                 // llm: getAgentLLM(agent_id, language),
                 // asr: getAgentASR(agent_id),
                 // tts: getAgentTTS(agent_id),
@@ -87,7 +93,9 @@ const startAgentUsingLambda = async (channelName: string, uid: string, language:
         remote_uid: uid,
         agent_uid: "67371",
         enable_string_uid: "false",
-        tts_provider: ""
+        tts_provider: "",
+        enable_rtm: "true",
+        data_channel: "rtm"
     };
 
     if (agent_id === 'sip_customer_support_agent_outbound_multilingual') {

@@ -109,6 +109,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     // Create a new unique uid for the agent with request user id by adding 2 digits to the end
     const agentUid = Number(req.user?.id) * 100 + 1; // the agent id is {req.user?.id}01
     const tokenData = tokenService.generateToken(channelName, agentUid);
+    const agentRtcRtmToken = tokenService.generateTokenWithRtm(channelName, agentUid);
     const avatarUid = Number(req.user?.id) * 100 + 2;
     const avatarTokenData = tokenService.generateToken(channelName, avatarUid);
 
@@ -118,7 +119,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       agentId,
       channelName,
       agentRTCUid: agentUid.toString(),
-      token: tokenData.token,
+      token: agentRtcRtmToken,
       userId: Number(userId),
       languageCode: languageCode,
       properties,
@@ -132,7 +133,8 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
 
     res.json({
       ...agent,
-      ...tokenData
+      ...tokenData,
+      token: agentRtcRtmToken
     });
   } catch (error) {
     console.error('Error starting agent:', error);
@@ -239,4 +241,4 @@ router.post('/heartbeat/:convoAgentId', authenticateToken, async (req, res) => {
 //   }
 // });
 
-export default router; 
+export default router;
