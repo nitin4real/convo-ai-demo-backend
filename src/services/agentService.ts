@@ -275,11 +275,11 @@ class AgentService {
     }
 
     if (config.agentId === 'khaled-ar' || config.agentId === 'hamed-ar-m' || config.agentId === 'zariyah-ar-m') {
-      if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG' || config.languageCode === 'ar-JO' || config.languageCode === 'ar-AE') {
-        llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
-        llmApiKey = process.env.MISTRAL_LLM_KEY || ""
-        llmModel = "mistral-saba-latest"
-      }
+      // if (config.languageCode === 'ar-SA' || config.languageCode === 'ar-EG' || config.languageCode === 'ar-JO' || config.languageCode === 'ar-AE') {
+      //   llmEndPoint = "https://api.mistral.ai/v1/chat/completions"
+      //   llmApiKey = process.env.MISTRAL_LLM_KEY || ""
+      //   llmModel = "mistral-saba-latest"
+      // }
       if (config.agentId === 'khaled-ar') {
         if (config.languageCode === 'ar-SA') {
           systemPrompt = `
@@ -428,6 +428,7 @@ class AgentService {
       if (config.agentId === 'legal_assistant') {
         properties.asr = this.getSonioxASRConfig() as any;
       }
+      // console.log('properties', JSON.stringify(properties, null, 4));
       const response = await axios.post(
         `${this.baseUrl}/join`,
         {
