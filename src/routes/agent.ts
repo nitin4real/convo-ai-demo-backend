@@ -3,7 +3,7 @@ import { authenticateToken } from '../middleware/auth';
 import { agentService } from '../services/agentService';
 import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
-import { agents, AgentTypeIds, agentTypes } from '../data/agents';
+import { agents, AgentTypeIds, agentTypes, isRtcStreamMessageAgent } from '../data/agents';
 import { startSIPCall_withAgent, startSIPWithLC } from '../services/sipService';
 import { checkAllowedSIPUser } from './webhook';
 import { isSIPUserAllowed } from '../utils/sipAccess';
@@ -111,6 +111,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     const agentUid = Number(req.user?.id) * 100 + 1; // the agent id is {req.user?.id}01
     const tokenData = tokenService.generateToken(channelName, agentUid);
     const agentRtcRtmToken = tokenService.generateTokenWithRtm(channelName, agentUid);
+    const agentToken = isRtcStreamMessageAgent(agentId) ? tokenData.token : agentRtcRtmToken;
     const avatarUid = Number(req.user?.id) * 100 + 2;
     const avatarTokenData = tokenService.generateToken(channelName, avatarUid);
 
@@ -120,7 +121,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       agentId,
       channelName,
       agentRTCUid: agentUid.toString(),
-      token: agentRtcRtmToken,
+      token: agentToken,
       userId: Number(userId),
       languageCode: languageCode,
       properties,
@@ -135,7 +136,7 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
     res.json({
       ...agent,
       ...tokenData,
-      token: agentRtcRtmToken
+      token: agentToken
     });
   } catch (error: any) {
     console.error('Error starting agent:', error);

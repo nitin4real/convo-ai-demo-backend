@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { UserService } from './userService';
 import { agentPromptService, updateSystemPrompt } from '../services/agentPromptService';
-import { agents } from '../data/agents';
+import { agents, isRtcStreamMessageAgent } from '../data/agents';
 import jwt from 'jsonwebtoken';
-import { withRtmDelivery } from './agoraRtmConfig';
+import { withRtmDelivery, withRtcDelivery } from './agoraRtmConfig';
 interface MicrosoftTTSParams {
   vendor: "microsoft";
   params: {
@@ -108,7 +108,7 @@ interface AgentProperties {
   parameters: {
     enable_metrics: boolean;
     enable_dump: boolean;
-    data_channel: 'rtm';
+    data_channel: 'rtm' | 'datastream';
   };
   llm: {
     url: string;
@@ -342,7 +342,7 @@ class AgentService {
       }
     }
 
-    return withRtmDelivery({
+    const agentProperties = {
       channel: channelName,
       token: token,
       agent_rtc_uid: agentUid,
@@ -381,7 +381,11 @@ class AgentService {
       },
       tts: ttsConfig,
       avatar: avatarConfig
-    });
+    };
+
+    return isRtcStreamMessageAgent(config.agentId)
+      ? withRtcDelivery(agentProperties) as AgentProperties
+      : withRtmDelivery(agentProperties) as AgentProperties;
   }
 
   async startAgent(config: StartAgentConfig): Promise<AgentResponse> {

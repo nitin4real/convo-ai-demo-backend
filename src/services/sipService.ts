@@ -1,6 +1,6 @@
 import axios from "axios";
 import { tokenService } from "./tokenService";
-import { agents } from "../data/agents";
+import { agents, isRtcStreamMessageAgent } from "../data/agents";
 import { agentPromptService } from "./agentPromptService";
 
 const sip_auth = process.env.SIP_AUTH
@@ -32,7 +32,11 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
         // Generate tokens for agent and SIP RTC UIDs
         const agentRtcUid = 111; // Agent RTC UID
         const sipRtcUid = 222; // SIP RTC UID
-        const agentRtcRtmToken = tokenService.generateTokenWithRtm(channelName, agentRtcUid);
+        const useRtcStreamMessages = isRtcStreamMessageAgent(agent_id);
+        const agentRtcTokenData = tokenService.generateToken(channelName, agentRtcUid);
+        const agentToken = useRtcStreamMessages
+            ? agentRtcTokenData.token
+            : tokenService.generateTokenWithRtm(channelName, agentRtcUid);
         const sipTokenData = tokenService.generateToken(channelName, sipRtcUid);
         
         // Construct the API URL
@@ -43,14 +47,14 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
             name: channelName,
             properties: {
                 channel: channelName,
-                token: agentRtcRtmToken,
+                token: agentToken,
                 agent_rtc_uid: agentRtcUid.toString(),
                 remote_rtc_uids: [`${sipRtcUid}`],
                 advanced_features: {
-                    enable_rtm: true,
+                    enable_rtm: !useRtcStreamMessages,
                 },
                 parameters: {
-                    data_channel: "rtm",
+                    data_channel: useRtcStreamMessages ? "datastream" : "rtm",
                 },
                 // llm: getAgentLLM(agent_id, language),
                 // asr: getAgentASR(agent_id),
@@ -88,6 +92,7 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
 const startAgentUsingLambda = async (channelName: string, uid: string, language: string = 'en-US', agent_id: string ): Promise<string> => {
     console.log('startAgentUsingLambda initialized', 'channelName', channelName, 'uid', uid, 'language', language, 'service_provider', agent_id);
     const lambdaUrl = start_agent_lambda_url;
+    const useRtcStreamMessages = isRtcStreamMessageAgent(agent_id);
     const params = {
         pin: language === 'en-US' ? "123" : "321",
         channel_name: channelName,
@@ -95,8 +100,8 @@ const startAgentUsingLambda = async (channelName: string, uid: string, language:
         agent_uid: "67371",
         enable_string_uid: "false",
         tts_provider: "",
-        enable_rtm: "true",
-        data_channel: "rtm"
+        enable_rtm: useRtcStreamMessages ? "false" : "true",
+        data_channel: useRtcStreamMessages ? "datastream" : "rtm"
     };
 
     if (agent_id === 'sip_customer_support_agent_outbound_multilingual') {

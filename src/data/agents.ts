@@ -21,7 +21,20 @@ export interface AgentTile {
     quality?: string;
     avatarId: string;
   }
+  /** Use Agora RTC data streams instead of Agora RTM for agent messages. */
+  useRtcStreamMessages?: boolean;
 }
+
+export const RTC_STREAM_MESSAGE_AGENT_IDS = [
+  'sip_wifi_agent_inbound',
+  'sip_wifi_agent_outbound',
+  'sip_customer_support_agent_outbound_multilingual',
+  'sip_property_assistant_agent_inbound',
+  'sip_property_assistant_agent_outbound',
+] as const;
+
+export const isRtcStreamMessageAgent = (agentId: string): boolean =>
+  (RTC_STREAM_MESSAGE_AGENT_IDS as readonly string[]).includes(agentId);
 
 export const enum Layout {
   DEFAULT = 'DEFAULT',
@@ -1929,6 +1942,7 @@ export const agents: AgentTile[] = [
     layout: Layout.SIP_CALL_INBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
+    useRtcStreamMessages: true,
   },
   {
     id: 'sip_wifi_agent_outbound',
@@ -1957,6 +1971,7 @@ export const agents: AgentTile[] = [
     layout: Layout.SIP_CALL_OUTBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
+    useRtcStreamMessages: true,
   },
   {
     id: 'sip_customer_support_agent_outbound_multilingual',
@@ -1986,6 +2001,7 @@ export const agents: AgentTile[] = [
     layout: Layout.SIP_CALL_OUTBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
+    useRtcStreamMessages: true,
   },
   // {
   //   id: 'sip_astrology_agent',
@@ -2063,7 +2079,8 @@ export const agents: AgentTile[] = [
     layout: Layout.SIP_CALL_INBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
-    showMetric: true
+    showMetric: true,
+    useRtcStreamMessages: true
   },
   {
     id: 'sip_property_assistant_agent_outbound',
@@ -2080,7 +2097,8 @@ export const agents: AgentTile[] = [
     layout: Layout.SIP_CALL_OUTBOUND,
     type: AgentTypeIds.PhoneCallAgent,
     domain: AgentDomains.PhoneCallAgent,
-    showMetric: true
+    showMetric: true,
+    useRtcStreamMessages: true
   },
   {
     id: 'custom',
