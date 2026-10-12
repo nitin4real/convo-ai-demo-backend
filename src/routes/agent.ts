@@ -5,7 +5,8 @@ import { tokenService } from '../services/tokenService';
 import { UserService } from '../services/userService';
 import { agents, AgentTypeIds, agentTypes } from '../data/agents';
 import { startSIPCall_withAgent, startSIPWithLC } from '../services/sipService';
-import { checkAllowedSIPUser, allowedSIPUsers } from './webhook';
+import { checkAllowedSIPUser } from './webhook';
+import { isSIPUserAllowed } from '../utils/sipAccess';
 const router = Router();
 
 
@@ -14,7 +15,7 @@ router.get('/agents', authenticateToken, async (req, res) => {
   try {
     // send sip agents only for allowed sip users 
     const userId = Number(req.user?.id) || 0;
-    if (!allowedSIPUsers.includes(userId)) {
+    if (!isSIPUserAllowed(userId)) {
       // send without sip agents
       const filteredAgents = agents.filter(agent => agent.id !== 'sip_wifi_agent_inbound' && agent.id !== 'sip_wifi_agent_outbound' && agent.id !== 'sip_property_assistant_agent_inbound' && agent.id !== 'sip_property_assistant_agent_outbound');
       res.json(filteredAgents);
@@ -34,7 +35,7 @@ router.get('/agents/:type', authenticateToken, async (req, res) => {
     const agentsByType = agents.filter(agent => agent.type === type);
     if (type === AgentTypeIds.PhoneCallAgent) {
       const userId = Number(req.user?.id) || 0;
-      if (!allowedSIPUsers.includes(userId)) {
+      if (!isSIPUserAllowed(userId)) {
         // send empty
         res.json([])
       }
@@ -50,7 +51,7 @@ router.get('/agents/:type', authenticateToken, async (req, res) => {
 router.get('/agent-types', authenticateToken, async (req, res) => {
   try {
     const userId = Number(req.user?.id) || 0;
-    if (!allowedSIPUsers.includes(userId)) {
+    if (!isSIPUserAllowed(userId)) {
       // send without phone call agent type
       const filteredAgentTypes = agentTypes.filter(agentType => agentType.id !== AgentTypeIds.PhoneCallAgent);
       res.json(filteredAgentTypes);
@@ -136,9 +137,9 @@ router.post('/start/:agentId', authenticateToken, async (req, res) => {
       ...tokenData,
       token: agentRtcRtmToken
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error starting agent:', error);
-    if (error.message?.includes('not found')) {
+    if (error?.message?.includes('not found')) {
       return res.status(404).json({ error: error.message });
     }
     res.status(500).json({ error: 'Failed to start agent' });

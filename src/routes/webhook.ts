@@ -1,19 +1,17 @@
 import { NextFunction, Router } from 'express';
 import { webhookService } from '../services/webhookService';
 import { authenticateToken } from '../middleware/auth';
+import { isSIPUserAllowed } from '../utils/sipAccess';
+
+// Preserve the existing route-module export for callers that consume it.
+export { allowedSIPUsers } from '../utils/sipAccess';
 
 const router = Router();
-
-export const allowedSIPUsers = [
-    3253,
-    8331,
-    9104
-];
 
 export const checkAllowedSIPUser = (req: any, res: any, next: NextFunction) => {
     try {
         const userId = Number(req?.user?.id) || 0;
-        if (allowedSIPUsers.includes(userId)) {
+        if (isSIPUserAllowed(userId)) {
             next();
         } else {
             return res.status(403).json({ message: 'Unauthorized, Contact Admin for access', userMessages: ['Unauthorized, Contact Admin for access'] });

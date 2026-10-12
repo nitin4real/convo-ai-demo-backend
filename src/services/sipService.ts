@@ -7,6 +7,7 @@ const sip_auth = process.env.SIP_AUTH
 const sip_url = process.env.SIP_URL || ""
 const agora_pstn_endpoint = process.env.AGORA_PSTN_URL || ""
 const sip_from_number = process.env.SIP_FROM_NUMBER || ""
+const sip_from_number_lc = process.env.SIP_FROM_NUMBER_LC || ""
 const start_agent_lambda_url = process.env.START_AGENT_LAMBDA_URL || ""
 const sip_manager_url = process.env.SIP_MANAGER_URL || ""
 const sip_manager_project_id = process.env.AGORA_APP_ID || ""
@@ -57,7 +58,7 @@ export const startSIPWithLC = async (channelName: string, uid: string, language:
             },
             sip: {
                 to_number: phoneNumber,
-                from_number: sip_from_number,
+                from_number: sip_from_number_lc,
                 rtc_uid: sipRtcUid.toString(),
                 rtc_token: sipTokenData.token,
                 enable_recording: false,
